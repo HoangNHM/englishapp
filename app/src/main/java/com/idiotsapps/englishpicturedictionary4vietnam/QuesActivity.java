@@ -28,6 +28,8 @@ import java.util.Random;
 
 public class QuesActivity extends Activity implements InfoDialogFragment.NoticeDialogListener
 {
+    //Hoang test push
+    //HoangNHM_br
     private ArrayList<Grade> grades = new ArrayList<Grade>();
     private Unit currentUnit;
     private Word currentWord;
