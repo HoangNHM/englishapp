@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.idiotsapps.chaoenglish" >
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application>
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ViewMoreActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:label="@string/title_activity_view_more" >
+        </activity>
+
+        <activity
+            android:name=".QuesActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:label="@string/title_activity_question" >
+        </activity>
+
+    </application>
+
+</manifest>
