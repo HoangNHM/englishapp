@@ -5,26 +5,24 @@
     <application>
 
         <activity
-            android:name=".GameActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-        </activity>
-
-        <activity
-            android:name=".QuesActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/FullscreenTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
+        <activity
+            android:name=".ViewMoreActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:label="@string/title_activity_view_more" >
         </activity>
 
         <activity
-            android:name=".ReportActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_report"
-            android:theme="@style/FullscreenTheme" >
+            android:name=".QuesActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:label="@string/title_activity_question" >
         </activity>
 
     </application>

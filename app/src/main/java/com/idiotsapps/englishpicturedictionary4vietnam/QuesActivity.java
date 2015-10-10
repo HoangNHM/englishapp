@@ -193,8 +193,9 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         if (tag.equals("failedDialog")) {
             dialog.dismiss();
             //Comeback to screen 1
-            Intent intent = new Intent(this, ReportActivity.class);
-            startActivity(intent);
+            //TODO ViewMoreActivity
+//            Intent intent = new Intent(this, ReportActivity.class);
+//            startActivity(intent);
         } else {
             dialog.dismiss();//Close dialog
         }
