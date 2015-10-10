@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:id="@+id/content"
+    tools:context="com.idiotsapps.englishpicturedictionary4vietnam.GameActivity">
+
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="384dp"
+            android:id="@+id/contentBoard">
+
+        <ImageView
+            android:layout_width="341dp"
+            android:layout_height="341dp"
+            android:id="@+id/imageView"
+            android:layout_gravity="center"
+            android:background="@drawable/spin" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="79dp"
+            android:layout_height="wrap_content"
+            android:text="Rate"
+            android:id="@+id/button2"
+            android:layout_weight="0.14" />
+
+        <Button
+            android:layout_width="191dp"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/button"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button"
+            android:layout_weight="0.69" />
+
+        <Button
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:text="Share"
+            android:id="@+id/button3" />
+    </LinearLayout>
+
+    </LinearLayout>
+
