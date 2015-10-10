@@ -15,9 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.idiotsapps.englishpicturedictionary4vietnam.stardict.StarDict;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -54,6 +51,7 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
 
         mySQLiteHelper = new MySQLiteHelper(this); //intialize sqlite helper
         this.grades = mySQLiteHelper.getGrades();
+        mySQLiteHelper.getWritableDatabase();
         getStarDict(); //initalize StarDict stuff
 
         /**

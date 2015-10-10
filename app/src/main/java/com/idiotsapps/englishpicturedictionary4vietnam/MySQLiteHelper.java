@@ -18,14 +18,16 @@ import java.util.ArrayList;
 /**
  * Created by xtruhuy on 08/10/2015.
  */
+
 public class MySQLiteHelper extends SQLiteOpenHelper {
     private ArrayList<Grade> grades = new ArrayList<>();
     private AssetManager assetManager = null;
+    private SQLiteDatabase db = null;
     public static final String TABLE_CLASSES = "classes";
     public static final String TABLE_UNIT = "unit";
     public static final String TABLE_TEST = "test";
 
-    private static final String DATABASE_NAME = "english_study";
+    private static final String DATABASE_NAME = "englishstudy.db";
     private static final int DATABASE_VERSION = 1;
     private static final String VOCA_TEST = "vocabulary";
     private static final String GRAM_TEST = "grammar";
@@ -33,27 +35,31 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private String tag = this.getClass().getSimpleName();
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
-            + TABLE_CLASSES + "( class_id integer primary key autoincrement,class_name integer not null);";
+            + TABLE_CLASSES + " (class_id integer primary key autoincrement,class_name integer not null);";
     private static final String UNIT_CREATE = "create table " + TABLE_UNIT +
-            "( unit_id integer primary key autoincrement,class_id integer,unit_name integer not null," +
-            "number_of_words integer";
-    private static final String TEST_CREATE = "create table " + TABLE_TEST + "( test_id integer primary " +
-            "key autoincrement, unit_id integer, vocabulary float, listen float, grammar float";
+            " (unit_id integer primary key autoincrement,class_id integer,unit_name integer not null," +
+            "number_of_words integer);";
+    private static final String TEST_CREATE = "create table " + TABLE_TEST + " (test_id integer primary " +
+            "key autoincrement, unit_id integer, vocabulary float, grammar float,listening float);";
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.assetManager = context.getAssets();
         getJsonDatabase();
+//        this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase database) {
+        Log.d(tag, "create db helper");
         database.execSQL(DATABASE_CREATE);//Create classes table
         database.execSQL(UNIT_CREATE);//create unit table
         database.execSQL(TEST_CREATE);//create test table
+        this.db = database;
         insertData(this.grades);
     }
 
+    //TODO
     public int updateTestUnit(int unitId, String testType, float result) {
 
         return 0;
@@ -68,14 +74,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
      * @return
      */
     public int insertTestUnit(int unitId, float vocaRes, float gramRes, float listRes) {
-        SQLiteDatabase db = this.getWritableDatabase();
+//        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("unit_id", unitId);
         contentValues.put("vocabulary", vocaRes);
         contentValues.put("grammar", gramRes);
         contentValues.put("listening", listRes);
         int rowId = (int) db.insert(TABLE_TEST, null, contentValues);
-        db.close();
+//        db.close();
         return rowId;
     }
 
@@ -85,11 +91,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
      * @return
      */
     public int insertClass(int className) {
-        SQLiteDatabase db = this.getWritableDatabase();
+//        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("class_name", className);
         int rowId = (int) db.insert(TABLE_CLASSES, null, contentValues);
-        db.close();
+//        db.close();
         return rowId;
     }
 
@@ -101,13 +107,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
      * @return
      */
     public int insertUnit(int unitName, int classId, int numberOfWord) {
-        SQLiteDatabase db = this.getWritableDatabase();
+//        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("class_id", classId);
         contentValues.put("unit_name", unitName);
         contentValues.put("number_of_words", numberOfWord);
         int rowId = (int) db.insert(TABLE_UNIT, null, contentValues);
-        db.close();
+//        db.close();
         return rowId;
     }
 
