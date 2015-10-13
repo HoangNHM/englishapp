@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -39,13 +40,15 @@ public class SlidingTabsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mTabs.add(new SamplePagerItem(
                 "Class", // Title
-                Color.BLUE, // Indicator color
+//                Color.BLUE, // Indicator color
+                ContextCompat.getColor(getContext(), R.color.action_bar_bg),
                 Color.GRAY // Divider color
         ));
 
         mTabs.add(new SamplePagerItem(
                 "Friends", // Title
-                Color.RED, // Indicator color
+//                Color.RED, // Indicator color
+                ContextCompat.getColor(getContext(), R.color.action_bar_bg),
                 Color.GRAY // Divider color
         ));
 

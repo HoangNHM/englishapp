@@ -23,7 +23,7 @@ public class CustomFriendsListViewAdapter extends ArrayAdapter<FriendsItem> {
     private Activity mActivity;
 
     public CustomFriendsListViewAdapter(Activity activity, ArrayList<FriendsItem> arrFriendsItems) {
-        super(activity, R.layout.friend_list_item_layout, arrFriendsItems);
+        super(activity, R.layout.item_friend_list, arrFriendsItems);
         this.mActivity = activity;
         this.mArrFriendsItems = arrFriendsItems;
     }
@@ -34,7 +34,7 @@ public class CustomFriendsListViewAdapter extends ArrayAdapter<FriendsItem> {
         if (null == view) {
             // first time creation
             LayoutInflater inflater = this.mActivity.getLayoutInflater();
-            view = inflater.inflate(R.layout.friend_list_item_layout, null);
+            view = inflater.inflate(R.layout.item_friend_list, null);
         } // else next time will recover
 
         // avatar

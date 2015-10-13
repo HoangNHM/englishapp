@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.idiotsapps.chaoenglish.helper.PreferencesHelper;
 import com.idiotsapps.chaoenglish.stardict.StarDict;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,9 +47,7 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
     private MySQLiteHelper mySQLiteHelper = null;
 
     // Check if app first launch, save path of database
-    private SharedPreferences prefs = null;
-    private static final String FIRST_RUN = "FIRST_RUN";
-    private static final String DICT_EXTER_PATH = "DICT_EXTER_PATH";
+    private PreferencesHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         setContentView(R.layout.activity_ques);
 //        Intent intent = getIntent();
 //        this.grade = intent.getIntExtra("grade", 6);
-        prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        prefsHelper = new PreferencesHelper(getApplicationContext());
 
 
         mySQLiteHelper = new MySQLiteHelper(this); //intialize sqlite helper
@@ -91,61 +91,63 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         goNextWord();
     }
 
-    /**
-     * It will copy asset dictionary files to an external location
-     */
-    private void copyDictToSdCard() {
-        AssetManager assetManager = getAssets();
-        this.dictExterPath = Environment.getExternalStorageDirectory().toString() + "/" + this.dictAssestPath;
-        File starDict = new File(this.dictExterPath);
-
-        if(!starDict.exists()){
-            starDict.mkdirs();
-            String[] files = null;
-            try {
-                files = assetManager.list(this.dictAssestPath);
-            } catch (IOException e) {
-                Log.e(tag, e.getMessage());
-            }
-
-            for(String filename : files) {
-                Log.d(tag, "file: " + filename);
-                InputStream in = null;
-                OutputStream out = null;
-                try {
-                    in = assetManager.open(this.dictAssestPath + "/" + filename);
-                    Log.d(tag, "file path: " + this.dictExterPath + "/" + filename);
-                    out = new FileOutputStream(this.dictExterPath + "/" + filename);
-                    copyFile(in, out);
-                    in.close();
-                    in = null;
-                    out.flush();
-                    out.close();
-                    out = null;
-                } catch (Exception e) {
-                    Log.e(tag, e.getMessage());
-                }
-            }
-        }
-        else {
-            //TODO: Verify exist files
-            Log.d(tag, "dir. already exists");
-        }
-    }
-
-    /**
-     * It will write data from input stream to an output stream as a file
-     * @param in Input stream
-     * @param out Output stream of a file
-     * @throws IOException
-     */
-    private void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int read;
-        while((read = in.read(buffer)) != -1){
-            out.write(buffer, 0, read);
-        }
-    }
+    //++del HoangNHM 20151013 move to FirstStartActivity
+//    /**
+//     * It will copy asset dictionary files to an external location
+//     */
+//    private void copyDictToSdCard() {
+//        AssetManager assetManager = getAssets();
+//        this.dictExterPath = Environment.getExternalStorageDirectory().toString() + "/" + this.dictAssestPath;
+//        File starDict = new File(this.dictExterPath);
+//
+//        if(!starDict.exists()){
+//            starDict.mkdirs();
+//            String[] files = null;
+//            try {
+//                files = assetManager.list(this.dictAssestPath);
+//            } catch (IOException e) {
+//                Log.e(tag, e.getMessage());
+//            }
+//
+//            for(String filename : files) {
+//                Log.d(tag, "file: " + filename);
+//                InputStream in = null;
+//                OutputStream out = null;
+//                try {
+//                    in = assetManager.open(this.dictAssestPath + "/" + filename);
+//                    Log.d(tag, "file path: " + this.dictExterPath + "/" + filename);
+//                    out = new FileOutputStream(this.dictExterPath + "/" + filename);
+//                    copyFile(in, out);
+//                    in.close();
+//                    in = null;
+//                    out.flush();
+//                    out.close();
+//                    out = null;
+//                } catch (Exception e) {
+//                    Log.e(tag, e.getMessage());
+//                }
+//            }
+//        }
+//        else {
+//            //TODO: Verify exist files
+//            Log.d(tag, "dir. already exists");
+//        }
+//    }
+//
+//    /**
+//     * It will write data from input stream to an output stream as a file
+//     * @param in Input stream
+//     * @param out Output stream of a file
+//     * @throws IOException
+//     */
+//    private void copyFile(InputStream in, OutputStream out) throws IOException {
+//        byte[] buffer = new byte[1024];
+//        int read;
+//        while((read = in.read(buffer)) != -1){
+//            out.write(buffer, 0, read);
+//        }
+//    }
+    //--del HoangNHM 20151013 move to FirstStartActivity
 
     /**
      * - Copy the dict database from asset for sdcard
@@ -153,9 +155,11 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
      */
     private void getStarDict() {
         Log.d(tag, "enter getStarDict");
+        //++del HoangNHM 20151013 move to FirstStartActivity
 //        copyDictToSdCard();
+        //--del HoangNHM 20151013 move to FirstStartActivity
         // get path from pref
-        this.dictExterPath = prefs.getString(DICT_EXTER_PATH, "");
+        this.dictExterPath = prefsHelper.getDictExterPath();
         if (0 != this.dictExterPath.length()) {
             this.starDict = new StarDict(this.dictExterPath);
             Log.d("testing", "new StarDict");

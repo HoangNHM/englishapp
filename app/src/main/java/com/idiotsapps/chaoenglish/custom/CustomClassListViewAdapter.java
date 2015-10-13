@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -50,7 +48,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
             "Party A", "Party B"
     };
     public CustomClassListViewAdapter(Activity activity, FragmentManager fragmentManager, com.idiotsapps.chaoenglish.ClassTab classTab, ArrayList<ClassItem> arrClassItems) {
-        super(activity, R.layout.class_list_item_layout, arrClassItems);
+        super(activity, R.layout.item_class_list, arrClassItems);
         this.mActivity = activity;
         this.mArrClassItems = arrClassItems;
         this.mFragmentManager = fragmentManager;
@@ -63,7 +61,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
         if (null == view) {
             // first time creation
             LayoutInflater inflater = this.mActivity.getLayoutInflater();
-            view = inflater.inflate(R.layout.class_list_item_layout, null);
+            view = inflater.inflate(R.layout.item_class_list, null);
         } // else next time will recover
 
         // chart

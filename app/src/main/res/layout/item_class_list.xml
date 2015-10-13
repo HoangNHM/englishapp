@@ -58,7 +58,7 @@
                 <ImageView
                     android:id="@+id/btnStudyClassItem"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="30dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     tools:ignore="ContentDescription"
@@ -77,7 +77,7 @@
                 <ImageView
                     android:id="@+id/btnViewMoreClassItem"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="30dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     tools:ignore="ContentDescription"

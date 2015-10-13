@@ -2,7 +2,6 @@ package com.idiotsapps.chaoenglish;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -12,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.idiotsapps.chaoenglish.helper.PreferencesHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,30 +25,26 @@ public class FirstStartActivity extends AppCompatActivity {
     private static final String TAG = FirstStartActivity.class.getSimpleName();
     private ProgressDialog mProgressDialog;
     private String dictExterPath = null;
-    private String dictAssestPath = "stardictvn";
+    private static final String DICT_ASSEST_PATH = "stardictvn";
     // Check if app first launch, save path of database
-    private SharedPreferences prefs = null;
-    private static final String FIRST_RUN = "FIRST_RUN";
-    private static final String DICT_EXTER_PATH = "DICT_EXTER_PATH";
+    private PreferencesHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        prefsHelper = new PreferencesHelper(getApplicationContext());
         setContentView(R.layout.activity_first_start);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (prefs.getBoolean(FIRST_RUN, true)) {
+        if (prefsHelper.isFirstStart()) {
             // first start, setup database
             AsyncTask<Void, Void, Boolean> task;
             task = new SetDataBase().execute();
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean(FIRST_RUN, false);
-            editor.putString(DICT_EXTER_PATH, dictExterPath);
-            editor.apply();
+            prefsHelper.setNotFirstStart();
+            prefsHelper.setDictExterPath(dictExterPath);
         } else {
             // not first start, call MainActivity
             gotoMainActivity();
@@ -124,14 +121,14 @@ public class FirstStartActivity extends AppCompatActivity {
      */
     private void copyDictToSdCard() throws IOException {
         AssetManager assetManager = getAssets();
-        this.dictExterPath = Environment.getExternalStorageDirectory().toString() + "/" + this.dictAssestPath;
+        this.dictExterPath = Environment.getExternalStorageDirectory().toString() + "/" + this.DICT_ASSEST_PATH;
         File starDict = new File(this.dictExterPath);
 
         if(!starDict.exists()){
             starDict.mkdirs();
             String[] files = null;
             try {
-                files = assetManager.list(this.dictAssestPath);
+                files = assetManager.list(this.DICT_ASSEST_PATH);
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -140,7 +137,7 @@ public class FirstStartActivity extends AppCompatActivity {
                 Log.d(TAG, "file: " + filename);
                 InputStream in = null;
                 OutputStream out = null;
-                    in = assetManager.open(this.dictAssestPath + "/" + filename);
+                    in = assetManager.open(this.DICT_ASSEST_PATH + "/" + filename);
                     Log.d(TAG, "file path: " + this.dictExterPath + "/" + filename);
                     out = new FileOutputStream(this.dictExterPath + "/" + filename);
                     copyFile(in, out);
