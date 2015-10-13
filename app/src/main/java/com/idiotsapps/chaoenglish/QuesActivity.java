@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -41,12 +43,19 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
     private String dictAssestPath = "stardictvn";
     private String tag = this.getClass().getSimpleName();
     private MySQLiteHelper mySQLiteHelper = null;
+
+    // Check if app first launch, save path of database
+    private SharedPreferences prefs = null;
+    private static final String FIRST_RUN = "FIRST_RUN";
+    private static final String DICT_EXTER_PATH = "DICT_EXTER_PATH";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ques);
 //        Intent intent = getIntent();
 //        this.grade = intent.getIntExtra("grade", 6);
+        prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
 
 
         mySQLiteHelper = new MySQLiteHelper(this); //intialize sqlite helper
@@ -144,8 +153,15 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
      */
     private void getStarDict() {
         Log.d(tag, "enter getStarDict");
-        copyDictToSdCard();
-        this.starDict = new StarDict(this.dictExterPath);
+//        copyDictToSdCard();
+        // get path from pref
+        this.dictExterPath = prefs.getString(DICT_EXTER_PATH, "");
+        if (0 != this.dictExterPath.length()) {
+            this.starDict = new StarDict(this.dictExterPath);
+            Log.d("testing", "new StarDict");
+        } else {
+            Log.d("testing", "some thing wrong");
+        }
         Log.d("testing", "leave getStarDict");
     }
 

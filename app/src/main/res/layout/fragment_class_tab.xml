@@ -3,12 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/white"
     tools:context="com.idiotsapps.chaoenglish.ClassTab">
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
         android:id="@+id/listViewClass"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:divider="@drawable/listview_divider"
+        android:dividerHeight="3dp"/>
 
 </LinearLayout>

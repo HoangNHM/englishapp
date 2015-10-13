@@ -8,9 +8,9 @@ import android.util.SparseIntArray;
 public class ClassItem {
     private int mClassPercent; // chart
     private SparseIntArray mUnitPercent;
-    private String mClassName;
+    private int mClassName;
 
-    public ClassItem(String className, int classPercent, SparseIntArray unitPercent) {
+    public ClassItem(int className, int classPercent, SparseIntArray unitPercent) {
         this.mClassName = className;
         this.mClassPercent = classPercent;
         this.mUnitPercent = unitPercent;
@@ -20,7 +20,7 @@ public class ClassItem {
         return mClassPercent;
     }
 
-    public String getClassName() {
+    public int getClassName() {
         return mClassName;
     }
 

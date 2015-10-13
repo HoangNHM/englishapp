@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -26,6 +27,20 @@ import java.util.ArrayList;
  * Created by vantuegia on 10/1/2015.
  */
 public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
+
+    private static int[] mClassName =
+            {R.drawable.class_1,
+                    R.drawable.class_2,
+                    R.drawable.class_3,
+                    R.drawable.class_4,
+                    R.drawable.class_5,
+                    R.drawable.class_6,
+                    R.drawable.class_7,
+                    R.drawable.class_8,
+                    R.drawable.class_9,
+                    R.drawable.class_10,
+                    R.drawable.class_11,
+                    R.drawable.class_12};
 
     private OnFriendsItemInteractionListener itemInteractionListener;
     private ArrayList<ClassItem> mArrClassItems;
@@ -57,11 +72,13 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
         setPieChart(pieChart, mArrClassItems.get(position).getClassPercent());
 
         // class 1, class 2, ...
-        TextView mTextViewClassNumber = (TextView) view.findViewById(R.id.textViewClassNumber);
-        mTextViewClassNumber.setText(mArrClassItems.get(position).getClassName());
+        ImageView imgClassName = (ImageView) view.findViewById(R.id.imgClassName);
+        imgClassName.setImageResource(mClassName[mArrClassItems.get(position).getClassName()]);
+//        TextView mTextViewClassNumber = (TextView) view.findViewById(R.id.textViewClassNumber);
+//        mTextViewClassNumber.setText(mArrClassItems.get(position).getClassName());
 
         // btn Study
-        ImageButton mBtnStudyClassItem = (ImageButton) view.findViewById(R.id.btnStudyClassItem);
+        ImageView mBtnStudyClassItem = (ImageView) view.findViewById(R.id.btnStudyClassItem);
         mBtnStudyClassItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +87,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
         });
 
         // btn View More
-        ImageButton mBtnViewMoreClassItem = (ImageButton) view.findViewById(R.id.btnViewMoreClassItem);
+        ImageView mBtnViewMoreClassItem = (ImageView) view.findViewById(R.id.btnViewMoreClassItem);
         mBtnViewMoreClassItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +167,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
 
         // add colors
         ArrayList<Integer> colors = new ArrayList<Integer>();
-        final int[] VORDIPLOM_COLORS = new int[]{Color.rgb(255, 100, 140), Color.rgb(100, 247, 140)};
+        final int[] VORDIPLOM_COLORS = new int[]{Color.rgb(255, 90, 0), Color.rgb(151, 200, 101)};
         for (int c : VORDIPLOM_COLORS)
             colors.add(c);
 
@@ -183,6 +200,6 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
      */
     public interface OnFriendsItemInteractionListener {
         // TODO: Update argument type and name
-        public void onFriendsItemInteractionListener(int btnId, int position, String className);
+        public void onFriendsItemInteractionListener(int btnId, int position, int className);
     }
 }

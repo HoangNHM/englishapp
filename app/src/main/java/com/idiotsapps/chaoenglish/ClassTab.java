@@ -1,7 +1,6 @@
 package com.idiotsapps.chaoenglish;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.SparseIntArray;
@@ -81,7 +80,7 @@ public class ClassTab extends Fragment implements CustomClassListViewAdapter.OnF
 
     // btn Study & View More click listener
     @Override
-    public void onFriendsItemInteractionListener(int btnId, int position, String className) {
+    public void onFriendsItemInteractionListener(int btnId, int position, int className) {
         switch (btnId) {
             case R.id.btnStudyClassItem:
                 Toast.makeText(getContext(), "Study, item: " + position, Toast.LENGTH_SHORT).show();
@@ -93,7 +92,7 @@ public class ClassTab extends Fragment implements CustomClassListViewAdapter.OnF
                 Toast.makeText(getContext(), "View More, item: " + position, Toast.LENGTH_SHORT).show();
                 Intent intentViewMore = new Intent(getContext(), ViewMoreActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("ClassName", className);
+                bundle.putInt("ClassName", className);
                 intentViewMore.putExtra("ClassPackage", bundle);
                 startActivity(intentViewMore);
                 break;
@@ -107,7 +106,10 @@ public class ClassTab extends Fragment implements CustomClassListViewAdapter.OnF
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Percent of Class, read from database
         ArrayList<Integer> arrClassPercent = new ArrayList<Integer>();
-        arrClassPercent.add(1);
+        arrClassPercent.add(55);
+        arrClassPercent.add(80);
+        arrClassPercent.add(64);
+        arrClassPercent.add(36);
         // Database retrieve
 //        DBHandler db = new DBHandler(getContext());
 //        Cursor cursor = db.getData(DBHandler.CLASS_TABLE_NAME, 0);
@@ -121,13 +123,16 @@ public class ClassTab extends Fragment implements CustomClassListViewAdapter.OnF
 
         // add list view
         ListView listView = (ListView) view.findViewById(R.id.listViewClass);
-        // ArrayList ClassItem
+        // TODO ArrayList ClassItem
         ArrayList<ClassItem> arr = new ArrayList<ClassItem>();
         // unit + percent of that unit
         SparseIntArray unitPercent = new SparseIntArray();
         unitPercent.append(2, 100);
         unitPercent.append(3, 30);
-        arr.add(new ClassItem("Class 1", arrClassPercent.get(0), unitPercent));
+        arr.add(new ClassItem(6, arrClassPercent.get(0), unitPercent));
+        arr.add(new ClassItem(7, arrClassPercent.get(1), unitPercent));
+        arr.add(new ClassItem(8, arrClassPercent.get(2), unitPercent));
+        arr.add(new ClassItem(9, arrClassPercent.get(3), unitPercent));
         // adapter
         CustomClassListViewAdapter adapter = new CustomClassListViewAdapter(getActivity(), getFragmentManager(), ClassTab.this, arr);
         listView.setAdapter(adapter);

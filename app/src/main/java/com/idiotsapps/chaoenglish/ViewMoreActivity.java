@@ -3,6 +3,7 @@ package com.idiotsapps.chaoenglish;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,14 +15,15 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.idiotsapps.chaoenglish.baseclass.ActivityBase;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ViewMoreActivity extends AppCompatActivity {
+public class ViewMoreActivity extends ActivityBase {
 
     private HorizontalBarChart mChart;
-    private String mChartName;
+    private int mClassName;
     private ScrollView mScrollViewChart;
 
     @Override
@@ -36,7 +38,7 @@ public class ViewMoreActivity extends AppCompatActivity {
         // get bundle from intent
         Bundle packageFromCaller = callerIntent.getBundleExtra("ClassPackage");
         // get bundle info
-        mChartName = packageFromCaller.getString("ClassName");
+        mClassName = packageFromCaller.getInt("ClassName");
         setupChart(mChart);
         mScrollViewChart.postDelayed(new Runnable() {
             @Override
@@ -61,7 +63,7 @@ public class ViewMoreActivity extends AppCompatActivity {
         horBarChart.setDrawBarShadow(false);
         horBarChart.setDrawValueAboveBar(true);
 
-        horBarChart.setDescription(mChartName);
+        horBarChart.setDescription("Class " + mClassName);
 
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
@@ -121,6 +123,22 @@ public class ViewMoreActivity extends AppCompatActivity {
 
         barChart.setData(data);
     }
+
+    @Override
+    protected void setActionBar() {
+        setTitle("View More Action Bar");
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
+            actionBar.setDisplayOptions(
+                    ActionBar.DISPLAY_SHOW_TITLE |
+                    ActionBar.DISPLAY_USE_LOGO |
+                    ActionBar.DISPLAY_SHOW_HOME |
+                    ActionBar.DISPLAY_HOME_AS_UP);
+
+            actionBar.setLogo(R.drawable.earth);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -142,4 +160,5 @@ public class ViewMoreActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
