@@ -202,6 +202,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
      * @param grades
      */
     public void insertData(ArrayList<Grade> grades) {
+        int percent[] = new int[]{0,10,30,75,80,90,100 }; //TODO: dumpy data, remove later
         for (int i = 0; i < grades.size(); i++) {
             Grade grade = grades.get(i);
             int className = grade.getGrade();
@@ -214,7 +215,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 int numOfWords = unit.getWords().size();
                 int unitId = insertUnit(unitName, classId, numOfWords);
                 Log.d(tag, "unit id: " + unitId);
-                int testId = insertTestUnit(unitId, 0, 0, 0);
+                int testId = insertTestUnit(unitId, percent[i],percent[i], percent[i]);
                 Log.d(tag, "test id: " + testId);
             }
         }
