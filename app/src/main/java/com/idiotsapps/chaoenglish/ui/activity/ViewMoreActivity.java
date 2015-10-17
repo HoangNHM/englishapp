@@ -1,4 +1,4 @@
-package com.idiotsapps.chaoenglish;
+package com.idiotsapps.chaoenglish.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +15,7 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.baseclass.ActivityBase;
 
 import java.util.ArrayList;

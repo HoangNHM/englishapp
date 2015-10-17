@@ -1,15 +1,10 @@
-package com.idiotsapps.chaoenglish;
+package com.idiotsapps.chaoenglish.ui.activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,13 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.idiotsapps.chaoenglish.Grade;
+import com.idiotsapps.chaoenglish.helper.HelperApplication;
+import com.idiotsapps.chaoenglish.ui.dialog.InfoDialogFragment;
+import com.idiotsapps.chaoenglish.MySQLiteHelper;
+import com.idiotsapps.chaoenglish.R;
+import com.idiotsapps.chaoenglish.Unit;
+import com.idiotsapps.chaoenglish.Word;
 import com.idiotsapps.chaoenglish.helper.PreferencesHelper;
 import com.idiotsapps.chaoenglish.stardict.StarDict;
-import java.io.File;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -161,7 +161,7 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         // get path from pref
         this.dictExterPath = prefsHelper.getDictExterPath();
         if (0 != this.dictExterPath.length()) {
-            this.starDict = new StarDict(this.dictExterPath);
+            this.starDict = HelperApplication.sStarDict;
             Log.d("testing", "new StarDict");
         } else {
             Log.d("testing", "some thing wrong");

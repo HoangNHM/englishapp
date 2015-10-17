@@ -1,4 +1,4 @@
-package com.idiotsapps.chaoenglish.custom;
+package com.idiotsapps.chaoenglish.ui.adapter;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.idiotsapps.chaoenglish.ui.fragment.ClassTabFragment;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.item.ClassItem;
 
@@ -47,7 +48,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
     private String[] mParties = new String[] {
             "Party A", "Party B"
     };
-    public CustomClassListViewAdapter(Activity activity, FragmentManager fragmentManager, com.idiotsapps.chaoenglish.ClassTab classTab, ArrayList<ClassItem> arrClassItems) {
+    public CustomClassListViewAdapter(Activity activity, FragmentManager fragmentManager, ClassTabFragment classTab, ArrayList<ClassItem> arrClassItems) {
         super(activity, R.layout.item_class_list, arrClassItems);
         this.mActivity = activity;
         this.mArrClassItems = arrClassItems;

@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.idiotsapps.chaoenglish.SlidingTabsFragment"
+    tools:context="com.idiotsapps.chaoenglish.ui.fragment.SlidingTabsFragment"
     android:orientation="vertical">
 
-    <com.idiotsapps.chaoenglish.widgets.SlidingTabLayout
+    <com.idiotsapps.chaoenglish.ui.widgets.SlidingTabLayout
         android:id="@+id/sliding_tabs"
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"

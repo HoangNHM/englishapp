@@ -1,4 +1,4 @@
-package com.idiotsapps.chaoenglish;
+package com.idiotsapps.chaoenglish.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.idiotsapps.chaoenglish.custom.CustomClassListViewAdapter;
+import com.idiotsapps.chaoenglish.R;
+import com.idiotsapps.chaoenglish.ui.activity.ViewMoreActivity;
+import com.idiotsapps.chaoenglish.ui.adapter.CustomClassListViewAdapter;
 import com.idiotsapps.chaoenglish.item.ClassItem;
+import com.idiotsapps.chaoenglish.ui.activity.QuesActivity;
 
 import java.util.ArrayList;
 
@@ -20,12 +23,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ClassTab.OnFragmentInteractionListener} interface
+ * {@link ClassTabFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ClassTab#newInstance} factory method to
+ * Use the {@link ClassTabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClassTab extends Fragment implements CustomClassListViewAdapter.OnFriendsItemInteractionListener {
+public class ClassTabFragment extends Fragment implements CustomClassListViewAdapter.OnFriendsItemInteractionListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,12 +46,12 @@ public class ClassTab extends Fragment implements CustomClassListViewAdapter.OnF
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ClassTab.
+     * @return A new instance of fragment ClassTabFragment.
      */
     // TODO: Rename and change types and number of parameters
     // Fragment required empty public constructor, nên muốn truyền cái gì vào phải dùng newInstance
-    public static ClassTab newInstance(String param1, String param2) {
-        ClassTab fragment = new ClassTab();
+    public static ClassTabFragment newInstance(String param1, String param2) {
+        ClassTabFragment fragment = new ClassTabFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -56,7 +59,7 @@ public class ClassTab extends Fragment implements CustomClassListViewAdapter.OnF
         return fragment;
     }
 
-    public ClassTab() {
+    public ClassTabFragment() {
         // Required empty public constructor
     }
 
@@ -134,7 +137,7 @@ public class ClassTab extends Fragment implements CustomClassListViewAdapter.OnF
         arr.add(new ClassItem(8, arrClassPercent.get(2), unitPercent));
         arr.add(new ClassItem(9, arrClassPercent.get(3), unitPercent));
         // adapter
-        CustomClassListViewAdapter adapter = new CustomClassListViewAdapter(getActivity(), getFragmentManager(), ClassTab.this, arr);
+        CustomClassListViewAdapter adapter = new CustomClassListViewAdapter(getActivity(), getFragmentManager(), ClassTabFragment.this, arr);
         listView.setAdapter(adapter);
     }
 

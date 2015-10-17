@@ -1,7 +1,6 @@
-package com.idiotsapps.chaoenglish;
+package com.idiotsapps.chaoenglish.ui.dialog;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.idiotsapps.chaoenglish.stardict.StarDict;
+import com.idiotsapps.chaoenglish.R;
 
 /**
  * Created by xtruhuy on 27/09/2015.
@@ -56,7 +55,7 @@ public class InfoDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout to use as dialog or embedded fragment
-        return inflater.inflate(R.layout.info_layout, container, false);
+        return inflater.inflate(R.layout.dialog_info_layout, container, false);
     }
 
     /** The system calls this only when creating the layout in a dialog. */

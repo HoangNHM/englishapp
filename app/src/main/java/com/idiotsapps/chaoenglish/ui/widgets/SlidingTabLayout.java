@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.idiotsapps.chaoenglish.widgets;
+package com.idiotsapps.chaoenglish.ui.widgets;
 
 import android.content.Context;
 import android.graphics.Typeface;

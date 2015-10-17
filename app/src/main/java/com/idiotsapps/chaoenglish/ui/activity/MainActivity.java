@@ -1,12 +1,13 @@
-package com.idiotsapps.chaoenglish;
+package com.idiotsapps.chaoenglish.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.idiotsapps.chaoenglish.R;
+import com.idiotsapps.chaoenglish.ui.fragment.SlidingTabsFragment;
 import com.idiotsapps.chaoenglish.baseclass.ActivityBase;
 
 public class MainActivity extends ActivityBase {

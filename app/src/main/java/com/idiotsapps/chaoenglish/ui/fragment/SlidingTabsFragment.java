@@ -1,4 +1,4 @@
-package com.idiotsapps.chaoenglish;
+package com.idiotsapps.chaoenglish.ui.fragment;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -15,7 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.idiotsapps.chaoenglish.widgets.SlidingTabLayout;
+import com.idiotsapps.chaoenglish.R;
+import com.idiotsapps.chaoenglish.ui.widgets.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,18 +149,18 @@ public class SlidingTabsFragment extends Fragment {
         }
 
 //        Fragment createFriendFragment() {
-//            return FriendsTab.newInstance("str1", "str2");
+//            return FriendsTabFragment.newInstance("str1", "str2");
 //        }
 
         /**
          * @return A new {@link android.support.v4.app.Fragment} to be displayed by a {@link ViewPager}
          */
         Fragment createFriendFragment() {
-            return FriendsTab.newInstance("str1", "str2");
+            return FriendsTabFragment.newInstance("str1", "str2");
         }
 
         Fragment createClassFragment() {
-            return ClassTab.newInstance("str1", "str2");
+            return ClassTabFragment.newInstance("str1", "str2");
         }
 
         /**

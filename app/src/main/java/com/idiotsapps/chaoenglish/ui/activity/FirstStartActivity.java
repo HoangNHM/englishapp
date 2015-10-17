@@ -1,4 +1,4 @@
-package com.idiotsapps.chaoenglish;
+package com.idiotsapps.chaoenglish.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,7 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.idiotsapps.chaoenglish.R;
+import com.idiotsapps.chaoenglish.helper.HelperApplication;
 import com.idiotsapps.chaoenglish.helper.PreferencesHelper;
+import com.idiotsapps.chaoenglish.stardict.StarDict;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,6 +52,7 @@ public class FirstStartActivity extends AppCompatActivity {
             // not first start, call MainActivity
             gotoMainActivity();
         }
+        HelperApplication.sStarDict = new StarDict(dictExterPath);
     }
 
     private void gotoMainActivity() {

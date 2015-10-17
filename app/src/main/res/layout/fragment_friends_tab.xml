@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.idiotsapps.chaoenglish.FriendsTab">
+    tools:context="com.idiotsapps.chaoenglish.ui.fragment.FriendsTabFragment">
 
     <ListView
         android:id="@+id/listViewFriends"

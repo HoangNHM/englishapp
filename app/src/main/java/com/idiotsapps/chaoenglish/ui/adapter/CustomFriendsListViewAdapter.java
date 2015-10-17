@@ -1,4 +1,4 @@
-package com.idiotsapps.chaoenglish.custom;
+package com.idiotsapps.chaoenglish.ui.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

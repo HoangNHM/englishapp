@@ -1,4 +1,4 @@
-package com.idiotsapps.chaoenglish;
+package com.idiotsapps.chaoenglish.ui.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,7 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.idiotsapps.chaoenglish.custom.CustomFriendsListViewAdapter;
+import com.idiotsapps.chaoenglish.R;
+import com.idiotsapps.chaoenglish.ui.adapter.CustomFriendsListViewAdapter;
 import com.idiotsapps.chaoenglish.item.FriendsItem;
 
 import java.util.ArrayList;
@@ -21,12 +22,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FriendsTab.OnFragmentInteractionListener} interface
+ * {@link FriendsTabFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FriendsTab#newInstance} factory method to
+ * Use the {@link FriendsTabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendsTab extends Fragment {
+public class FriendsTabFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,11 +44,11 @@ public class FriendsTab extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FriendsTab.
+     * @return A new instance of fragment FriendsTabFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FriendsTab newInstance(String param1, String param2) {
-        FriendsTab fragment = new FriendsTab();
+    public static FriendsTabFragment newInstance(String param1, String param2) {
+        FriendsTabFragment fragment = new FriendsTabFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -55,7 +56,7 @@ public class FriendsTab extends Fragment {
         return fragment;
     }
 
-    public FriendsTab() {
+    public FriendsTabFragment() {
         // Required empty public constructor
     }
 
