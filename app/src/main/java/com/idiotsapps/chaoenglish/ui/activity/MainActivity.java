@@ -27,35 +27,11 @@ public class MainActivity extends ActivityBase {
         SlidingTabsFragment fragment = new SlidingTabsFragment();
         fmTrans.replace(R.id.fragment_content, fragment);
         fmTrans.commit();
+        setActionBar(R.id.abIc, getResources().getString(R.string.app_name));
 //        DBHandler dbHandler = new DBHandler(this);
 //        for (int i = 0; i < 20; i++) {
 //            dbHandler.insertClassPercent(new Random().nextInt((100) + 1));
 //        }
-    }
-
-    @Override
-    protected void setActionBar() {
-        setTitle("");
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar) {
-            actionBar.setDisplayOptions(
-                    ActionBar.DISPLAY_SHOW_CUSTOM |
-                            ActionBar.DISPLAY_SHOW_TITLE |
-                            ActionBar.DISPLAY_USE_LOGO |
-                            ActionBar.DISPLAY_SHOW_HOME);
-
-            LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = inflator.inflate(R.layout.actionbar_custom, null);
-            ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
-            v.setLayoutParams(params);
-            ImageView abIc = (ImageView) v.findViewById(R.id.abIc);
-            abIc.setImageResource(R.drawable.ic_app);
-            TextView abTitle = (TextView) v.findViewById(R.id.abTitle);
-            abTitle.setText(" " + getResources().getString(R.string.app_name));
-            abTitle.setTextSize(25);
-            actionBar.setCustomView(v);
-//            actionBar.setLogo(R.drawable.ic_app);
-        }
     }
 
     @Override
