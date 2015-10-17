@@ -1,4 +1,4 @@
-package com.idiotsapps.chaoenglish;
+package com.idiotsapps.chaoenglish.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,10 @@ import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.idiotsapps.chaoenglish.Grade;
+import com.idiotsapps.chaoenglish.Unit;
+import com.idiotsapps.chaoenglish.Word;
 
 import org.json.JSONArray;
 import org.json.JSONException;

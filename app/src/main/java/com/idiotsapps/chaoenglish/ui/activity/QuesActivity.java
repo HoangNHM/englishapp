@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import com.idiotsapps.chaoenglish.Grade;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
 import com.idiotsapps.chaoenglish.ui.dialog.InfoDialogFragment;
-import com.idiotsapps.chaoenglish.MySQLiteHelper;
+import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.Unit;
 import com.idiotsapps.chaoenglish.Word;

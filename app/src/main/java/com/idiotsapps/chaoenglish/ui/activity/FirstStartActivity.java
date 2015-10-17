@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.idiotsapps.chaoenglish.MySQLiteHelper;
+import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
 import com.idiotsapps.chaoenglish.helper.PreferencesHelper;
@@ -32,18 +32,20 @@ public class FirstStartActivity extends AppCompatActivity {
     private static final String DICT_ASSEST_PATH = "stardictvn";
     // Check if app first launch, save path of database
     private PreferencesHelper prefsHelper;
+    private boolean mIsFirstStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefsHelper = new PreferencesHelper(getApplicationContext());
         setContentView(R.layout.activity_first_start);
+        mIsFirstStart = prefsHelper.isFirstStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (prefsHelper.isFirstStart()) {
+        if (mIsFirstStart) {
             // first start, setup database
             AsyncTask<Void, Void, Boolean> task;
             task = new SetDataBase().execute();
@@ -57,11 +59,14 @@ public class FirstStartActivity extends AppCompatActivity {
     }
 
     private void gotoMainActivity() {
-        HelperApplication.sStarDict = new StarDict(dictExterPath);
-        HelperApplication.sMySQLiteHelper = new MySQLiteHelper(getApplicationContext());
         Intent intent = new Intent(FirstStartActivity.this, MainActivity.class);
         startActivity(intent);
         FirstStartActivity.this.finish();
+    }
+
+    private void setHelper() {
+        HelperApplication.sStarDict = new StarDict(dictExterPath);
+        HelperApplication.sMySQLiteHelper = new MySQLiteHelper(getApplicationContext());
     }
 
     @Override
@@ -100,7 +105,11 @@ public class FirstStartActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                copyDictToSdCard();
+                if (mIsFirstStart) {
+                    copyDictToSdCard();
+                } else {
+                    setHelper();
+                }
                 return true;
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());

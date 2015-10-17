@@ -2,7 +2,6 @@ package com.idiotsapps.chaoenglish.helper;
 
 import android.app.Application;
 
-import com.idiotsapps.chaoenglish.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.stardict.StarDict;
 
 /**
