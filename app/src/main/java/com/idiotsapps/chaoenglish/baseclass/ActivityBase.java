@@ -21,15 +21,24 @@ public abstract class ActivityBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    protected void setActionBar(int resIc, String title) {
+    protected void setActionBar(int resIc, String title, boolean canBack) {
         setTitle("");
         ActionBar actionBar = getSupportActionBar();
         if (null != actionBar) {
-            actionBar.setDisplayOptions(
-                    ActionBar.DISPLAY_SHOW_CUSTOM |
-                    ActionBar.DISPLAY_SHOW_TITLE |
-                    ActionBar.DISPLAY_USE_LOGO |
-                    ActionBar.DISPLAY_SHOW_HOME);
+            if (canBack) {
+                actionBar.setDisplayOptions(
+                        ActionBar.DISPLAY_SHOW_CUSTOM |
+                                ActionBar.DISPLAY_SHOW_TITLE |
+                                ActionBar.DISPLAY_USE_LOGO |
+                                ActionBar.DISPLAY_HOME_AS_UP |
+                                ActionBar.DISPLAY_SHOW_HOME);
+            } else {
+                actionBar.setDisplayOptions(
+                        ActionBar.DISPLAY_SHOW_CUSTOM |
+                                ActionBar.DISPLAY_SHOW_TITLE |
+                                ActionBar.DISPLAY_USE_LOGO |
+                                ActionBar.DISPLAY_SHOW_HOME);
+            }
             LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflator.inflate(R.layout.actionbar_custom, null);
             ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);

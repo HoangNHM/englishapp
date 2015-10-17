@@ -27,7 +27,7 @@ public class MainActivity extends ActivityBase {
         SlidingTabsFragment fragment = new SlidingTabsFragment();
         fmTrans.replace(R.id.fragment_content, fragment);
         fmTrans.commit();
-        setActionBar(R.id.abIc, getResources().getString(R.string.app_name));
+        setActionBar(R.id.abIc, getResources().getString(R.string.app_name), false); //cannot back to parent
 //        DBHandler dbHandler = new DBHandler(this);
 //        for (int i = 0; i < 20; i++) {
 //            dbHandler.insertClassPercent(new Random().nextInt((100) + 1));

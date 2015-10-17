@@ -2,5 +2,9 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="action_bar_bg">#ffa200</color>
+    <color name="btn_answer_pressed">#98c865</color>
+    <color name="btn_answer_normal">#f1f1f1</color>
+    <color name="btn_help_pressed">#98c865</color>
+    <color name="btn_help_normal">#ffa200</color>
 
 </resources>

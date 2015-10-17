@@ -15,6 +15,7 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.baseclass.ActivityBase;
 
@@ -40,6 +41,7 @@ public class ViewMoreActivity extends ActivityBase {
         Bundle packageFromCaller = callerIntent.getBundleExtra("ClassPackage");
         // get bundle info
         mClassName = packageFromCaller.getInt("ClassName");
+        setActionBar(R.id.abIc, "Class " + mClassName, true); //true: back to parent
         setupChart(mChart);
         mScrollViewChart.postDelayed(new Runnable() {
             @Override
@@ -64,7 +66,9 @@ public class ViewMoreActivity extends ActivityBase {
         horBarChart.setDrawBarShadow(false);
         horBarChart.setDrawValueAboveBar(true);
 
-        horBarChart.setDescription("Class " + mClassName);
+        horBarChart.setDescription("");
+//        int density = (int) getResources().getDisplayMetrics().density;
+//        horBarChart.setDescriptionPosition(horBarChart.getWidth() - (10 * density), horBarChart.getHeight());
 
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
@@ -81,7 +85,8 @@ public class ViewMoreActivity extends ActivityBase {
         horBarChart.setDrawGridBackground(false);
 
         // Random YVals
-        int count = new Random().nextInt((20) + 1);
+//        int count = new Random().nextInt((20) + 1);
+        int count = 16;
         int[] mYVals = new int[count];
         for (int i = 0; i < count; i++) {
             mYVals[i] = new Random().nextInt((100) + 1);
@@ -95,8 +100,8 @@ public class ViewMoreActivity extends ActivityBase {
         ArrayList<String> xVals = new ArrayList<String>();
         int count = arr.length;
         // draw backward
-        for (int i = 0; i < count; i++) {
-            xVals.add(i + "");
+        for (int i = 1; i <= count; i++) {
+            xVals.add("unit " + i);
         }
 
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
@@ -108,8 +113,7 @@ public class ViewMoreActivity extends ActivityBase {
         }
 
         BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
-        set1.setColors(new int[]{Color.rgb(192, 255, 140), Color.rgb(255, 247, 140), Color.rgb(255, 208, 140),
-                Color.rgb(140, 234, 255), Color.rgb(255, 140, 157)});
+        set1.setColors(ColorTemplate.JOYFUL_COLORS);
         set1.setBarSpacePercent(35f);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
@@ -123,21 +127,6 @@ public class ViewMoreActivity extends ActivityBase {
         barChart.getLayoutParams().height = 100 * count;
 
         barChart.setData(data);
-    }
-
-    @Override
-    protected void setActionBar() {
-        setTitle("CLASS " + mClassName);
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar) {
-            actionBar.setDisplayOptions(
-                    ActionBar.DISPLAY_SHOW_TITLE |
-                    ActionBar.DISPLAY_USE_LOGO |
-                    ActionBar.DISPLAY_SHOW_HOME |
-                    ActionBar.DISPLAY_HOME_AS_UP);
-
-            actionBar.setLogo(R.drawable.ic_app);
-        }
     }
 
     @Override

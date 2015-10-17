@@ -38,8 +38,8 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
     private int currGradeIndex = 0;
     private int percent = 0;
     private ImageView imageView;
-    private Button[] aBtn = new Button[4];
-    private Button[] iBtn = new Button[4];
+    private final Button[] aBtn = new Button[4];
+    private ImageView[] iBtn = new ImageView[4];
     private StarDict starDict = null;
     private String tag = this.getClass().getSimpleName();
     private MySQLiteHelper mySQLiteHelper = null;
@@ -80,10 +80,10 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         addAnswBtnListener();
 
         // Information buttons
-        this.iBtn[0] = (Button) findViewById(R.id.button_S);
-        this.iBtn[1] = (Button) findViewById(R.id.button_X);
-        this.iBtn[2] = (Button) findViewById(R.id.button_Y);
-        this.iBtn[3] = (Button) findViewById(R.id.button_Z);
+        this.iBtn[0] = (ImageView) findViewById(R.id.button_S);
+        this.iBtn[1] = (ImageView) findViewById(R.id.button_X);
+        this.iBtn[2] = (ImageView) findViewById(R.id.button_Y);
+        this.iBtn[3] = (ImageView) findViewById(R.id.button_Z);
         addInfoBtnListener();
 
         //Starting game
@@ -254,11 +254,13 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
      */
     private void addInfoBtnListener() {
         for (int i = 0; i < this.iBtn.length; i++) {
+            final int finalI = i;
             this.iBtn[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Button b = (Button) view;
-                    String word = b.getText().toString();
+//                    String word = b.getText().toString();
+                    String word = QuesActivity.this.aBtn[finalI].getText().toString();
                     showHelpInfo(word);
                 }
             });
@@ -275,7 +277,7 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         imageViewSet(imageView,fileName + ".jpg");
         for (int i = 0; i < 4; i++) {
             this.aBtn[i].setText(words[i].getWord());
-            this.iBtn[i].setText((words[i].getWord()));
+//            this.iBtn[i].setText((words[i].getWord()));
         }
     }
 

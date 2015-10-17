@@ -25,10 +25,14 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
+    <ImageView
         android:id="@+id/StudyNow"
-        android:text="Study Now"
-        android:layout_gravity="bottom|center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        tools:ignore="ContentDescription"
+        android:src="@drawable/study"/>
 </LinearLayout>

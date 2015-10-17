@@ -144,7 +144,7 @@ public class YAxisRendererHorizontalBarChart extends YAxisRenderer {
 
         for (int i = 0; i < mYAxis.mEntryCount; i++) {
 
-            String text = mYAxis.getFormattedLabel(i);
+            String text = mYAxis.getFormattedLabel(i) + "%";
 
             if (!mYAxis.isDrawTopYLabelEntryEnabled() && i >= mYAxis.mEntryCount - 1)
                 return;
