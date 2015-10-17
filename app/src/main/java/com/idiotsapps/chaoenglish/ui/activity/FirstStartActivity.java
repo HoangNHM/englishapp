@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.idiotsapps.chaoenglish.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
 import com.idiotsapps.chaoenglish.helper.PreferencesHelper;
@@ -52,10 +53,11 @@ public class FirstStartActivity extends AppCompatActivity {
             // not first start, call MainActivity
             gotoMainActivity();
         }
-        HelperApplication.sStarDict = new StarDict(dictExterPath);
     }
 
     private void gotoMainActivity() {
+        HelperApplication.sStarDict = new StarDict(dictExterPath);
+        HelperApplication.sMySQLiteHelper = new MySQLiteHelper(getApplicationContext());
         Intent intent = new Intent(FirstStartActivity.this, MainActivity.class);
         startActivity(intent);
         FirstStartActivity.this.finish();

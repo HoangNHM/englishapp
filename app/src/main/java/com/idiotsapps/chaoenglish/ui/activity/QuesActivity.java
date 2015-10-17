@@ -41,8 +41,6 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
     private Button[] aBtn = new Button[4];
     private Button[] iBtn = new Button[4];
     private StarDict starDict = null;
-    private String dictExterPath = null;
-    private String dictAssestPath = "stardictvn";
     private String tag = this.getClass().getSimpleName();
     private MySQLiteHelper mySQLiteHelper = null;
 
@@ -58,7 +56,8 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         prefsHelper = new PreferencesHelper(getApplicationContext());
 
 
-        mySQLiteHelper = new MySQLiteHelper(this); //intialize sqlite helper
+//        mySQLiteHelper = new MySQLiteHelper(this); //intialize sqlite helper
+        mySQLiteHelper = HelperApplication.sMySQLiteHelper; //intialize sqlite helper
         this.grades = mySQLiteHelper.getGrades();
         mySQLiteHelper.getWritableDatabase();
         getStarDict(); //initalize StarDict stuff
@@ -159,8 +158,7 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
 //        copyDictToSdCard();
         //--del HoangNHM 20151013 move to FirstStartActivity
         // get path from pref
-        this.dictExterPath = prefsHelper.getDictExterPath();
-        if (0 != this.dictExterPath.length()) {
+        if (null != HelperApplication.sStarDict) {
             this.starDict = HelperApplication.sStarDict;
             Log.d("testing", "new StarDict");
         } else {

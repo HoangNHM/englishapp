@@ -2,6 +2,7 @@ package com.idiotsapps.chaoenglish.helper;
 
 import android.app.Application;
 
+import com.idiotsapps.chaoenglish.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.stardict.StarDict;
 
 /**
@@ -10,6 +11,7 @@ import com.idiotsapps.chaoenglish.stardict.StarDict;
 public class HelperApplication extends Application {
 
     public static StarDict sStarDict;
+    public static MySQLiteHelper sMySQLiteHelper;
 
     @Override
     public void onCreate() {
