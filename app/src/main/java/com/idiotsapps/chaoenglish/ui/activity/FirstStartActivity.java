@@ -32,7 +32,7 @@ public class FirstStartActivity extends AppCompatActivity {
     private static final String DICT_ASSEST_PATH = "stardictvn";
     // Check if app first launch, save path of database
     private PreferencesHelper prefsHelper;
-    private boolean mIsFirstStart;
+    private boolean mIsFirstStart = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +45,9 @@ public class FirstStartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mIsFirstStart) {
-            // first start, setup database
-            AsyncTask<Void, Void, Boolean> task;
-            task = new SetDataBase().execute();
-            prefsHelper.setNotFirstStart();
-            prefsHelper.setDictExterPath(dictExterPath);
-        } else {
-            dictExterPath = prefsHelper.getDictExterPath();
-            // not first start, call MainActivity
-            gotoMainActivity();
-        }
+        AsyncTask<Void, Void, Boolean> task;
+        task = new SetDataBase().execute();
+        // not first start, call MainActivity
     }
 
     private void gotoMainActivity() {
@@ -107,9 +99,12 @@ public class FirstStartActivity extends AppCompatActivity {
             try {
                 if (mIsFirstStart) {
                     copyDictToSdCard();
+                    prefsHelper.setNotFirstStart();
+                    prefsHelper.setDictExterPath(dictExterPath);
                 } else {
-                    setHelper();
+                    dictExterPath = prefsHelper.getDictExterPath();
                 }
+                setHelper();
                 return true;
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
