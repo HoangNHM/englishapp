@@ -98,12 +98,15 @@ public class FirstStartActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             try {
                 if (mIsFirstStart) {
+                    Log.d(TAG, "mIsFirstStart copy database");
                     copyDictToSdCard();
                     prefsHelper.setNotFirstStart();
                     prefsHelper.setDictExterPath(dictExterPath);
                 } else {
+                    Log.d(TAG, "not mIsFirstStart getDictExterPath");
                     dictExterPath = prefsHelper.getDictExterPath();
                 }
+                Log.d(TAG, "setHelper");
                 setHelper();
                 return true;
             } catch (IOException e) {

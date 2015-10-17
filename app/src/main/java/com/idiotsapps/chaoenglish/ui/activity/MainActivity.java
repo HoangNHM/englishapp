@@ -1,10 +1,16 @@
 package com.idiotsapps.chaoenglish.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.ui.fragment.SlidingTabsFragment;
@@ -29,15 +35,26 @@ public class MainActivity extends ActivityBase {
 
     @Override
     protected void setActionBar() {
-        setTitle("Main Activity Action Bar");
+        setTitle("");
         ActionBar actionBar = getSupportActionBar();
         if (null != actionBar) {
             actionBar.setDisplayOptions(
-                    ActionBar.DISPLAY_SHOW_TITLE |
-                    ActionBar.DISPLAY_USE_LOGO |
-                    ActionBar.DISPLAY_SHOW_HOME);
+                    ActionBar.DISPLAY_SHOW_CUSTOM |
+                            ActionBar.DISPLAY_SHOW_TITLE |
+                            ActionBar.DISPLAY_USE_LOGO |
+                            ActionBar.DISPLAY_SHOW_HOME);
 
-            actionBar.setLogo(R.drawable.earth);
+            LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = inflator.inflate(R.layout.actionbar_custom, null);
+            ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+            v.setLayoutParams(params);
+            ImageView abIc = (ImageView) v.findViewById(R.id.abIc);
+            abIc.setImageResource(R.drawable.ic_app);
+            TextView abTitle = (TextView) v.findViewById(R.id.abTitle);
+            abTitle.setText(" " + getResources().getString(R.string.app_name));
+            abTitle.setTextSize(25);
+            actionBar.setCustomView(v);
+//            actionBar.setLogo(R.drawable.ic_app);
         }
     }
 

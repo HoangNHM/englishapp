@@ -127,7 +127,7 @@ public class ViewMoreActivity extends ActivityBase {
 
     @Override
     protected void setActionBar() {
-        setTitle("View More Action Bar");
+        setTitle("CLASS " + mClassName);
         ActionBar actionBar = getSupportActionBar();
         if (null != actionBar) {
             actionBar.setDisplayOptions(
@@ -136,7 +136,7 @@ public class ViewMoreActivity extends ActivityBase {
                     ActionBar.DISPLAY_SHOW_HOME |
                     ActionBar.DISPLAY_HOME_AS_UP);
 
-            actionBar.setLogo(R.drawable.earth);
+            actionBar.setLogo(R.drawable.ic_app);
         }
     }
 

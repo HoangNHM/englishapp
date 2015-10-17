@@ -28,9 +28,8 @@ public class SlidingTabsFragment extends Fragment {
     private ViewPager mViewPager;
     private List<SamplePagerItem> mTabs = new ArrayList<SamplePagerItem>();
     private int[] imageResId = {
-            R.drawable.image,
-            R.drawable.image,
-            R.drawable.image
+            R.drawable.ic_class,
+            R.drawable.ic_friend
     };
     public SlidingTabsFragment() {
         // Required empty public constructor
