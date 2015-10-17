@@ -50,6 +50,7 @@ public class FirstStartActivity extends AppCompatActivity {
             prefsHelper.setNotFirstStart();
             prefsHelper.setDictExterPath(dictExterPath);
         } else {
+            dictExterPath = prefsHelper.getDictExterPath();
             // not first start, call MainActivity
             gotoMainActivity();
         }
