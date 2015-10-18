@@ -12,7 +12,7 @@
 					"unit_percent":"0",
 					"words":
 					[
-						"Food stall",
+						"Foodstall",
 						"Help",
 						"Intersection",
 						"Lie",
@@ -49,36 +49,35 @@
 						"Eye",
 						"Fat",
 						"Finger",
-						"Food",
-						"Fly",
-						"Jog",
-						"Kite",
-						"Movie",
-						"Never",
-						"Often",
-						"Once",
-						"Pastime",
-						"Picnic",
-						"Skip",
-						"Sometimes",
-						"Swim",
-						"Table",
-						"tennis",
-						"Twice",
-						"Usually",
-						"Wear",
-						"Week",
-						"Weekend",
-						"Year",
-						"Arm",
-						"Black",
-						"Blue",
-						"Body",
-						"Brown",
-						"Chest",
-						"Ear",
-						"Eye",
-						"Fat"
+						"Foot",
+						"Full",
+						"Gray",
+						"Green",
+						"Gymnast",
+						"Hair",
+						"Hand",
+						"Head",
+						"Heavy",
+						"Leg",
+						"Light",
+						"Lips",
+						"Mouth",
+						"Nose",
+						"Orange",
+						"Oval",
+						"Purple",
+						"Red",
+						"Round",
+						"Short",
+						"Shoulder",
+						"Strong",
+						"Tall",
+						"Thin",
+						"Toe",
+						"Weak",
+						"Weight lifter",
+						"White",
+						"Yellow"
 					]
 				},
 				{
@@ -128,7 +127,7 @@
 					"unit_percent":"0",
 					"words":
 					[
-						"apple pie",
+						"Apple pie",
 						"Bar",
 						"Beef",
 						"Bottle",
@@ -246,13 +245,51 @@
 			"vocabulary":
 			[
 				{
+					"unit":"1",
+					"unit_percent":"0",
+					"words":
+					[
+						"Bus stop",
+						"Different",
+						"Distance",
+						"Far",
+						"Means",
+						"Miss",
+						"Nice",
+						"Parent",
+						"Pretty",
+						"Unhappy"
+					]
+				},
+				{
+					"unit":"2",
+					"unit_percent":"0",
+					"words":
+					[
+						"address",
+						"appear",
+						"Birthday",
+						"Calendar",
+						"Call",
+						"Date",
+						"Except",
+						"Finish",
+						"Fun",
+						"Invite",
+						"Join",
+						"Leap year",
+						"Moment",
+						"Nervous",
+						"Party",
+						"Worried"
+					]
+				},
+				{
 					"unit":"3",
 					"unit_percent":"0",
 					"words":
 					[
-						"Nervous",
-						"Party",
-						"Worried",
+
 						"Amazing",
 						"Apartment",
 						"Awful",
@@ -288,8 +325,7 @@
 						"Dictionary",
 						"Novel",
 						"Order",
-						"Physical",
-						"education",
+						"Physical education",
 						"Physics",
 						"Rack",
 						"Reader",
@@ -388,7 +424,7 @@
 					[
 						"Altogether",
 						"Change",
-						"Couch",
+						"Coach",
 						"Cost",
 						"Direction",
 						"Guess",
@@ -399,7 +435,14 @@
 						"Regularly",
 						"Send",
 						"Souvenir",
-						"Total",
+						"Total"
+					]
+				},
+				{
+					"unit":"9",
+					"unit_percent":"0",
+					"words":
+					[
 						"Aquarium",
 						"Cap",
 						"Crap",
@@ -426,7 +469,7 @@
 					]
 				},
 				{
-					"unit":"9",
+					"unit":"10",
 					"unit_percent":"0",
 					"words":
 					[
@@ -453,7 +496,7 @@
 					]
 				},
 				{
-					"unit":"10",
+					"unit":"11",
 					"unit_percent":"0",
 					"words":
 					[
@@ -479,7 +522,7 @@
 					]
 				},
 				{
-					"unit":"11",
+					"unit":"12",
 					"unit_percent":"0",
 					"words":
 					[
@@ -513,7 +556,7 @@
 					]
 				},
 				{
-					"unit":"12",
+					"unit":"13",
 					"unit_percent":"0",
 					"words":
 					[
@@ -542,10 +585,11 @@
 					]
 				},
 				{
-					"unit":"13",
+					"unit":"14",
 					"unit_percent":"0",
 					"words":
 					[
+
 						"Adventure",
 						"Band",
 						"Cartoon",
@@ -567,7 +611,7 @@
 					]
 				},
 				{
-					"unit":"14",
+					"unit":"15",
 					"unit_percent":"0",
 					"words":
 					[
@@ -590,8 +634,8 @@
 						"Socialize"
 					]
 				},
-				{
-					"unit":"15",
+								{
+					"unit":"16",
 					"unit_percent":"0",
 					"words":
 					[
@@ -684,8 +728,7 @@
 						"Match",
 						"Object",
 						"Precaution",
-						"Rice",
-						"cooker",
+						"Rice cooker",
 						"Rug",
 						"Safety",
 						"Saucepan",
@@ -946,8 +989,7 @@
 						"Royal",
 						"Snorkel",
 						"Surround",
-						"Twin",
-						"Towers",
+						"Twin Towers",
 						"Wonder"
 					]
 				},
@@ -973,7 +1015,14 @@
 						"Printer",
 						"Requirement",
 						"Restrict",
-						"Skeptical",
+						"Skeptical"
+					]
+				},
+				{
+					"unit":"16",
+					"unit_percent":"0",
+					"words":
+					[
 						"Conveyor-belt",
 						"Crush",
 						"Facsimile",
@@ -1096,7 +1145,7 @@
 						"Hike",
 						"Locate",
 						"Maize",
-						"Pagada",
+						"Pagoda",
 						"Picnic",
 						"Plow",
 						"Relax",
@@ -1143,6 +1192,7 @@
 						"Benefit",
 						"Commercial",
 						"Communicate",
+						"Control",
 						"Costly",
 						"Crier",
 						"Deny",
@@ -1155,7 +1205,7 @@
 						"Limitation",
 						"Opinion",
 						"Purpose",
-						"Remote control",
+						"Remote",
 						"Respond",
 						"Ring",
 						"Shout",
@@ -1260,8 +1310,7 @@
 					[
 						"Accquaintace",
 						"Ancient",
-						"Auld",
-						"Syne",
+						"Auld langsyne",
 						"Celebrate",
 						"Celebration",
 						"Charity",
@@ -1400,7 +1449,7 @@
 						"Harrow",
 						"Plough",
 						"Pump",
-						"Stare death face",
+						"Stare death in the face",
 						"Stewed",
 						"Typical"
 					]
@@ -1451,7 +1500,7 @@
 						"Enclose",
 						"Exhibition",
 						"Gradually",
-						"Mentally retarted",
+						"Mentally retarded",
 						"Opposition",
 						"Passion",
 						"Photogenic",
@@ -1493,6 +1542,17 @@
 					"unit_percent":"0",
 					"words":
 					[
+						"Altitude",
+						"Botanical Garden",
+						"Cave",
+						"Destination",
+						"Glorious",
+						"Left-overs",
+						"Permission",
+						"Persuade",
+						"picturesque",
+						"Resort",
+						"Site"
 					]
 				},
 				{
@@ -1500,6 +1560,19 @@
 					"unit_percent":"0",
 					"words":
 					[
+						"Aurally",
+						"Cartoon",
+						"Documentary",
+						"Feature",
+						"Internet",
+						"Mass media",
+						"Orally",
+						"Passive",
+						"Quiz show",
+						"Visually",
+						"Weather forecast",
+						"Wildlife"
+
 					]
 				},
 				{
@@ -1507,6 +1580,23 @@
 					"unit_percent":"0",
 					"words":
 					[
+						"Atmosphere",
+						"Better",
+						"Brick",
+						"Bumper crop",
+						"Cash crop",
+						"Crop",
+						"Farming method",
+						"Flooded",
+						"Holiday resort",
+						"Last",
+						"Mud",
+						"Muddy",
+						"Raise",
+						"Resurface",
+						"Shortage",
+						"Straw",
+						"Widen"
 					]
 				},
 				{
@@ -1546,7 +1636,7 @@
 						"Defence",
 						"Destruction",
 						"Endangered species",
-						"Encrosion",
+						"Erosion",
 						"Forester",
 						"Imprison",
 						"Reconstruction",
@@ -1580,21 +1670,56 @@
 					"unit_percent":"0",
 					"words":
 					[
+						"Classical music",
 						"Communicate",
 						"Compose",
+						"Composer",
 						"Delight",
 						"Emotion",
 						"Folk music",
 						"Funeral",
 						"Gentle",
 						"Intergral park",
+						"National anthem",
 						"Jazz",
 						"Lyrical",
 						"Mournful",
 						"Powerful",
 						"Rousing",
 						"Serene",
-						"Solemn",
+						"Solemn"
+					]
+				},
+				{
+					"unit":"13",
+					"unit_percent":"0",
+					"words":
+					[
+						"Action film",
+						"Audience",
+						"Cartoon film",
+						"Character",
+						"Cinema",
+						"Detective film",
+						"Disaster",
+						"Discover",
+						"Love story film",
+						"Motion",
+						"Movement",
+						"Science fiction film"
+
+					]
+				},
+				{
+					"unit":"14",
+					"unit_percent":"0",
+					"words":
+					[
+						"Competition",
+						"Committee",
+						"Championship",
+						"Champion",
+						"Ambassador",
 						"Defeat",
 						"Event",
 						"Globe",
@@ -1614,7 +1739,7 @@
 					]
 				},
 				{
-					"unit":"13",
+					"unit":"15",
 					"unit_percent":"0",
 					"words":
 					[
@@ -1637,7 +1762,7 @@
 					]
 				},
 				{
-					"unit":"14",
+					"unit":"16",
 					"unit_percent":"0",
 					"words":
 					[
@@ -1695,8 +1820,9 @@
 						"Appreciate",
 						"Attitude",
 						"Confidence",
+						"Embrace",
 						"Embrassing",
-						"Floopy",
+						"Floppy",
 						"Glance at",
 						"Idol",
 						"Make a fuss",
@@ -1752,9 +1878,10 @@
 						"Campaign",
 						"Effective",
 						"Eradicate",
+						"Ethnic minority",
+						"Expand",
 						"Illiteracy",
-						"Mutual",
-						"respect",
+						"Mutual respect",
 						"Performance",
 						"Rate",
 						"Strategy",
@@ -1771,8 +1898,7 @@
 						"Aim",
 						"Annual",
 						"Announce",
-						"Athletics",
-						"Meeting",
+						"Athletics Meeting",
 						"Clock",
 						"Disappoinment",
 						"Formally",
@@ -1838,23 +1964,16 @@
 					[
 						"Bother",
 						"Commune",
-						"Counteous",
+						"Courteous",
 						"Coward",
 						"Digit",
 						"Dissatisfaction",
-						"Express",
-						"Mail",
-						"Service",
-						"Express",
-						"Money",
-						"Transfer",
+						"Express Mail Service",
+						"Express Money Transfer",
 						"Fasimilie",
-						"Flower",
-						"Telegram",
-						"Service",
-						"Messenger",
-						"Call",
-						"Service",
+						"Flower Telegram Service",
+						"Mail and Parcel Service",
+						"Messenger Call Service",
 						"Notify",
 						"Press distripution",
 						"Proportion",
@@ -1934,8 +2053,7 @@
 						"Gather",
 						"Gymnasium",
 						"Gymanast",
-						"Intercultural",
-						"knowledge",
+						"Intercultural knowledge",
 						"Land",
 						"Official",
 						"Rugby",
@@ -2055,8 +2173,7 @@
 						"Caring",
 						"Close-knit",
 						"Household chore",
-						"Join",
-						"hands",
+						"Join hands",
 						"Leftover",
 						"Secure",
 						"Shift",
@@ -2113,6 +2230,8 @@
 						"Nursery",
 						"Kindergarten",
 						"General education",
+						"Primary education",
+						"Secondary education",
 						"Lower secondary school",
 						"Upper secondary school"
 					]
@@ -2122,7 +2241,7 @@
 					"unit_percent":"0",
 					"words":
 					[
-						"Application",
+						"Application form",
 						"Applicant",
 						"Blame",
 						"Daunt",
@@ -2223,6 +2342,7 @@
 						"Jackal",
 						"Rainfall",
 						"Slope",
+						"Stretch",
 						"Spinifex",
 						"Tableland"
 					]
@@ -2238,7 +2358,7 @@
 						"Deforestation",
 						"Derive from",
 						"Enact",
-						"Gorrilla",
+						"Gorilla",
 						"Habitat",
 						"Leopart",
 						"Panda",
@@ -2334,9 +2454,7 @@
 					"words":
 					[
 						"Advocate",
-						"Age of",
-						"Enlightenment",
-						"Childbearing",
+						"Age of Enlightenment",						"Childbearing",
 						"Deep-seated",
 						"Discriminate",
 						"Homemaking",
@@ -2363,12 +2481,22 @@
 						"Accelerate",
 						"Baht",
 						"Buddhism",
-						"Catholism",
+						"Catholicism",
 						"Christianity",
 						"Currency",
 						"Diverse",
 						"Forge",
-						"Gross domestic product integration"
+						"Gross domestic product integration",
+						"Integration",
+						"Islam",
+						"Justice",
+						"Namely",
+						"Peso",
+						"Realization",
+						"Ringgit",
+						"Series",
+						"Socio-economic",
+						"Stability"
 					]
 				}
 			]
