@@ -58,7 +58,9 @@ public class FirstStartActivity extends AppCompatActivity {
 
     private void setHelper() {
         HelperApplication.sStarDict = new StarDict(dictExterPath);
+//        Log.d(TAG, "new StarDict");
         HelperApplication.sMySQLiteHelper = new MySQLiteHelper(getApplicationContext());
+//        Log.d(TAG, "new MySQLiteHelper");
     }
 
     @Override
@@ -83,6 +85,15 @@ public class FirstStartActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+//            Log.d(TAG, "onPause dismiss mProgressDialog");
+        }
+    }
+
     private class SetDataBase extends AsyncTask<Void, Void, Boolean> {
 
         @Override
@@ -98,15 +109,15 @@ public class FirstStartActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             try {
                 if (mIsFirstStart) {
-                    Log.d(TAG, "mIsFirstStart copy database");
+//                    Log.d(TAG, "mIsFirstStart copy database");
                     copyDictToSdCard();
                     prefsHelper.setNotFirstStart();
                     prefsHelper.setDictExterPath(dictExterPath);
                 } else {
-                    Log.d(TAG, "not mIsFirstStart getDictExterPath");
+//                    Log.d(TAG, "not mIsFirstStart getDictExterPath");
                     dictExterPath = prefsHelper.getDictExterPath();
                 }
-                Log.d(TAG, "setHelper");
+//                Log.d(TAG, "setHelper");
                 setHelper();
                 return true;
             } catch (IOException e) {
@@ -120,6 +131,9 @@ public class FirstStartActivity extends AppCompatActivity {
             super.onPostExecute(success);
             if (mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
+//                Log.d(TAG, "onPostExecute dismiss mProgressDialog");
+            } else {
+//                Log.d(TAG, "onPostExecute NOT dismiss mProgressDialog");
             }
             if (success) {
 //                Toast.makeText(FirstStartActivity.this, "Done", Toast.LENGTH_SHORT).show();
