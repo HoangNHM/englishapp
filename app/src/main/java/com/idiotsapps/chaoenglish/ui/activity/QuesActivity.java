@@ -29,8 +29,6 @@ import java.util.Random;
 
 public class QuesActivity extends Activity implements InfoDialogFragment.NoticeDialogListener
 {
-    //Hoang test push
-    //HoangNHM_br
     private ArrayList<Grade> grades = new ArrayList<Grade>();
     private Unit currentUnit;
     private Word currentWord;
@@ -38,14 +36,13 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
     private int currGradeIndex = 0;
     private int percent = 0;
     private ImageView imageView;
-    private final Button[] aBtn = new Button[4];
+    private Button[] aBtn = new Button[4];
     private ImageView[] iBtn = new ImageView[4];
     private StarDict starDict = null;
     private String tag = this.getClass().getSimpleName();
     private MySQLiteHelper mySQLiteHelper = null;
-
-    // Check if app first launch, save path of database
-    private PreferencesHelper prefsHelper;
+    //HoangNHM
+    Word[] mWords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +50,6 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         setContentView(R.layout.activity_ques);
 //        Intent intent = getIntent();
 //        this.grade = intent.getIntExtra("grade", 6);
-        prefsHelper = new PreferencesHelper(getApplicationContext());
-
 
 //        mySQLiteHelper = new MySQLiteHelper(this); //intialize sqlite helper
         mySQLiteHelper = HelperApplication.sMySQLiteHelper; //intialize sqlite helper
@@ -160,11 +155,11 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         // get path from pref
         if (null != HelperApplication.sStarDict) {
             this.starDict = HelperApplication.sStarDict;
-            Log.d("testing", "new StarDict");
+            Log.d("testing", "StarDict = HelperApplication.sStarDict");
         } else {
-            Log.d("testing", "some thing wrong");
+            Log.d("testing", "null == HelperApplication.sStarDict");
         }
-        Log.d("testing", "leave getStarDict");
+        Log.d("testing", "done getStarDict");
     }
 
     /**
@@ -258,9 +253,7 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
             this.iBtn[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Button b = (Button) view;
-//                    String word = b.getText().toString();
-                    String word = QuesActivity.this.aBtn[finalI].getText().toString();
+                    String word = mWords[finalI].getWord();
                     showHelpInfo(word);
                 }
             });
@@ -271,12 +264,13 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
      * Move to next word
      */
     private void goNextWord() {
-        Word[] words = get4Words();
+//        Word[] words = get4Words();
+        mWords = get4Words();
         // Set an image into view
         String fileName = getFilePath(this.currentWord.getWord());
         imageViewSet(imageView,fileName + ".jpg");
         for (int i = 0; i < 4; i++) {
-            this.aBtn[i].setText(words[i].getWord());
+            this.aBtn[i].setText(mWords[i].getWord());
 //            this.iBtn[i].setText((words[i].getWord()));
         }
     }

@@ -122,7 +122,7 @@ public class FirstStartActivity extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
             if (success) {
-                Toast.makeText(FirstStartActivity.this, "Done", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(FirstStartActivity.this, "Done", Toast.LENGTH_SHORT).show();
                 gotoMainActivity();
             } else {
                 Toast.makeText(FirstStartActivity.this, "Error\nPlease start app again!", Toast.LENGTH_SHORT).show();
