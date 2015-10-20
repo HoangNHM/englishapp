@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Grade {
     private ArrayList<Unit> units = new ArrayList<Unit>();
-    private int percent;
+    private float percent;
     private int grade;
     private int cIndexUnit = 0;
     private Date date;//last time user do the words of grade
@@ -28,8 +28,13 @@ public class Grade {
         this.grade = grade;
     }
 
-    public int getPercent() {
-        return percent;
+    public float getPercent() {
+        float sum = 0;
+        for (int i = 0; i < units.size(); i++) {
+            sum += units.get(i).getVocabPercent();
+        }
+        this.percent = sum/units.size(); //TODO: update percent for grammar and listen
+        return this.percent;
     }
 
     public void setPercent(int percent) {
@@ -67,9 +72,12 @@ public class Grade {
         units.add(unit);
     }
 
-    public Grade(int grade, int percent) {
+    public void setUnits(ArrayList<Unit> units) {
+        this.units = units;
+    }
+
+    public Grade(int grade) {
         this.grade = grade;
-        this.percent = percent;
         this.cIndexUnit = 0;
 
     }

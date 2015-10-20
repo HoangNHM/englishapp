@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.idiotsapps.chaoenglish.Grade;
 import com.idiotsapps.chaoenglish.R;
+import com.idiotsapps.chaoenglish.helper.HelperApplication;
+import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.ui.activity.ViewMoreActivity;
 import com.idiotsapps.chaoenglish.ui.adapter.CustomClassListViewAdapter;
 import com.idiotsapps.chaoenglish.item.ClassItem;
@@ -109,33 +112,30 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Percent of Class, read from database
         ArrayList<Integer> arrClassPercent = new ArrayList<Integer>();
-        arrClassPercent.add(55);
-        arrClassPercent.add(80);
-        arrClassPercent.add(64);
-        arrClassPercent.add(36);
-        // Database retrieve
-//        DBHandler db = new DBHandler(getContext());
-//        Cursor cursor = db.getData(DBHandler.CLASS_TABLE_NAME, 0);
-//        if (cursor.moveToFirst()) {
-//            do {
-//                // get  the  data into array,or class variable
-//                arrClassPercent.add(cursor.getInt(cursor.getColumnIndex(DBHandler.CLASS_COLUMN_PERCENT)));
-//            } while (cursor.moveToNext());
-//        }
-//        db.close();
+//        arrClassPercent.add(55);
+//        arrClassPercent.add(80);
+//        arrClassPercent.add(64);
+//        arrClassPercent.add(36);
+        // unit + percent of that unit
+        SparseIntArray unitPercent = new SparseIntArray();
+        unitPercent.append(2, 100);
+        unitPercent.append(3, 30);
 
         // add list view
         ListView listView = (ListView) view.findViewById(R.id.listViewClass);
         // TODO ArrayList ClassItem
         ArrayList<ClassItem> arr = new ArrayList<ClassItem>();
-        // unit + percent of that unit
-        SparseIntArray unitPercent = new SparseIntArray();
-        unitPercent.append(2, 100);
-        unitPercent.append(3, 30);
-        arr.add(new ClassItem(6, arrClassPercent.get(0), unitPercent));
-        arr.add(new ClassItem(7, arrClassPercent.get(1), unitPercent));
-        arr.add(new ClassItem(8, arrClassPercent.get(2), unitPercent));
-        arr.add(new ClassItem(9, arrClassPercent.get(3), unitPercent));
+        ArrayList<Grade> grades = HelperApplication.sMySQLiteHelper.getClasses();
+        for (int i = 0; i < grades.size(); i++) {
+            int classId = grades.get(i).getGrade();
+            int percent = (int) grades.get(i).getPercent();
+            arr.add(new ClassItem(classId, percent, null));
+        }
+
+//        arr.add(new ClassItem(6, arrClassPercent.get(0), unitPercent));
+//        arr.add(new ClassItem(7, arrClassPercent.get(1), unitPercent));
+//        arr.add(new ClassItem(8, arrClassPercent.get(2), unitPercent));
+//        arr.add(new ClassItem(9, arrClassPercent.get(3), unitPercent));
         // adapter
         CustomClassListViewAdapter adapter = new CustomClassListViewAdapter(getActivity(), getFragmentManager(), ClassTabFragment.this, arr);
         listView.setAdapter(adapter);

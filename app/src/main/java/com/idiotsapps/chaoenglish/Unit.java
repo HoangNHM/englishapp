@@ -10,19 +10,14 @@ import java.util.Date;
 public class Unit {
     private ArrayList<Word> words = new ArrayList<Word>();
     private String unitName;// unit_<unitInt>
-    private int unitInt; //order of unit
+    private int unitId; //order of unit
     private int grade;
-    private int percent;
+    private float vocabPercent;
+    private float listenPercent;
+    private float grammarPercent;
+    private int numOfWord;
     private int cWordIndex = 0;
     private Date date; // last time user do the test
-
-    public int getPercent() {
-        return percent;
-    }
-
-    public void setPercent(int percent) {
-        this.percent = percent;
-    }
 
     public Date getDate() {
         return date;
@@ -31,9 +26,11 @@ public class Unit {
     public void setDate(Date date) {
         this.date = date;
     }
-
+    public float getVocabPercent() {
+        return vocabPercent;
+    }
     public int getUnit() {
-        return unitInt;
+        return unitId;
     }
     public String getUnitName(){
         return unitName;
@@ -59,13 +56,17 @@ public class Unit {
         words.add(word);
     }
 
-    public Unit(int grade, int unit, int percent) {
-        this.unitInt = unit;
-        this.unitName = "unit_" + this.unitInt;
+    public Unit(int grade, int unitId,int unitName,int numOfWord, float vPercent, float gPercent, float lPercent) {
+        this.unitId= unitId;
+        this.numOfWord = numOfWord;
+        this.unitName = "unit_" + this.unitName;
         this.cWordIndex = 0;
         this.grade = grade;
-        this.percent = percent;
+        this.grammarPercent = gPercent;
+        this.vocabPercent = vPercent;
+        this.listenPercent = lPercent;
     }
+
     public boolean isLastWord(){
         if(this.cWordIndex == (words.size() - 1)){
             return true;

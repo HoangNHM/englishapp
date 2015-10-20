@@ -12,7 +12,7 @@
 					"unit_percent":"0",
 					"words":
 					[
-						"Foodstall",
+						"Food stall",
 						"Help",
 						"Intersection",
 						"Lie",
@@ -1840,9 +1840,14 @@
 					[
 						"Anniversary",
 						"Celebrate",
+						"Childish",
+						"Clap",
+						"Cosy",
+						"Enthusiastic",
+						"Helicopter",
 						"Host",
 						"Hostess",
-						"Leing",
+						"Icing",
 						"New Year's Eve",
 						"Party-goer",
 						"Refreshment"
@@ -1898,7 +1903,7 @@
 						"Aim",
 						"Annual",
 						"Announce",
-						"Athletics Meeting",
+						"Athletics meeting",
 						"Clock",
 						"Disappoinment",
 						"Formally",
@@ -1930,7 +1935,7 @@
 						"Overpopulation",
 						"Probably",
 						"Raise animal",
-						"Third world"
+						"Third World"
 					]
 				},
 				{
@@ -1941,12 +1946,12 @@
 						"Agrarian",
 						"Comment",
 						"Dress up",
-						"Firework",
+						"Fireworks",
 						"Get together",
 						"Grand",
 						"Green bean",
 						"Influence",
-						"Kumquat",
+						"Kumquat tree",
 						"Longevity",
 						"Lucky money",
 						"Parade",
@@ -1998,7 +2003,7 @@
 						"Co-exist",
 						"Cultivation",
 						"Destroy",
-						"Disvastate",
+						"Devastate",
 						"Discharge",
 						"Endangered",
 						"Extinct",
@@ -2092,7 +2097,7 @@
 						"Average",
 						"Bricklaying",
 						"Campground",
-						"Dirt-bike",
+						"Dirt bike",
 						"Entry qualification",
 						"Fee",
 						"Glass-engraving",
@@ -2103,6 +2108,7 @@
 						"Solitude",
 						"Sophisticated",
 						"Stock market",
+						"Spectacular",
 						"Undertake",
 						"Waterfall",
 						"Wilderness"
@@ -2114,6 +2120,9 @@
 					"words":
 					[
 						"Appoint",
+						"Artificial",
+						"Aspiration",
+						"Astronaut",
 						"Bid goodbye",
 						"Biography",
 						"Break-through",
@@ -2150,6 +2159,7 @@
 						"Eternal",
 						"Ground",
 						"Impressive",
+						"Ramp",
 						"Represent",
 						"Spiral",
 						"Theory",

@@ -59,7 +59,10 @@ public class FirstStartActivity extends AppCompatActivity {
     private void setHelper() {
         HelperApplication.sStarDict = new StarDict(dictExterPath);
 //        Log.d(TAG, "new StarDict");
-        HelperApplication.sMySQLiteHelper = new MySQLiteHelper(getApplicationContext());
+        HelperApplication.sMySQLiteHelper = MySQLiteHelper.getInstance(getApplicationContext());
+        HelperApplication.sMySQLiteHelper.createDataBase();
+        HelperApplication.sMySQLiteHelper.openDataBase();
+        HelperApplication.sMySQLiteHelper.getWritableDatabase();
 //        Log.d(TAG, "new MySQLiteHelper");
     }
 
