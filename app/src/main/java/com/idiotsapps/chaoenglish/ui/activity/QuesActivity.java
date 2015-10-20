@@ -1,16 +1,20 @@
 package com.idiotsapps.chaoenglish.ui.activity;
 
-import android.app.Activity;
-import android.app.DialogFragment;
-import android.app.FragmentTransaction;
+import android.os.Handler;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.idiotsapps.chaoenglish.Grade;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
@@ -19,7 +23,6 @@ import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.Unit;
 import com.idiotsapps.chaoenglish.Word;
-import com.idiotsapps.chaoenglish.helper.PreferencesHelper;
 import com.idiotsapps.chaoenglish.stardict.StarDict;
 
 import java.io.IOException;
@@ -27,7 +30,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class QuesActivity extends Activity implements InfoDialogFragment.NoticeDialogListener
+public class QuesActivity extends AppCompatActivity
+        implements InfoDialogFragment.NoticeDialogListener
 {
     private ArrayList<Grade> grades = new ArrayList<Grade>();
     private Unit currentUnit;
@@ -42,12 +46,21 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
     private String tag = this.getClass().getSimpleName();
     private MySQLiteHelper mySQLiteHelper = null;
     //HoangNHM
-    Word[] mWords;
+    private Word[] mWords;
+    private Handler mHandlerRialog;
+    private RelativeLayout mViewRightChoice;
+    private TextView mTvWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hideActionBar();
         setContentView(R.layout.activity_ques);
+        // add view RightChoice
+        mViewRightChoice = (RelativeLayout) findViewById(R.id.vRightChoice);
+        mViewRightChoice.setOnClickListener(mOnDismissRightChoiceView);
+        mTvWord = (TextView) findViewById(R.id.tvWord);
+
 //        Intent intent = getIntent();
 //        this.grade = intent.getIntExtra("grade", 6);
 
@@ -84,6 +97,25 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         //Starting game
         goNextWord();
     }
+
+    private void hideActionBar() {
+        ActionBar bar = getSupportActionBar();
+        if (null != bar) {
+            bar.hide();
+        }
+    }
+
+    /**
+     * when RightChoice view isShow, click will cause it's dismissed
+     */
+    private View.OnClickListener mOnDismissRightChoiceView = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mHandlerRialog = null;
+            mViewRightChoice.setVisibility(View.GONE);
+            goNextWord();
+        }
+    };
 
     //++del HoangNHM 20151013 move to FirstStartActivity
 //    /**
@@ -186,7 +218,20 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
     private void verifyAnswer(String word){
         String currWord = this.currentWord.getWord();
         if (currWord.equals(word)) {
-            goNextWord();
+            // show Right Choice dialog - then goNextWord
+            mTvWord.setText(word);
+            mViewRightChoice.setVisibility(View.VISIBLE);
+//            final DialogFragment dialog = showRightChoiceDialog(word);
+            mHandlerRialog = new Handler();
+            mHandlerRialog.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (View.GONE != mViewRightChoice.getVisibility()) {
+                        mViewRightChoice.setVisibility(View.GONE);
+                        goNextWord();
+                    }
+                }
+            }, 1000);
         }else {
             //show ads
             String htmlText = this.starDict.lookupWord(word);
@@ -194,9 +239,12 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
         }
     }
 
-    // The dialog fragment receives a reference to this Activity through the
-    // Fragment.onAttach() callback, which it uses to call the following methods
-    // defined by the NoticeDialogFragment.NoticeDialogListener interface
+//    private DialogFragment showRightChoiceDialog(String word) {
+//        DialogFragment newFragment = CustomDialogFragment.newInstance(word);
+//        newFragment.show(getSupportFragmentManager(), "Rialog");
+//        return newFragment;
+//    }
+
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
@@ -216,9 +264,8 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-        // User touched the dialog's negative button
-    }
 
+    }
     /**
      * Show definition, pronunciation, example for a word
      * This word user want to know more about its meaning
@@ -226,7 +273,7 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
      */
     public void showHelpInfo(String word){
         //TODO: show ads randomly here
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         final InfoDialogFragment newFragment = new InfoDialogFragment();
         String htmlText = this.starDict.lookupWord(word);
         newFragment.show(ft, "infoDialog");
@@ -238,7 +285,7 @@ public class QuesActivity extends Activity implements InfoDialogFragment.NoticeD
      * @param word
      */
     public void showFailedDialog(String word) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         final InfoDialogFragment newFragment = new InfoDialogFragment();
         newFragment.show(ft, "failedDialog");
         newFragment.setWord(word);

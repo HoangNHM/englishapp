@@ -142,7 +142,8 @@ public class StarDict {
         }
         WordEntry tempEntry = idxFile.getEntryList().get((int) idx);
 
-        return dictFile.getWordData(tempEntry.getLongOffset(), tempEntry.getLongSize());
+        String strWordData = dictFile.getWordData(tempEntry.getLongOffset(), tempEntry.getLongSize());
+        return strWordData;
     }
 
     /**

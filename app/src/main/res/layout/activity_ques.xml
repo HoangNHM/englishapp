@@ -1,9 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     tools:context=".QuesActivity"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -142,7 +148,7 @@
                     android:layout_column="1"
                     android:text="New Button"
                     android:id="@+id/button_B"
-                    android:background="@drawable/selector_answer" />
+                    android:background="@drawable/selector_answer"/>
             </TableRow>
 
             <TableRow
@@ -196,7 +202,29 @@
             </TableRow>
         </TableLayout>
     </LinearLayout>
+    </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/vRightChoice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/viewmore"
+            android:layout_centerInParent="true">
+            <TextView
+                android:id="@+id/tvWord"
+                android:text="word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </RelativeLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="1000dp"
-    android:minHeight="1000dp"
-    android:weightSum="1">
+    tools:ignore="HardcodedText" >
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Textda  dafadfadfadsfasd"
-        android:id="@+id/textView"
-        android:layout_weight="0.92" />
+        android:minHeight="300dp"
+        android:minWidth="500dp"
+        android:orientation="vertical"
+        android:background="@android:color/white">
 
-    <Button
-        android:layout_width="187dp"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button4"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Textda  dafadfadfadsfasd"
+            android:layout_weight="0.92"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="New Button"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.07" />
+    </LinearLayout>
+
+</ScrollView>
