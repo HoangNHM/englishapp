@@ -85,15 +85,15 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
      * 3. Calculate average of percentages
      */
     public ArrayList<Grade> getClasses(){
-        String collum[] = {"rowid",this.CLASS_ID};
+        String column[] = {"rowid",MySQLiteHelper.CLASS_ID};
         ArrayList<Grade> classes = new ArrayList<>();
         Log.d(tag, "get classes");
-        Cursor cursor = this.db.query(this.TABLE_CLASSES, collum, null, null, null, null,null);
+        Cursor cursor = this.db.query(MySQLiteHelper.TABLE_CLASSES, column, null, null, null, null,null);
         if (cursor.moveToFirst()) {
             do {
                 // unit_id,unit_name, number_of_words,vocab_test,grammar_test,listen_test
                 int rowId = Integer.parseInt(cursor.getString(cursor.getColumnIndex("rowid")));
-                int classId = Integer.parseInt(cursor.getString(cursor.getColumnIndex(this.CLASS_ID)));
+                int classId = Integer.parseInt(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CLASS_ID)));
                 ArrayList<Unit> units = getUnitList(classId);
                 Grade grade = new Grade(classId);
                 grade.setUnits(units);
@@ -101,29 +101,32 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         Log.d(tag, "leave get classes");
+        cursor.close();
         return classes;
     }
 
     public ArrayList<Unit> getUnitList(int class_id) {
-        String collum[] = {this.UNIT_ID,this.UNIT_NAME,this.NUMBER_OF_WORDS, this.VOCA_TEST,this.LIST_TEST,this.GRAM_TEST};
+        String column[] = {MySQLiteHelper.UNIT_ID,MySQLiteHelper.UNIT_NAME,MySQLiteHelper.NUMBER_OF_WORDS,
+                MySQLiteHelper.VOCA_TEST,MySQLiteHelper.LIST_TEST,MySQLiteHelper.GRAM_TEST};
         ArrayList<Unit> units = new ArrayList<>();
         String selection = "class_id =" + class_id;
         Log.d(tag, "get Unit list");
-        Cursor unitCursor = this.db.query(this.TABLE_UNIT, collum, selection,null, null, null, null);
+        Cursor unitCursor = this.db.query(MySQLiteHelper.TABLE_UNIT, column, selection,null, null, null, null);
         if (unitCursor.moveToFirst()) {
             do {
                 // unit_id,unit_name, number_of_words,vocab_test,grammar_test,listen_test
-                int unitId = Integer.parseInt(unitCursor.getString(unitCursor.getColumnIndex(this.UNIT_ID)));
-                int unitName = Integer.parseInt(unitCursor.getString(unitCursor.getColumnIndex(this.UNIT_NAME)));
-                int numOfWord = Integer.parseInt(unitCursor.getString(unitCursor.getColumnIndex(this.NUMBER_OF_WORDS)));
-                float vocabTest = Float.parseFloat(unitCursor.getString(unitCursor.getColumnIndex(this.VOCA_TEST)));
-                float gramTest = Float.parseFloat(unitCursor.getString(unitCursor.getColumnIndex(this.GRAM_TEST)));
-                float listTest = Float.parseFloat(unitCursor.getString(unitCursor.getColumnIndex(this.LIST_TEST)));
+                int unitId = Integer.parseInt(unitCursor.getString(unitCursor.getColumnIndex(MySQLiteHelper.UNIT_ID)));
+                int unitName = Integer.parseInt(unitCursor.getString(unitCursor.getColumnIndex(MySQLiteHelper.UNIT_NAME)));
+                int numOfWord = Integer.parseInt(unitCursor.getString(unitCursor.getColumnIndex(MySQLiteHelper.NUMBER_OF_WORDS)));
+                float vocabTest = Float.parseFloat(unitCursor.getString(unitCursor.getColumnIndex(MySQLiteHelper.VOCA_TEST)));
+                float gramTest = Float.parseFloat(unitCursor.getString(unitCursor.getColumnIndex(MySQLiteHelper.GRAM_TEST)));
+                float listTest = Float.parseFloat(unitCursor.getString(unitCursor.getColumnIndex(MySQLiteHelper.LIST_TEST)));
                 units.add(new Unit(class_id,unitId,unitName,numOfWord,vocabTest,gramTest,listTest));
                 Log.d(tag, "classid: " + class_id + " unitName:" + unitName + " numOfWord:" + numOfWord
                         + " vocabTest:" + vocabTest + " gramTest:" + gramTest + " listTest:" + listTest);
             } while (unitCursor.moveToNext());
         }
+        unitCursor.close();
         return units;
     }
 

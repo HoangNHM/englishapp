@@ -1,16 +1,36 @@
 package com.idiotsapps.chaoenglish;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Grade {
+public class Grade implements Parcelable {
     private ArrayList<Unit> units = new ArrayList<Unit>();
     private float percent;
     private int grade;
     private int cIndexUnit = 0;
     private Date date;//last time user do the words of grade
+
+    protected Grade(Parcel in) {
+        percent = in.readFloat();
+        grade = in.readInt();
+        cIndexUnit = in.readInt();
+    }
+
+    public static final Creator<Grade> CREATOR = new Creator<Grade>() {
+        @Override
+        public Grade createFromParcel(Parcel in) {
+            return new Grade(in);
+        }
+
+        @Override
+        public Grade[] newArray(int size) {
+            return new Grade[size];
+        }
+    };
 
     public Date getDate() {
         return date;
@@ -84,5 +104,17 @@ public class Grade {
 
     public Grade() {//
 
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(percent);
+        dest.writeInt(grade);
+        dest.writeInt(cIndexUnit);
     }
 }

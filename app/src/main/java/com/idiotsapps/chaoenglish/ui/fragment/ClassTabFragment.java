@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.idiotsapps.chaoenglish.Grade;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
-import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.ui.activity.ViewMoreActivity;
 import com.idiotsapps.chaoenglish.ui.adapter.CustomClassListViewAdapter;
 import com.idiotsapps.chaoenglish.item.ClassItem;
@@ -31,8 +30,9 @@ import java.util.ArrayList;
  * Use the {@link ClassTabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClassTabFragment extends Fragment implements CustomClassListViewAdapter.OnFriendsItemInteractionListener {
+public class ClassTabFragment extends Fragment implements CustomClassListViewAdapter.OnClassItemInteractionListener {
 
+    private ArrayList<Grade> mGrades;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,7 +86,7 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
 
     // btn Study & View More click listener
     @Override
-    public void onFriendsItemInteractionListener(int btnId, int position, int className) {
+    public void onClassItemInteractionListener(int btnId, int position, int className) {
         switch (btnId) {
             case R.id.btnStudyClassItem:
                 Toast.makeText(getContext(), "Study, item: " + position, Toast.LENGTH_SHORT).show();
@@ -97,9 +97,10 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
                 // call ViewMoreActivity
                 Toast.makeText(getContext(), "View More, item: " + position, Toast.LENGTH_SHORT).show();
                 Intent intentViewMore = new Intent(getContext(), ViewMoreActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("ClassName", className);
-                intentViewMore.putExtra("ClassPackage", bundle);
+                intentViewMore.putParcelableArrayListExtra("key_grades", mGrades);
+                Bundle args = new Bundle();
+                args.putInt("ClassName", className);
+                intentViewMore.putExtra("ClassPackage", args);
                 startActivity(intentViewMore);
                 break;
             default:
@@ -125,10 +126,10 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
         ListView listView = (ListView) view.findViewById(R.id.listViewClass);
         // TODO ArrayList ClassItem
         ArrayList<ClassItem> arr = new ArrayList<ClassItem>();
-        ArrayList<Grade> grades = HelperApplication.sMySQLiteHelper.getClasses();
-        for (int i = 0; i < grades.size(); i++) {
-            int classId = grades.get(i).getGrade();
-            int percent = (int) grades.get(i).getPercent();
+        mGrades = HelperApplication.sMySQLiteHelper.getClasses();
+        for (int i = 0; i < mGrades.size(); i++) {
+            int classId = mGrades.get(i).getGrade();
+            int percent = (int) mGrades.get(i).getPercent();
             arr.add(new ClassItem(classId, percent, null));
         }
 

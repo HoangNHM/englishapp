@@ -41,7 +41,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
                     R.drawable.class_11,
                     R.drawable.class_12};
 
-    private OnFriendsItemInteractionListener itemInteractionListener;
+    private OnClassItemInteractionListener itemInteractionListener;
     private ArrayList<ClassItem> mArrClassItems;
     private Activity mActivity;
     private FragmentManager mFragmentManager;
@@ -53,7 +53,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
         this.mActivity = activity;
         this.mArrClassItems = arrClassItems;
         this.mFragmentManager = fragmentManager;
-        this.itemInteractionListener = (OnFriendsItemInteractionListener) classTab;
+        this.itemInteractionListener = (OnClassItemInteractionListener) classTab;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
         mBtnStudyClassItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemInteractionListener.onFriendsItemInteractionListener(v.getId(), position, mArrClassItems.get(position).getClassName());
+                itemInteractionListener.onClassItemInteractionListener(v.getId(), position, mArrClassItems.get(position).getClassName());
             }
         });
 
@@ -90,7 +90,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
         mBtnViewMoreClassItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemInteractionListener.onFriendsItemInteractionListener(v.getId(), position, mArrClassItems.get(position).getClassName());
+                itemInteractionListener.onClassItemInteractionListener(v.getId(), position, mArrClassItems.get(position).getClassName());
                 // Don't use dlg, use activity instead
                 // Show Bar chart
 //                DialogFragment horBarChartDlg = BarChartDlg.newInstance(mArrClassItems.get(position).getYVals(), mArrClassItems.get(position).getClassName());
@@ -197,8 +197,8 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFriendsItemInteractionListener {
+    public interface OnClassItemInteractionListener {
         // TODO: Update argument type and name
-        public void onFriendsItemInteractionListener(int btnId, int position, int className);
+        public void onClassItemInteractionListener(int btnId, int position, int className);
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ScrollView;
@@ -16,8 +17,12 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.idiotsapps.chaoenglish.Grade;
 import com.idiotsapps.chaoenglish.R;
+import com.idiotsapps.chaoenglish.Unit;
 import com.idiotsapps.chaoenglish.baseclass.ActivityBase;
+import com.idiotsapps.chaoenglish.helper.HelperApplication;
+import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -27,6 +32,7 @@ public class ViewMoreActivity extends ActivityBase {
     private HorizontalBarChart mChart;
     private int mClassName;
     private ScrollView mScrollViewChart;
+    private ArrayList<Grade> mGrades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +43,14 @@ public class ViewMoreActivity extends ActivityBase {
         mChart = (HorizontalBarChart) findViewById(R.id.horBarChart);
         // get caller intent
         Intent callerIntent = getIntent();
+        mGrades = callerIntent.getParcelableArrayListExtra("key_grades");
+        int[] YVals = getYVals(mGrades);
         // get bundle from intent
         Bundle packageFromCaller = callerIntent.getBundleExtra("ClassPackage");
         // get bundle info
         mClassName = packageFromCaller.getInt("ClassName");
         setActionBar(R.id.abIc, "Class " + mClassName, true); //true: back to parent
-        setupChart(mChart);
+        setupChart(mChart, YVals);
         mScrollViewChart.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -51,7 +59,16 @@ public class ViewMoreActivity extends ActivityBase {
         }, 1000);
     }
 
-    private void setupChart(HorizontalBarChart horBarChart) {
+    private int[] getYVals(ArrayList<Grade> grades) {
+        int length = grades.size();
+        int[] YVals = new int[length];
+        for (int i = 0; i < length; i++) {
+            YVals[i] = (int) grades.get(i).getPercent();
+        }
+        return YVals;
+    }
+
+    private void setupChart(HorizontalBarChart horBarChart, int[] YVals) {
         horBarChart.getLegend().setEnabled(false);
         // set max value 108, to see 100% display percent
         horBarChart.getAxisLeft().setAxisMaxValue(108f);
@@ -86,19 +103,19 @@ public class ViewMoreActivity extends ActivityBase {
 
         // Random YVals
 //        int count = new Random().nextInt((20) + 1);
-        int count = 16;
-        int[] mYVals = new int[count];
-        for (int i = 0; i < count; i++) {
-            mYVals[i] = new Random().nextInt((100) + 1);
-        }
+//        int count = 16;
+//        int[] mYVals = new int[count];
+//        for (int i = 0; i < count; i++) {
+//            mYVals[i] = new Random().nextInt((100) + 1);
+//        }
 
-        setData(horBarChart, mYVals);
+        setData(horBarChart, YVals);
     }
 
-    private void setData(BarChart barChart, int[] arr) {
+    private void setData(BarChart barChart, int[] YVals) {
 
         ArrayList<String> xVals = new ArrayList<String>();
-        int count = arr.length;
+        int count = YVals.length;
         // draw backward
         for (int i = 1; i <= count; i++) {
             xVals.add("unit " + i);
@@ -108,8 +125,8 @@ public class ViewMoreActivity extends ActivityBase {
 
         // draw backward
         for (int i = 0; i < count; i++) {
-//            yVals1.add(new BarEntry(arr[count - 1 - i], i));
-            yVals1.add(new BarEntry(arr[i], i));
+//            yVals1.add(new BarEntry(YVals[count - 1 - i], i));
+            yVals1.add(new BarEntry(YVals[i], i));
         }
 
         BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
