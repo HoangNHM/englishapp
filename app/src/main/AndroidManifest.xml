@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
         <activity
-            android:name=".ui.activity.FirstStartActivity"
+            android:name="com.idiotsapps.chaoenglish.ui.activity.FirstStartActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

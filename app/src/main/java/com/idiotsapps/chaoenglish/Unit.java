@@ -1,5 +1,8 @@
 package com.idiotsapps.chaoenglish;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,7 +10,7 @@ import java.util.Date;
 /**
  * Created by xtruhuy on 05/09/2015.
  */
-public class Unit {
+public class Unit implements Parcelable{
     private ArrayList<Word> words = new ArrayList<Word>();
     private String unitName;// unit_<unitInt>
     private int unitId; //order of unit
@@ -18,6 +21,29 @@ public class Unit {
     private int numOfWord;
     private int cWordIndex = 0;
     private Date date; // last time user do the test
+
+    protected Unit(Parcel in) {
+        unitName = in.readString();
+        unitId = in.readInt();
+        grade = in.readInt();
+        vocabPercent = in.readFloat();
+        listenPercent = in.readFloat();
+        grammarPercent = in.readFloat();
+        numOfWord = in.readInt();
+        cWordIndex = in.readInt();
+    }
+
+    public static final Creator<Unit> CREATOR = new Creator<Unit>() {
+        @Override
+        public Unit createFromParcel(Parcel in) {
+            return new Unit(in);
+        }
+
+        @Override
+        public Unit[] newArray(int size) {
+            return new Unit[size];
+        }
+    };
 
     public Date getDate() {
         return date;
@@ -73,5 +99,22 @@ public class Unit {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(unitName);
+        dest.writeInt(unitId);
+        dest.writeInt(grade);
+        dest.writeFloat(vocabPercent);
+        dest.writeFloat(listenPercent);
+        dest.writeFloat(grammarPercent);
+        dest.writeInt(numOfWord);
+        dest.writeInt(cWordIndex);
     }
 }

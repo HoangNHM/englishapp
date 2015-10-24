@@ -72,7 +72,7 @@ public class CustomClassListViewAdapter extends ArrayAdapter<ClassItem> {
 
         // class 1, class 2, ...
         ImageView imgClassName = (ImageView) view.findViewById(R.id.imgClassName);
-        imgClassName.setImageResource(mClassName[mArrClassItems.get(position).getClassName()]);
+        imgClassName.setImageResource(mClassName[mArrClassItems.get(position).getClassName()-1]);
 //        TextView mTextViewClassNumber = (TextView) view.findViewById(R.id.textViewClassNumber);
 //        mTextViewClassNumber.setText(mArrClassItems.get(position).getClassName());
 

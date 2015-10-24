@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.idiotsapps.chaoenglish.Grade;
 import com.idiotsapps.chaoenglish.R;
+import com.idiotsapps.chaoenglish.Unit;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
 import com.idiotsapps.chaoenglish.ui.activity.ViewMoreActivity;
 import com.idiotsapps.chaoenglish.ui.adapter.CustomClassListViewAdapter;
@@ -97,7 +98,8 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
                 // call ViewMoreActivity
                 Toast.makeText(getContext(), "View More, item: " + position, Toast.LENGTH_SHORT).show();
                 Intent intentViewMore = new Intent(getContext(), ViewMoreActivity.class);
-                intentViewMore.putParcelableArrayListExtra("key_grades", mGrades);
+                ArrayList<Unit> units = mGrades.get(position).getUnits(); // pass only list of units of clicked_class to ViewMoreActivity
+                intentViewMore.putParcelableArrayListExtra("key_units", units);
                 Bundle args = new Bundle();
                 args.putInt("ClassName", className);
                 intentViewMore.putExtra("ClassPackage", args);

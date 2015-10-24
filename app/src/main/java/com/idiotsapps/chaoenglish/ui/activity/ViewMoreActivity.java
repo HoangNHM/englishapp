@@ -32,8 +32,7 @@ public class ViewMoreActivity extends ActivityBase {
     private HorizontalBarChart mChart;
     private int mClassName;
     private ScrollView mScrollViewChart;
-    private ArrayList<Grade> mGrades;
-
+    private ArrayList<Unit> mUnits;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +42,8 @@ public class ViewMoreActivity extends ActivityBase {
         mChart = (HorizontalBarChart) findViewById(R.id.horBarChart);
         // get caller intent
         Intent callerIntent = getIntent();
-        mGrades = callerIntent.getParcelableArrayListExtra("key_grades");
-        int[] YVals = getYVals(mGrades);
+        mUnits = callerIntent.getParcelableArrayListExtra("key_units");
+        int[] YVals = getYVals(mUnits);
         // get bundle from intent
         Bundle packageFromCaller = callerIntent.getBundleExtra("ClassPackage");
         // get bundle info
@@ -59,11 +58,11 @@ public class ViewMoreActivity extends ActivityBase {
         }, 1000);
     }
 
-    private int[] getYVals(ArrayList<Grade> grades) {
-        int length = grades.size();
+    private int[] getYVals(ArrayList<Unit> units) {
+        int length = units.size();
         int[] YVals = new int[length];
         for (int i = 0; i < length; i++) {
-            YVals[i] = (int) grades.get(i).getPercent();
+            YVals[i] = (int) units.get(i).getVocabPercent();
         }
         return YVals;
     }
