@@ -81,7 +81,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public ArrayList<Word> getWords(int classId, int unitName){
         String column[] = {MySQLiteHelper.NUMBER_OF_CORRECT,MySQLiteHelper.NUMBER_OF_WRONG,MySQLiteHelper.WORD};
         ArrayList<Word> words = new ArrayList<>();
-        String selection = "class_id =" + classId + "& unit_name=" + unitName;
+        String selection = "class_id =" + classId + " and unit_name=" + unitName;
         Log.d(tag, "get word list");
         Cursor unitCursor = this.db.query(MySQLiteHelper.TABLE_WORD, column, selection,null, null, null, null);
         if (unitCursor.moveToFirst()) {

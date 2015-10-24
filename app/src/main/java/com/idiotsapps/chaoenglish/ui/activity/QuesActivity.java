@@ -37,6 +37,7 @@ public class QuesActivity extends AppCompatActivity
 {
     private ArrayList<Grade> grades = new ArrayList<Grade>();
     private Unit currentUnit;
+    private int lifeCount = 3;
     private Word currentWord;
     private Grade  currentGrade;
     private int currGradeIndex = 0;
@@ -66,8 +67,7 @@ public class QuesActivity extends AppCompatActivity
         Intent intent = getIntent();
         this.grades = HelperApplication.sMySQLiteHelper.getClasses();
         int pos = intent.getIntExtra("position", 0);
-//        int pos = 0;
-        Log.d(tag,"position: " + pos);
+//        Log.d(tag,"position: " + pos);
         getStarDict(); //initalize StarDict stuff
 
         /**
@@ -77,7 +77,6 @@ public class QuesActivity extends AppCompatActivity
          */
 
         this.currentGrade = grades.get(pos);//list starts from 0
-
         this.currentUnit = this.currentGrade.getCurrentUnit();
         this.currentUnit.getWords();
         this.currentWord = this.currentUnit.getCurrentWord();
@@ -96,11 +95,21 @@ public class QuesActivity extends AppCompatActivity
         this.iBtn[2] = (ImageView) findViewById(R.id.button_Y);
         this.iBtn[3] = (ImageView) findViewById(R.id.button_Z);
         addInfoBtnListener();
+        findViewById(R.id.btnQuit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Come back MainActivity
+                comeBackMain();
+            }
+        });
 
         //Starting game
         goNextWord();
     }
-
+    private void comeBackMain(){
+        Intent intentQues = new Intent(QuesActivity.this, MainActivity.class);
+        startActivity(intentQues);
+    }
     private void hideActionBar() {
         ActionBar bar = getSupportActionBar();
         if (null != bar) {
@@ -150,7 +159,18 @@ public class QuesActivity extends AppCompatActivity
             });
         }
     }
+    private void decrLifeCount(String word){
+        lifeCount--;
+        String htmlText = this.starDict.lookupWord(word);
+        showFailedDialog(htmlText);
+        if(lifeCount <= 0){
+            //TODO: show adv
+            comeBackMain();
+        }else{
+            //
+        }
 
+    }
     /**
      *  Verify if user's answer is correct or not
      *  Will show advertisement if it is corrected
@@ -178,8 +198,7 @@ public class QuesActivity extends AppCompatActivity
             soundHelper.playSound(SoundHelper.SOUND_CHOOSE_RIGHT);
         }else {
             //show ads
-            String htmlText = this.starDict.lookupWord(word);
-            showFailedDialog(htmlText);
+            decrLifeCount(word);
         }
     }
 
@@ -274,7 +293,8 @@ public class QuesActivity extends AppCompatActivity
     private String getFilePath(String word) {
         String out = word.replace(' ', '_');
         String grade = Integer.toString(this.currentGrade.getGrade());
-        out = "out/" + "grade_" + grade + "/" + this.currentUnit.getUnitName() + "/" + out;
+        out = "out/" + "grade_" + grade + "/unit_" + this.currentUnit.getUnitName() + "/" + out;
+        Log.d(tag, "out:" + out);
         return out;
     }
 

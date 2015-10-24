@@ -78,9 +78,9 @@ public class Unit implements Parcelable{
     }
     public ArrayList<Word> getWords() {
         //If words have not retrieve from database
-        if(words.size() == 0){
-            words = HelperApplication.sMySQLiteHelper.getWords(this.grade,this.unitName);
-        }
+//        if(words.size() == 0){
+        words = HelperApplication.sMySQLiteHelper.getWords(this.grade,this.unitName);
+//        }
         return words;
     }
 
