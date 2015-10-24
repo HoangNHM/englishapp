@@ -32,7 +32,8 @@ public class ViewMoreActivity extends ActivityBase {
     private HorizontalBarChart mChart;
     private int mClassName;
     private ScrollView mScrollViewChart;
-    private ArrayList<Unit> mUnits;
+    private ArrayList<Unit> mUnits; //list of units of clicked_class
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

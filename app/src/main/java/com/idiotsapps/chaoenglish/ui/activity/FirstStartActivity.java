@@ -5,13 +5,15 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.idiotsapps.chaoenglish.baseclass.ActivityBase;
 import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
@@ -24,10 +26,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class FirstStartActivity extends AppCompatActivity {
+public class FirstStartActivity extends ActivityBase {
 
     private static final String TAG = FirstStartActivity.class.getSimpleName();
     private ProgressDialog mProgressDialog;
+    private ProgressBar mProgressBar;
     private String dictExterPath = null;
     private static final String DICT_ASSEST_PATH = "stardictvn";
     // Check if app first launch, save path of database
@@ -39,7 +42,9 @@ public class FirstStartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         prefsHelper = new PreferencesHelper(getApplicationContext());
         setContentView(R.layout.activity_first_start);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mIsFirstStart = prefsHelper.isFirstStart();
+        hideActionBar(true);
     }
 
     @Override
@@ -91,10 +96,10 @@ public class FirstStartActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-//            Log.d(TAG, "onPause dismiss mProgressDialog");
-        }
+//        if (mProgressDialog.isShowing()) {
+//            mProgressDialog.dismiss();
+////            Log.d(TAG, "onPause dismiss mProgressDialog");
+//        }
     }
 
     private class SetDataBase extends AsyncTask<Void, Void, Boolean> {
@@ -102,10 +107,11 @@ public class FirstStartActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(FirstStartActivity.this);
-            mProgressDialog.setTitle("Setup DataBase in First Start");
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
+//            mProgressDialog = new ProgressDialog(FirstStartActivity.this);
+//            mProgressDialog.setTitle("Setup DataBase in First Start");
+//            mProgressDialog.setCancelable(false);
+//            mProgressDialog.show();
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -132,8 +138,8 @@ public class FirstStartActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             super.onPostExecute(success);
-            if (mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
+            if (mProgressBar.isShown()) {
+                mProgressBar.setVisibility(View.GONE);
 //                Log.d(TAG, "onPostExecute dismiss mProgressDialog");
             } else {
 //                Log.d(TAG, "onPostExecute NOT dismiss mProgressDialog");

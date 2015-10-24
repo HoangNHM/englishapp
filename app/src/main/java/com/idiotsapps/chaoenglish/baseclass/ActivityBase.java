@@ -21,6 +21,13 @@ public abstract class ActivityBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
+    protected void hideActionBar(boolean hide) {
+        if (!hide) return;
+        ActionBar bar = getSupportActionBar();
+        if (null != bar) {
+            bar.hide();
+        }
+    }
     protected void setActionBar(int resIc, String title, boolean canBack) {
         setTitle("");
         ActionBar actionBar = getSupportActionBar();
