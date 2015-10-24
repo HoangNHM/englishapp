@@ -92,6 +92,8 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
             case R.id.btnStudyClassItem:
                 Toast.makeText(getContext(), "Study, item: " + position, Toast.LENGTH_SHORT).show();
                 Intent intentQues = new Intent(getContext(), QuesActivity.class);
+//                intentQues.putParcelableArrayListExtra("key_grades", mGrades);
+                intentQues.putExtra("position",position);
                 startActivity(intentQues);
                 break;
             case R.id.btnViewMoreClassItem:
@@ -103,6 +105,7 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
                 Bundle args = new Bundle();
                 args.putInt("ClassName", className);
                 intentViewMore.putExtra("ClassPackage", args);
+
                 startActivity(intentViewMore);
                 break;
             default:
@@ -113,32 +116,15 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // Percent of Class, read from database
-        ArrayList<Integer> arrClassPercent = new ArrayList<Integer>();
-//        arrClassPercent.add(55);
-//        arrClassPercent.add(80);
-//        arrClassPercent.add(64);
-//        arrClassPercent.add(36);
-        // unit + percent of that unit
-        SparseIntArray unitPercent = new SparseIntArray();
-        unitPercent.append(2, 100);
-        unitPercent.append(3, 30);
-
         // add list view
         ListView listView = (ListView) view.findViewById(R.id.listViewClass);
-        // TODO ArrayList ClassItem
-        ArrayList<ClassItem> arr = new ArrayList<ClassItem>();
+        ArrayList<ClassItem> arr = new ArrayList<ClassItem>();// Percent of Classes, read from database
         mGrades = HelperApplication.sMySQLiteHelper.getClasses();
         for (int i = 0; i < mGrades.size(); i++) {
             int classId = mGrades.get(i).getGrade();
             int percent = (int) mGrades.get(i).getPercent();
             arr.add(new ClassItem(classId, percent, null));
         }
-
-//        arr.add(new ClassItem(6, arrClassPercent.get(0), unitPercent));
-//        arr.add(new ClassItem(7, arrClassPercent.get(1), unitPercent));
-//        arr.add(new ClassItem(8, arrClassPercent.get(2), unitPercent));
-//        arr.add(new ClassItem(9, arrClassPercent.get(3), unitPercent));
         // adapter
         CustomClassListViewAdapter adapter = new CustomClassListViewAdapter(getActivity(), getFragmentManager(), ClassTabFragment.this, arr);
         listView.setAdapter(adapter);

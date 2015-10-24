@@ -5,12 +5,20 @@ package com.idiotsapps.chaoenglish;
  */
 public class Word {
     private String word;
+    private int classId;
+    private int unitName;
+    private int numOfWrong;
+    private int numOfCorr;
     private String[] defintions;
     private String[] example;
     private String[] pronounciation;
 
-    public Word(String word) {
+    public Word(String word,int classId, int unitName,int numOfCorr, int numOfWrong) {
         this.word = word;
+        this.classId = classId;
+        this.unitName = unitName;
+        this.numOfCorr = numOfCorr;
+        this.numOfWrong = numOfWrong;
     }
 
     public String[] getDefintions() {

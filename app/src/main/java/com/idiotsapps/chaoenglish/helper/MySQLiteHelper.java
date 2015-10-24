@@ -29,7 +29,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private SQLiteDatabase db = null;
     public static final String TABLE_CLASSES = "classes";
     public static final String TABLE_UNIT = "unit";
-    public static final String TABLE_TEST = "test";
+    public static final String TABLE_WORD = "words";
 
     private static final String DATABASE_NAME = "chaoenglish.sqlite";
     private static final int DATABASE_VERSION = 1;
@@ -40,18 +40,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String UNIT_NAME = "unit_name";
     private static final String CLASS_ID = "class_id";
     private static final String NUMBER_OF_WORDS = "number_of_words";
+    private static final String NUMBER_OF_CORRECT = "number_of_correct_time";
+    private static final String NUMBER_OF_WRONG = "number_of_wrong_time";
+    private static final String WORD = "word";
     private Context myContext = null;
     private static MySQLiteHelper mInstance = null;
     private String tag = this.getClass().getSimpleName();
-
-    // Database creation sql statement
-//    private static final String DATABASE_CREATE = "create table "
-//            + TABLE_CLASSES + " (class_id integer primary key autoincrement,class_name integer not null);";
-//    private static final String UNIT_CREATE = "create table " + TABLE_UNIT +
-//            " (unit_id integer primary key autoincrement,class_id integer,unit_name integer not null," +
-//            "number_of_words integer);";
-//    private static final String TEST_CREATE = "create table " + TABLE_TEST + " (test_id integer primary " +
-//            "key autoincrement, unit_id integer, vocabulary float, grammar float,listening float);";
 
     public static MySQLiteHelper getInstance(Context ctx) {
         if (mInstance == null) {
@@ -78,6 +72,36 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 ////        insertData(this.grades);
     }
 
+    /**
+     *
+     * @param classId
+     * @param unitName
+     * @return
+     */
+    public ArrayList<Word> getWords(int classId, int unitName){
+        String column[] = {MySQLiteHelper.NUMBER_OF_CORRECT,MySQLiteHelper.NUMBER_OF_WRONG,MySQLiteHelper.WORD};
+        ArrayList<Word> words = new ArrayList<>();
+        String selection = "class_id =" + classId + "& unit_name=" + unitName;
+        Log.d(tag, "get word list");
+        Cursor unitCursor = this.db.query(MySQLiteHelper.TABLE_WORD, column, selection,null, null, null, null);
+        if (unitCursor.moveToFirst()) {
+            do {
+                // unit_id,unit_name, number_of_words,vocab_test,grammar_test,listen_test
+                String word = unitCursor.getString(unitCursor.getColumnIndex(MySQLiteHelper.WORD));
+                int numOfCorr = Integer.parseInt(unitCursor.getString(unitCursor.getColumnIndex(MySQLiteHelper.NUMBER_OF_CORRECT)));
+                int numOfWrong = 0;
+                String temp = unitCursor.getString(unitCursor.getColumnIndex(MySQLiteHelper.NUMBER_OF_WRONG));
+                if(temp != null) {
+                    numOfWrong = Integer.parseInt(temp);
+                }
+                words.add(new Word(word,classId,unitName,numOfCorr,numOfWrong));
+                Log.d(tag, "classid: " + classId + " unitName:" + unitName + " Word:" + word
+                        + " numOfCorr:" + numOfCorr + " numOfWrong:" + numOfWrong);
+            } while (unitCursor.moveToNext());
+        }
+        unitCursor.close();
+        return words;
+    }
     /**
      * This function will return the percentage of every classes
      * 1. Get list of class id from database
@@ -161,9 +185,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     // Copy the database from assets
     private void copyDataBase() throws IOException {
         InputStream mInput = myContext.getAssets().open(DATABASE_NAME);
-//		File sqliteFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/sinhhuynh.game.quiz/files/data/" + DB_NAME);
-//		InputStream mInput = new FileInputStream(sqliteFile);
-
         String outFileName = "/data/data/" + myContext.getPackageName() + "/databases/" + DATABASE_NAME;
         OutputStream mOutput = new FileOutputStream(outFileName);
         byte[] mBuffer = new byte[1024];
@@ -175,6 +196,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         mOutput.close();
         mInput.close();
     }
+
     //TODO
     public int updateTestUnit(int unitId, String testType, float result) {
 
@@ -189,16 +211,16 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
      * @param listRes
      * @return
      */
-    public int insertTestUnit(int unitId, float vocaRes, float gramRes, float listRes) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("unit_id", unitId);
-        contentValues.put("vocabulary", vocaRes);
-        contentValues.put("grammar", gramRes);
-        contentValues.put("listening", listRes);
-        int rowId = (int) db.insert(TABLE_TEST, null, contentValues);
-        return rowId;
-    }
+//    public int insertTestUnit(int unitId, float vocaRes, float gramRes, float listRes) {
+////        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put("unit_id", unitId);
+//        contentValues.put("vocabulary", vocaRes);
+//        contentValues.put("grammar", gramRes);
+//        contentValues.put("listening", listRes);
+//        int rowId = (int) db.insert(TABLE_TEST, null, contentValues);
+//        return rowId;
+//    }
 
     /**
      * Insert a new row for new class
@@ -240,94 +262,31 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return grades;
     }
 
-
-    /**
-     * Load Json file of list words into a string
-     *
-     * @return
-     */
-//    private String loadJSONFromAsset() {
-//        String json = null;
-//        try {
-//            InputStream is = assetManager.open("database");
-//            int size = is.available();
-//            byte[] buffer = new byte[size];
-//            is.read(buffer);
-//            is.close();
-//            json = new String(buffer, "UTF-8");
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//            return null;
-//        }
-//        return json;
-//    }
-
 //    /**
-//     * Analyse JSON string into classes, grades, units
+//     * Insert data into database
+//     *
+//     * @param grades
 //     */
-//    private void getJsonDatabase() {
-//        try {
-//            JSONObject obj = new JSONObject(loadJSONFromAsset());
-//            JSONArray cArray = obj.getJSONArray("classes");
-////            this.percent = obj.getInt("classes_percent");
-////            Log.d(tag, "class_percent" + percent);
-//
-//            for (int i = 0; i < cArray.length(); i++) {
-//                JSONObject gradeObj = cArray.getJSONObject(i);//Grade
-//                int grade = gradeObj.getInt("grade");
-//                int gradePercent = gradeObj.getInt("grade_percent");
-//                JSONArray vocabArray = gradeObj.getJSONArray("vocabulary");
-//                Log.d(tag, "grade:" + grade);
-//                Grade newGrade = new Grade(grade, gradePercent);
-//                for (int j = 0; j < vocabArray.length(); j++) {
-//                    JSONObject unitObj = vocabArray.getJSONObject(j); //Unit
-//                    int unit = unitObj.getInt("unit");
-//                    int unitPercent = unitObj.getInt("unit_percent");
-//                    JSONArray wordArray = unitObj.getJSONArray("words");
-//                    Unit newUnit = new Unit(grade, unit, unitPercent);
-//                    Log.d(tag, "Unit:" + unit);
-//
-//                    for (int k = 0; k < wordArray.length(); k++) {
-//                        String word = wordArray.getString(k);
-//                        Word newWord = new Word(word);
-//                        newUnit.addWord(newWord);
-//                    }
-//                    newGrade.addUnit(newUnit);
-//                }
-//                Log.d(tag, "add grade:" + i);
-//                this.grades.add(newGrade);
+//    public void insertData(ArrayList<Grade> grades) {
+//        int percent[] = new int[]{0,10,30,75,80,90,100 }; //TODO: dumpy data, remove later
+//        for (int i = 0; i < grades.size(); i++) {
+//            Grade grade = grades.get(i);
+//            int className = grade.getGrade();
+//            int classId = insertClass(className);//add row for class
+//            Log.d(tag, "class id: " + classId);
+//            ArrayList<Unit> units = grade.getUnits();
+//            for (int j = 0; j < units.size(); j++) {
+//                Unit unit = units.get(i);
+//                int unitName = unit.getUnit();
+//                int numOfWords = unit.getWords().size();
+//                int unitId = insertUnit(unitName, classId, numOfWords);
+//                Log.d(tag, "unit id: " + unitId);
+//                int testId = insertTestUnit(unitId, percent[i],percent[i], percent[i]);
+//                Log.d(tag, "test id: " + testId);
 //            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
 //        }
+//
 //    }
-
-
-    /**
-     * Insert data into database
-     *
-     * @param grades
-     */
-    public void insertData(ArrayList<Grade> grades) {
-        int percent[] = new int[]{0,10,30,75,80,90,100 }; //TODO: dumpy data, remove later
-        for (int i = 0; i < grades.size(); i++) {
-            Grade grade = grades.get(i);
-            int className = grade.getGrade();
-            int classId = insertClass(className);//add row for class
-            Log.d(tag, "class id: " + classId);
-            ArrayList<Unit> units = grade.getUnits();
-            for (int j = 0; j < units.size(); j++) {
-                Unit unit = units.get(i);
-                int unitName = unit.getUnit();
-                int numOfWords = unit.getWords().size();
-                int unitId = insertUnit(unitName, classId, numOfWords);
-                Log.d(tag, "unit id: " + unitId);
-                int testId = insertTestUnit(unitId, percent[i],percent[i], percent[i]);
-                Log.d(tag, "test id: " + testId);
-            }
-        }
-
-    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

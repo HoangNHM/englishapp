@@ -70,6 +70,10 @@ public class Grade implements Parcelable {
     }
 
     public Unit getCurrentUnit() {
+        Log.d("Grade", "unit size: " + units.size());
+        for(int i = 0; i <units.size(); i++){
+            Log.d("Grade:", "" + units.get(i).getUnitName());
+        }
         return units.get(cIndexUnit);
     }
     public Unit getNextUnit() {
@@ -87,12 +91,12 @@ public class Grade implements Parcelable {
         }
     }
 
-
     public void addUnit(Unit unit) {
         units.add(unit);
     }
 
     public void setUnits(ArrayList<Unit> units) {
+        Log.d("Grade", "setUnit list");
         this.units = units;
     }
 

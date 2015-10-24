@@ -1,7 +1,9 @@
 package com.idiotsapps.chaoenglish;
-
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.idiotsapps.chaoenglish.helper.HelperApplication;
+
 
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -12,8 +14,8 @@ import java.util.Date;
  */
 public class Unit implements Parcelable{
     private ArrayList<Word> words = new ArrayList<Word>();
-    private String unitName;// unit_<unitInt>
-    private int unitId; //order of unit
+    private int unitName;//1,2,3...
+    private int unitId; //rowId of Unit
     private int grade;
     private float vocabPercent;
     private float listenPercent;
@@ -23,7 +25,7 @@ public class Unit implements Parcelable{
     private Date date; // last time user do the test
 
     protected Unit(Parcel in) {
-        unitName = in.readString();
+        unitName = in.readInt();
         unitId = in.readInt();
         grade = in.readInt();
         vocabPercent = in.readFloat();
@@ -58,7 +60,7 @@ public class Unit implements Parcelable{
     public int getUnit() {
         return unitId;
     }
-    public String getUnitName(){
+    public int getUnitName(){
         return unitName;
     }
     public Word getCurrentWord() {
@@ -75,6 +77,10 @@ public class Unit implements Parcelable{
         return cWordIndex;
     }
     public ArrayList<Word> getWords() {
+        //If words have not retrieve from database
+        if(words.size() == 0){
+            words = HelperApplication.sMySQLiteHelper.getWords(this.grade,this.unitName);
+        }
         return words;
     }
 
@@ -85,7 +91,7 @@ public class Unit implements Parcelable{
     public Unit(int grade, int unitId,int unitName,int numOfWord, float vPercent, float gPercent, float lPercent) {
         this.unitId= unitId;
         this.numOfWord = numOfWord;
-        this.unitName = "unit_" + this.unitName;
+        this.unitName = unitName;
         this.cWordIndex = 0;
         this.grade = grade;
         this.grammarPercent = gPercent;
@@ -108,7 +114,7 @@ public class Unit implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(unitName);
+        dest.writeInt(unitName);
         dest.writeInt(unitId);
         dest.writeInt(grade);
         dest.writeFloat(vocabPercent);

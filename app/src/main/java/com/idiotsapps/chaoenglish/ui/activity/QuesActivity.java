@@ -1,5 +1,6 @@
 package com.idiotsapps.chaoenglish.ui.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
@@ -61,13 +62,11 @@ public class QuesActivity extends AppCompatActivity
         mViewRightChoice.setOnClickListener(mOnDismissRightChoiceView);
         mTvWord = (TextView) findViewById(R.id.tvWord);
 
-//        Intent intent = getIntent();
-//        this.grade = intent.getIntExtra("grade", 6);
-
-//        mySQLiteHelper = new MySQLiteHelper(this); //intialize sqlite helper
-        mySQLiteHelper = HelperApplication.sMySQLiteHelper; //intialize sqlite helper
-        this.grades = mySQLiteHelper.getGrades();
-        mySQLiteHelper.getWritableDatabase();
+        Intent intent = getIntent();
+        this.grades = HelperApplication.sMySQLiteHelper.getClasses();
+        int pos = intent.getIntExtra("position", 0);
+//        int pos = 0;
+        Log.d(tag,"position: " + pos);
         getStarDict(); //initalize StarDict stuff
 
         /**
@@ -75,8 +74,11 @@ public class QuesActivity extends AppCompatActivity
          * This below snippet code will be replace
          * by other initialization
          */
-        this.currentGrade = grades.get(0);//list starts from 0
+
+        this.currentGrade = grades.get(pos);//list starts from 0
+
         this.currentUnit = this.currentGrade.getCurrentUnit();
+        this.currentUnit.getWords();
         this.currentWord = this.currentUnit.getCurrentWord();
         this.imageView = (ImageView) findViewById(R.id.wordImage);
 
@@ -117,74 +119,12 @@ public class QuesActivity extends AppCompatActivity
         }
     };
 
-    //++del HoangNHM 20151013 move to FirstStartActivity
-//    /**
-//     * It will copy asset dictionary files to an external location
-//     */
-//    private void copyDictToSdCard() {
-//        AssetManager assetManager = getAssets();
-//        this.dictExterPath = Environment.getExternalStorageDirectory().toString() + "/" + this.dictAssestPath;
-//        File starDict = new File(this.dictExterPath);
-//
-//        if(!starDict.exists()){
-//            starDict.mkdirs();
-//            String[] files = null;
-//            try {
-//                files = assetManager.list(this.dictAssestPath);
-//            } catch (IOException e) {
-//                Log.e(tag, e.getMessage());
-//            }
-//
-//            for(String filename : files) {
-//                Log.d(tag, "file: " + filename);
-//                InputStream in = null;
-//                OutputStream out = null;
-//                try {
-//                    in = assetManager.open(this.dictAssestPath + "/" + filename);
-//                    Log.d(tag, "file path: " + this.dictExterPath + "/" + filename);
-//                    out = new FileOutputStream(this.dictExterPath + "/" + filename);
-//                    copyFile(in, out);
-//                    in.close();
-//                    in = null;
-//                    out.flush();
-//                    out.close();
-//                    out = null;
-//                } catch (Exception e) {
-//                    Log.e(tag, e.getMessage());
-//                }
-//            }
-//        }
-//        else {
-//            //TODO: Verify exist files
-//            Log.d(tag, "dir. already exists");
-//        }
-//    }
-//
-//    /**
-//     * It will write data from input stream to an output stream as a file
-//     * @param in Input stream
-//     * @param out Output stream of a file
-//     * @throws IOException
-//     */
-//    private void copyFile(InputStream in, OutputStream out) throws IOException {
-//        byte[] buffer = new byte[1024];
-//        int read;
-//        while((read = in.read(buffer)) != -1){
-//            out.write(buffer, 0, read);
-//        }
-//    }
-    //--del HoangNHM 20151013 move to FirstStartActivity
-
     /**
      * - Copy the dict database from asset for sdcard
      * - Create new StarDict object for app
      */
     private void getStarDict() {
         Log.d(tag, "enter getStarDict");
-        //++del HoangNHM 20151013 move to FirstStartActivity
-//        copyDictToSdCard();
-        //--del HoangNHM 20151013 move to FirstStartActivity
-        // get path from pref
         if (null != HelperApplication.sStarDict) {
             this.starDict = HelperApplication.sStarDict;
             Log.d("testing", "StarDict = HelperApplication.sStarDict");
