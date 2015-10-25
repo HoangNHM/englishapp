@@ -138,7 +138,7 @@ public class StarDict {
      */
     public String lookupWord(int idx) {
         if (idx < 0 || idx >= idxFile.getLongWordCount()) {
-            return "not found";
+            return "update in next version";
         }
         WordEntry tempEntry = idxFile.getEntryList().get((int) idx);
 

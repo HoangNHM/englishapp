@@ -45,6 +45,7 @@ public class QuesActivity extends AppCompatActivity
     private ImageView imageView;
     private Button[] aBtn = new Button[4];
     private ImageView[] iBtn = new ImageView[4];
+    private ImageView[] heartBtn = new ImageView[3];
     private StarDict starDict = null;
     private String tag = this.getClass().getSimpleName();
     private MySQLiteHelper mySQLiteHelper = null;
@@ -59,6 +60,7 @@ public class QuesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         hideActionBar();
         setContentView(R.layout.activity_ques);
+//        setContentView(findViewById(R.id.webView));
         // add view RightChoice
         mViewRightChoice = (RelativeLayout) findViewById(R.id.vRightChoice);
         mViewRightChoice.setOnClickListener(mOnDismissRightChoiceView);
@@ -67,7 +69,6 @@ public class QuesActivity extends AppCompatActivity
         Intent intent = getIntent();
         this.grades = HelperApplication.sMySQLiteHelper.getClasses();
         int pos = intent.getIntExtra("position", 0);
-//        Log.d(tag,"position: " + pos);
         getStarDict(); //initalize StarDict stuff
 
         /**
@@ -75,7 +76,6 @@ public class QuesActivity extends AppCompatActivity
          * This below snippet code will be replace
          * by other initialization
          */
-
         this.currentGrade = grades.get(pos);//list starts from 0
         this.currentUnit = this.currentGrade.getCurrentUnit();
         this.currentUnit.getWords();
@@ -103,13 +103,20 @@ public class QuesActivity extends AppCompatActivity
             }
         });
 
+        //heart buttons
+        this.heartBtn[0] = (ImageView) findViewById(R.id.heart1);
+        this.heartBtn[1] = (ImageView) findViewById(R.id.heart2);
+        this.heartBtn[2] = (ImageView) findViewById(R.id.heart3);
+
         //Starting game
         goNextWord();
     }
+
     private void comeBackMain(){
         Intent intentQues = new Intent(QuesActivity.this, MainActivity.class);
         startActivity(intentQues);
     }
+
     private void hideActionBar() {
         ActionBar bar = getSupportActionBar();
         if (null != bar) {
@@ -159,15 +166,21 @@ public class QuesActivity extends AppCompatActivity
             });
         }
     }
+
+    /**
+     * Handle the heart buttons when you answer questions
+     * @param word
+     */
     private void decrLifeCount(String word){
         lifeCount--;
         String htmlText = this.starDict.lookupWord(word);
         showFailedDialog(htmlText);
-        if(lifeCount <= 0){
+        if(lifeCount < 0){
             //TODO: show adv
+            //TODO: show a dialog "number correct word per total
             comeBackMain();
         }else{
-            //
+            heartBtn[lifeCount].setImageResource(R.drawable.ic_heart_null);
         }
 
     }
@@ -238,7 +251,100 @@ public class QuesActivity extends AppCompatActivity
         //TODO: show ads randomly here
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         final InfoDialogFragment newFragment = new InfoDialogFragment();
-        String htmlText = this.starDict.lookupWord(word);
+//        String htmlText = this.starDict.lookupWord(word);
+        String htmlText = "<html>\n" +
+                "<head>\n" +
+                "\t\t<meta charset=\"UTF-8\">\n" +
+                "</head>\n" +
+                "<body style=\"padding: 0px; margin-top: 0px;\">\n" +
+                "<style type=\"text/css\">\n" +
+                "\t.firstHeading{\n" +
+                "\t\tbackground-color: #4577BF;\n" +
+                "\t\tmargin: 0px -236px 4px -28px;\n" +
+                "\t\tpadding: 7px 236px 4px 28px;\n" +
+                "\t\tline-height: 28px;\n" +
+                "\t\tfont-size: 21px;\n" +
+                "\t\tfont-weight: bold;\n" +
+                "\t\tfont-family: Arial,sans-serif;\n" +
+                "\t\tcolor: #FFF;\n" +
+                "\t}\n" +
+                "\t.meaning{\n" +
+                "\t\tmargin-top: 2px;\n" +
+                "\t}\n" +
+                "\t.headline{\n" +
+                "\t\tfont-size: 18px;\n" +
+                "\t\ttext-decoration: none;\n" +
+                "\t\tcolor: #FF8A00;\n" +
+                "\t\tfont-weight: bold;\n" +
+                "\n" +
+                "\t}\n" +
+                "\t.mw-headline{\n" +
+                "\t\tdisplay: block;\n" +
+                "\t\tpadding-top: 5px;\n" +
+                "\t\tmargin-top: 2px;\n" +
+                "\t\tpadding-left: 20px;\n" +
+                "\t\tfont-weight: bold;\n" +
+                "\t\tfont-style: italic;\n" +
+                "\t}\n" +
+                "\t.mw-headline::before{\n" +
+                "\t\tcontent: \"* \";\n" +
+                "\t}\n" +
+                "\t.example{\n" +
+                "\t\tborder-left: 1px solid #CCC;\n" +
+                "\t    padding-bottom: 5px;\n" +
+                "\t    padding-left: 40px;\n" +
+                "\t    font-style: italic;\n" +
+                "\t}\n" +
+                "\t.example::before{\n" +
+                "\t\tcontent: \"-\";\n" +
+                "\t\tpadding-right: 5px;\n" +
+                "\t}\n" +
+                "\t.ex-meaning{\n" +
+                "\t\tborder-left: 1px solid #CCC;\n" +
+                "\t    padding-bottom: 5px;\n" +
+                "\t    padding-left: 40px;\n" +
+                "\t    font-style: italic;\n" +
+                "\t    color: #3434E0\n" +
+                "\t}\n" +
+                "\t.ex-meaning::before{\n" +
+                "\t\tcontent: \" \";\n" +
+                "\t\tpadding-right: 5px;\n" +
+                "\t}\n" +
+                "\t.firstHeading b{\n" +
+                "\t\tfont-style: italic;\n" +
+                "\t}\n" +
+                "</style>\n" +
+                "<div id=\"column-content\">\t\t\t\t\t\t\t\t\n" +
+                "\t<div class=\"firstHeading\"><span>Separate</span> /<b>'seprət</b>/\n" +
+                "\t</div>\t\n" +
+                "\t<div class=\"bodyContent\">\n" +
+                "\t<div class=\"category\">\n" +
+                "\t\t<div class=\"meaning\">\n" +
+                "\t\t\t<span class=\"headline\">Tính từ</span>\n" +
+                "\t\t\t<div class=\"section-h5\">\n" +
+                "\t\t\t\t<div class=\"mw-headline\">Khác nhau, riêng biệt, độc lập, riêng lẻ, tồn tại riêng rẽ</div>\n" +
+                "\t\t\t\t<div class=\"example\">the two questions are essentially separate</div>\n" +
+                "\t\t\t\t<div class=\"ex-meaning\">ve co ban, hai van de do khong dinh voi nhau</div>\n" +
+                "\t\t\t\t<div class=\"example\">separate estate</div>\n" +
+                "\t\t\t\t<div class=\"ex-meaning\">cua rieng(cua dan ba co chong)</div>\n" +
+                "\t\t\t\t<div class=\"example\">separate estate</div>\n" +
+                "\t\t\t\t<div class=\"ex-meaning\">cua rieng(cua dan ba co chong)</div>\n" +
+                "\t\t\t\t<div class=\"example\">separate maintenance</div>\n" +
+                "\t\t\t\t<div class=\"ex-meaning\">Tien cap cho vo</div>\n" +
+                "\t\t\t</div>\n" +
+                "\t\t</div>\n" +
+                "\n" +
+                "\t\t<div class=\"meaning\">\n" +
+                "\t\t\t<span class=\"headline\">Danh Tu </span>\n" +
+                "\t\t\t<div class=\"section-h5\">\n" +
+                "\t\t\t\t<span class=\"mw-headline\">Vat roi</span>\n" +
+                "\t\t\t\t<span class=\"mw-headline\">Quan le, ao le</span>\n" +
+                "\t\t\t\t<span class=\"mw-headline\">ban in roi</span>\n" +
+                "\t\t\t</div>\n" +
+                "\t\t</div>\n" +
+                "\t</div>\n" +
+                "</body>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n" +
+                "</html>";
         newFragment.show(ft, "infoDialog");
         newFragment.setWord(htmlText);
     }

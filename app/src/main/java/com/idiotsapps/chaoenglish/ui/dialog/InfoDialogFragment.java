@@ -5,11 +5,13 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -87,8 +89,8 @@ public class InfoDialogFragment extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        TextView tv = (TextView) view.findViewById(R.id.textView);
-        tv.setText(this.word);
+        WebView tv = (WebView) view.findViewById(R.id.webView);
+        tv.loadData(this.word,"text/html","UTF-8");
 
     }
 }
