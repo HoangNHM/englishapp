@@ -126,8 +126,9 @@ public class QuesActivity extends AppCompatActivity
     }
 
     private void comeBackMain(){
-        Intent intentQues = new Intent(QuesActivity.this, MainActivity.class);
-        startActivity(intentQues);
+//        Intent intentQues = new Intent(QuesActivity.this, MainActivity.class);
+//        startActivity(intentQues);
+        onBackPressed();
     }
 
     private void hideActionBar() {
