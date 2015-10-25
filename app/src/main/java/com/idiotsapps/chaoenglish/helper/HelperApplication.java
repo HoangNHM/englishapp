@@ -11,6 +11,7 @@ public class HelperApplication extends Application {
 
     public static StarDict sStarDict;
     public static MySQLiteHelper sMySQLiteHelper;
+    public static SoundHelper sSoundHelper;
 
     @Override
     public void onCreate() {

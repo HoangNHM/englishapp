@@ -18,6 +18,7 @@ import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
 import com.idiotsapps.chaoenglish.helper.PreferencesHelper;
+import com.idiotsapps.chaoenglish.helper.SoundHelper;
 import com.idiotsapps.chaoenglish.stardict.StarDict;
 
 import java.io.File;
@@ -69,6 +70,8 @@ public class FirstStartActivity extends ActivityBase {
         HelperApplication.sMySQLiteHelper.openDataBase();
         HelperApplication.sMySQLiteHelper.getWritableDatabase();
 //        Log.d(TAG, "new MySQLiteHelper");
+        // Sound Helper
+        HelperApplication.sSoundHelper = new SoundHelper(getApplicationContext());
     }
 
     @Override

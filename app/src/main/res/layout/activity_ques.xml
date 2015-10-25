@@ -212,15 +212,15 @@
         android:visibility="gone">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="150dp"
             android:background="#f4ffd4"
             android:layout_centerInParent="true"
             android:gravity="center">
             <TextView
                 android:id="@+id/tvWord"
                 android:text="word"
-                android:textColor="#75c902"
-                android:textSize="16sp"
+                android:textColor="#5bae02"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"

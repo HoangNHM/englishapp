@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.idiotsapps.chaoenglish.Grade;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
+import com.idiotsapps.chaoenglish.helper.SoundHelper;
 import com.idiotsapps.chaoenglish.ui.dialog.InfoDialogFragment;
 import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.R;
@@ -172,6 +173,9 @@ public class QuesActivity extends AppCompatActivity
                     }
                 }
             }, 1000);
+            // TODO sound
+            SoundHelper soundHelper = HelperApplication.sSoundHelper;
+            soundHelper.playSound(SoundHelper.SOUND_CHOOSE_RIGHT);
         }else {
             //show ads
             String htmlText = this.starDict.lookupWord(word);
