@@ -27,8 +27,10 @@ import com.idiotsapps.chaoenglish.Unit;
 import com.idiotsapps.chaoenglish.Word;
 import com.idiotsapps.chaoenglish.stardict.StarDict;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -54,13 +56,17 @@ public class QuesActivity extends AppCompatActivity
     private Handler mHandlerRialog;
     private RelativeLayout mViewRightChoice;
     private TextView mTvWord;
+    private SoundHelper mSoundHelper;
+    private TextView mTvUnit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideActionBar();
         setContentView(R.layout.activity_ques);
-//        setContentView(findViewById(R.id.webView));
+
+        // Sound Helper
+        mSoundHelper = HelperApplication.sSoundHelper;
         // add view RightChoice
         mViewRightChoice = (RelativeLayout) findViewById(R.id.vRightChoice);
         mViewRightChoice.setOnClickListener(mOnDismissRightChoiceView);
@@ -108,8 +114,15 @@ public class QuesActivity extends AppCompatActivity
         this.heartBtn[1] = (ImageView) findViewById(R.id.heart2);
         this.heartBtn[2] = (ImageView) findViewById(R.id.heart3);
 
+        mTvUnit = (TextView) findViewById(R.id.tvUnit);
+        setTvUnit(this.currentUnit.getUnitName());
+
         //Starting game
         goNextWord();
+    }
+
+    private void setTvUnit(int unit) {
+        mTvUnit.setText("UNIT" + unit);
     }
 
     private void comeBackMain(){
@@ -205,13 +218,14 @@ public class QuesActivity extends AppCompatActivity
                         goNextWord();
                     }
                 }
-            }, 1000);
+            }, 2000);
             // TODO sound
-            SoundHelper soundHelper = HelperApplication.sSoundHelper;
-            soundHelper.playSound(SoundHelper.SOUND_CHOOSE_RIGHT);
+            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_RIGHT);
         }else {
             //show ads
+            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
             decrLifeCount(word);
+
         }
     }
 
@@ -251,104 +265,207 @@ public class QuesActivity extends AppCompatActivity
         //TODO: show ads randomly here
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         final InfoDialogFragment newFragment = new InfoDialogFragment();
-//        String htmlText = this.starDict.lookupWord(word);
-        String htmlText = "<html>\n" +
-                "<head>\n" +
-                "\t\t<meta charset=\"UTF-8\">\n" +
-                "</head>\n" +
-                "<body style=\"padding: 0px; margin-top: 0px;\">\n" +
-                "<style type=\"text/css\">\n" +
-                "\t.firstHeading{\n" +
-                "\t\tbackground-color: #4577BF;\n" +
-                "\t\tmargin: 0px -236px 4px -28px;\n" +
-                "\t\tpadding: 7px 236px 4px 28px;\n" +
-                "\t\tline-height: 28px;\n" +
-                "\t\tfont-size: 21px;\n" +
-                "\t\tfont-weight: bold;\n" +
-                "\t\tfont-family: Arial,sans-serif;\n" +
-                "\t\tcolor: #FFF;\n" +
-                "\t}\n" +
-                "\t.meaning{\n" +
-                "\t\tmargin-top: 2px;\n" +
-                "\t}\n" +
-                "\t.headline{\n" +
-                "\t\tfont-size: 18px;\n" +
-                "\t\ttext-decoration: none;\n" +
-                "\t\tcolor: #FF8A00;\n" +
-                "\t\tfont-weight: bold;\n" +
-                "\n" +
-                "\t}\n" +
-                "\t.mw-headline{\n" +
-                "\t\tdisplay: block;\n" +
-                "\t\tpadding-top: 5px;\n" +
-                "\t\tmargin-top: 2px;\n" +
-                "\t\tpadding-left: 20px;\n" +
-                "\t\tfont-weight: bold;\n" +
-                "\t\tfont-style: italic;\n" +
-                "\t}\n" +
-                "\t.mw-headline::before{\n" +
-                "\t\tcontent: \"* \";\n" +
-                "\t}\n" +
-                "\t.example{\n" +
-                "\t\tborder-left: 1px solid #CCC;\n" +
-                "\t    padding-bottom: 5px;\n" +
-                "\t    padding-left: 40px;\n" +
-                "\t    font-style: italic;\n" +
-                "\t}\n" +
-                "\t.example::before{\n" +
-                "\t\tcontent: \"-\";\n" +
-                "\t\tpadding-right: 5px;\n" +
-                "\t}\n" +
-                "\t.ex-meaning{\n" +
-                "\t\tborder-left: 1px solid #CCC;\n" +
-                "\t    padding-bottom: 5px;\n" +
-                "\t    padding-left: 40px;\n" +
-                "\t    font-style: italic;\n" +
-                "\t    color: #3434E0\n" +
-                "\t}\n" +
-                "\t.ex-meaning::before{\n" +
-                "\t\tcontent: \" \";\n" +
-                "\t\tpadding-right: 5px;\n" +
-                "\t}\n" +
-                "\t.firstHeading b{\n" +
-                "\t\tfont-style: italic;\n" +
-                "\t}\n" +
-                "</style>\n" +
-                "<div id=\"column-content\">\t\t\t\t\t\t\t\t\n" +
-                "\t<div class=\"firstHeading\"><span>Separate</span> /<b>'seprət</b>/\n" +
-                "\t</div>\t\n" +
-                "\t<div class=\"bodyContent\">\n" +
-                "\t<div class=\"category\">\n" +
-                "\t\t<div class=\"meaning\">\n" +
-                "\t\t\t<span class=\"headline\">Tính từ</span>\n" +
-                "\t\t\t<div class=\"section-h5\">\n" +
-                "\t\t\t\t<div class=\"mw-headline\">Khác nhau, riêng biệt, độc lập, riêng lẻ, tồn tại riêng rẽ</div>\n" +
-                "\t\t\t\t<div class=\"example\">the two questions are essentially separate</div>\n" +
-                "\t\t\t\t<div class=\"ex-meaning\">ve co ban, hai van de do khong dinh voi nhau</div>\n" +
-                "\t\t\t\t<div class=\"example\">separate estate</div>\n" +
-                "\t\t\t\t<div class=\"ex-meaning\">cua rieng(cua dan ba co chong)</div>\n" +
-                "\t\t\t\t<div class=\"example\">separate estate</div>\n" +
-                "\t\t\t\t<div class=\"ex-meaning\">cua rieng(cua dan ba co chong)</div>\n" +
-                "\t\t\t\t<div class=\"example\">separate maintenance</div>\n" +
-                "\t\t\t\t<div class=\"ex-meaning\">Tien cap cho vo</div>\n" +
-                "\t\t\t</div>\n" +
-                "\t\t</div>\n" +
-                "\n" +
-                "\t\t<div class=\"meaning\">\n" +
-                "\t\t\t<span class=\"headline\">Danh Tu </span>\n" +
-                "\t\t\t<div class=\"section-h5\">\n" +
-                "\t\t\t\t<span class=\"mw-headline\">Vat roi</span>\n" +
-                "\t\t\t\t<span class=\"mw-headline\">Quan le, ao le</span>\n" +
-                "\t\t\t\t<span class=\"mw-headline\">ban in roi</span>\n" +
-                "\t\t\t</div>\n" +
-                "\t\t</div>\n" +
-                "\t</div>\n" +
-                "</body>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n" +
-                "</html>";
+        String htmlText = this.starDict.lookupWord(word);
+        String htmlBody = null;
+        try {
+            htmlBody = new ParseHtlm().parseHtlm(htmlText);
+        } catch (IOException e) {
+            e.printStackTrace();
+            htmlBody = "";
+        }
+        newFragment.setWord(htmlBody);
         newFragment.show(ft, "infoDialog");
-        newFragment.setWord(htmlText);
     }
 
+     class ParseHtlm {
+
+        private static final char MARK_TITLE = '@';
+        private static final char MARK_TYPE = '*';
+        private static final char MARK_MEANING = '-';
+        private static final char MARK_EX = '=';
+
+        private static final String OPEN_TITLE = "<div class=\"title\"><span>";
+        private static final String OPEN_TYPE = "<div>\n" +
+                "\t\t<div class=\"c-meaning\">\n" +
+                "\t\t\t<span class=\"type\">";
+        private static final String OPEN_MEANING = "<div class=\"meaning\">";
+        private static final String OPEN_EX = "<div class=\"example\">";
+
+        private static final String CLOSE_TITLE = "</div>";
+        private static final String CLOSE_TYPE = "</div>\n" +
+                "\t\t</div>";
+        private static final String CLOSE_MEANING = "</div>";
+        private static final String CLOSE_EX = "</div>";
+
+        private  String parseHtlm(String strInput) throws IOException {
+            String res = "";
+            BufferedReader reader = new BufferedReader(new StringReader(strInput));
+            String line = ""; // read line by line
+            char[] mark = new char[1]; // @, -, ...
+
+            String openTitle = "";
+            String openType = "";
+            String openMeaning = "";
+            String openEx = "";
+
+            String closeTitle = "";
+            String closeType = "";
+            String closeMeaning = "";
+            String closeEx = "";
+
+            while (null != (line = reader.readLine())) {
+                line.getChars(0, 1, mark, 0);
+                switch (mark[0]) {
+                    case MARK_TITLE:
+                        //close
+                        res += closeEx; closeEx = "";
+                        res += closeMeaning; closeMeaning = "";
+                        res += closeType; closeType = "";
+                        res += closeTitle; closeTitle = "";
+                        //open
+                        openTitle = OPEN_TITLE;
+                        //close
+                        closeTitle = CLOSE_TITLE;
+                        //res
+                        //process
+                        String[] temp = new String[9];
+                        line = line.substring(1); // remove @
+                        if (line.contains("/")) {
+                            temp = line.split("/");
+                            res += openTitle + temp[0] + "</span> /<b>" + temp[1] + "</b>/</div>";
+                            openTitle = "";
+                        } else {
+                            res += openTitle + line + "</b>/</div>";
+                            openTitle = "";
+                        }
+                        break;
+
+                    case MARK_TYPE:
+                        //close
+                        res += closeEx; closeEx = "";
+                        res += closeMeaning; closeMeaning = "";
+                        res += closeType; closeType = "";
+                        //open
+                        openType = OPEN_TYPE;
+                        //close
+                        closeType = CLOSE_TYPE;
+                        //res
+                        line = line.substring(1); // remove *
+                        res += openType + line + "</span>\n" +
+                                "\t\t\t<div>"; openType = "";
+                        break;
+
+                    case MARK_MEANING:
+                        //close
+                        res += closeEx; closeEx = "";
+                        res += closeMeaning; closeMeaning = "";
+                        //open
+                        openMeaning = OPEN_MEANING;
+                        //close
+                        closeMeaning = CLOSE_MEANING;
+                        //res
+                        line = line.substring(1); // remove -
+                        res += openMeaning + line + "\n"; openMeaning = "";
+                        break;
+
+                    case MARK_EX:
+                        //close
+                        res += closeEx; closeEx = "";
+                        res += closeMeaning; closeMeaning = "";
+                        //open
+                        openEx = OPEN_EX;
+                        //close
+                        closeEx = CLOSE_EX;
+                        //res
+                        line = line.substring(1); // remove =
+                        String[] ex_meaning = new String[2];
+                        ex_meaning = line.split("\\+");
+                        res += openEx + ex_meaning[0] + "</div>";
+                        res += "<div class=\"ex-meaning\">" + ex_meaning[1] + "</div>";
+                        openEx = "";
+
+                        break;
+
+                    default:
+                        res += line;
+                        break;
+                }
+            } // end while
+            //close
+            res += closeEx; closeEx = "";
+            res += closeMeaning; closeMeaning = "";
+            res += closeType; closeType = "";
+            res += closeTitle; closeTitle = "";
+
+            String HEADER = "<html>\n" +
+                    "<head>\n" +
+                    "\t\t<meta charset=\"UTF-8\">\n" +
+                    "</head>\n" +
+                    "<body style=\"padding: 0px; margin-top: 0px;\">\n" +
+                    "<style type=\"text/css\">\n" +
+                    "\t.title{\n" +
+                    "\t\tbackground-color: #94C500;\n" +
+                    "\t\tmargin: 0px -236px 4px -28px;\n" +
+                    "\t\tpadding: 7px 236px 4px 28px;\n" +
+                    "\t\tline-height: 28px;\n" +
+                    "\t\tfont-size: 21px;\n" +
+                    "\t\tfont-weight: bold;\n" +
+                    "\t\tfont-family: Arial,sans-serif;\n" +
+                    "\t\tcolor: #FFF;\n" +
+                    "\t}\n" +
+                    "\t.c-meaning{\n" +
+                    "\t\tmargin-top: 2px;\n" +
+                    "\t}\n" +
+                    "\t.type{\n" +
+                    "\t\tfont-size: 18px;\n" +
+                    "\t\ttext-decoration: none;\n" +
+                    "\t\tcolor: #FF8A00;\n" +
+                    "\t\tfont-weight: bold;\n" +
+                    "\n" +
+                    "\t}\n" +
+                    "\t.meaning{\n" +
+                    "\t\tdisplay: block;\n" +
+                    "\t\tpadding-top: 5px;\n" +
+                    "\t\tmargin-top: 2px;\n" +
+                    "\t\tpadding-left: 20px;\n" +
+                    "\t\tfont-weight: bold;\n" +
+                    "\t\tfont-style: italic;\n" +
+                    "\t}\n" +
+                    "\t.meaning::before{\n" +
+                    "\t\tcontent: \"* \";\n" +
+                    "\t}\n" +
+                    "\t.example{\n" +
+                    "\t\tborder-left: 1px solid #CCC;\n" +
+                    "\t    padding-bottom: 5px;\n" +
+                    "\t    padding-left: 40px;\n" +
+                    "\t    font-style: italic;\n" +
+                    "\t}\n" +
+                    "\t.example::before{\n" +
+                    "\t\tcontent: \"-\";\n" +
+                    "\t\tpadding-right: 5px;\n" +
+                    "\t}\n" +
+                    "\t.ex-meaning{\n" +
+                    "\t\tborder-left: 1px solid #CCC;\n" +
+                    "\t    padding-bottom: 5px;\n" +
+                    "\t    padding-left: 40px;\n" +
+                    "\t    font-style: italic;\n" +
+                    "\t    color: #3434E0\n" +
+                    "\t}\n" +
+                    "\t.ex-meaning::before{\n" +
+                    "\t\tcontent: \" \";\n" +
+                    "\t\tpadding-right: 5px;\n" +
+                    "\t}\n" +
+                    "\t.title b{\n" +
+                    "\t\tfont-style: italic;\n" +
+                    "\t}\n" +
+                    "</style>" +
+                    "<div id=\"column-content\">\t\t\t\t\t\t\t\t\n";
+            String FOOTER = "\t</div>\n" +
+                    "</body>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n" +
+                    "</html>";
+            return HEADER + res + FOOTER;
+        }
+    }
     /**
      * Show definition, pronunciation, example for click word
      * @param word
@@ -356,8 +473,15 @@ public class QuesActivity extends AppCompatActivity
     public void showFailedDialog(String word) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         final InfoDialogFragment newFragment = new InfoDialogFragment();
+        String htmlBody = null;
+        try {
+            htmlBody = new ParseHtlm().parseHtlm(word);
+        } catch (IOException e) {
+            e.printStackTrace();
+            htmlBody = "";
+        }
+        newFragment.setWord(htmlBody);
         newFragment.show(ft, "failedDialog");
-        newFragment.setWord(word);
     }
 
     /**

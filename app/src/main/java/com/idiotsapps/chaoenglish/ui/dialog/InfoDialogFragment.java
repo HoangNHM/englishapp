@@ -3,9 +3,11 @@ package com.idiotsapps.chaoenglish.ui.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +63,7 @@ public class InfoDialogFragment extends DialogFragment {
     }
 
     /** The system calls this only when creating the layout in a dialog. */
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // The only reason you might override this method when using onCreateView() is
@@ -71,8 +74,8 @@ public class InfoDialogFragment extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         return dialog;
     }
-    @Override
 
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
@@ -90,7 +93,25 @@ public class InfoDialogFragment extends DialogFragment {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         WebView tv = (WebView) view.findViewById(R.id.webView);
-        tv.loadData(this.word,"text/html","UTF-8");
+        tv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        tv.loadData(this.word,"text/html; charset=UTF-8", null);
+        Log.d("Hoang", word);
 
+    }
+
+    /**
+     * full screen
+     */
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 }

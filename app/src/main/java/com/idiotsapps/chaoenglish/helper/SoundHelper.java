@@ -18,6 +18,15 @@ public class SoundHelper {
     private float mVolume;
     private int[] mSoundId;
     public final static int SOUND_CHOOSE_RIGHT = 0;
+    public final static int SOUND_CHOOSE_WRONG = 1;
+    public static enum SoundId {
+        SOUND_CHOOSE_RIGHT(0),
+        SOUND_CHOOSE_WRONG(1);
+        private int a;
+        private SoundId(int a){
+            this.a = a;
+        }
+    }
 
     public SoundHelper (Context context) {
         mSoundId = new int[10]; // max: ten sound
@@ -29,15 +38,14 @@ public class SoundHelper {
             builder.setMaxStreams(1);
             mSoundPool = builder.build();
         }
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        mVolume = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         mSoundId[0] = mSoundPool.load(context, R.raw.sound_choose_right, 1);
+        mSoundId[1] = mSoundPool.load(context, R.raw.sound_choose_wrong, 1);
     }
 
-    public int playSound(int id) {
-        return mSoundPool.play(mSoundId[0], // temp hard code
-                mVolume,
-                mVolume,
+    public int playSound(SoundId id) {
+        return mSoundPool.play(mSoundId[id.a], // temp hard code
+                1f,
+                1f,
                 1,
                 0, // loop = 0 - no loop
                 1);
