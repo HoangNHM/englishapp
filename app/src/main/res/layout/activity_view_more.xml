@@ -35,4 +35,16 @@
         android:scaleType="fitCenter"
         tools:ignore="ContentDescription"
         android:src="@drawable/study"/>
+
+    <Button
+        android:text="invite"
+        android:onClick="invite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--<com.facebook.share.widget.SendButton-->
+        <!--android:id="@+id/fb_send_button"-->
+        <!--android:text="send"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="45dp"-->
+        />
 </LinearLayout>

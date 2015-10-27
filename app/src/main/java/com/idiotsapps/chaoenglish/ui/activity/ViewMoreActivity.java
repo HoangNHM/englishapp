@@ -2,14 +2,24 @@ package com.idiotsapps.chaoenglish.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ScrollView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.model.AppInviteContent;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.AppInviteDialog;
+import com.facebook.share.widget.SendButton;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -33,12 +43,19 @@ public class ViewMoreActivity extends ActivityBase {
     private int mClassName;
     private ScrollView mScrollViewChart;
     private ArrayList<Unit> mUnits; //list of units of clicked_class
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_more);
         mScrollViewChart = (ScrollView) findViewById(R.id.scrollViewChart);
+//        ShareLinkContent content = new ShareLinkContent.Builder()
+//                .setContentUrl(Uri.parse("https://fb.me/749567541854476"))
+//                .build();
+//        SendButton sendButton = (SendButton)findViewById(R.id.fb_send_button);
+//        sendButton.setShareContent(content);
+//        sendButton.registerCallback();
 
         mChart = (HorizontalBarChart) findViewById(R.id.horBarChart);
         // get caller intent
@@ -168,4 +185,45 @@ public class ViewMoreActivity extends ActivityBase {
         return super.onOptionsItemSelected(item);
     }
 
+    public void invite(View view) {
+        {
+            String appLinkUrl, previewImageUrl;
+
+            appLinkUrl = "https://fb.me/749567541854476";
+//        previewImageUrl = "https://www.mydomain.com/my_invite_image.jpg";
+
+            if (AppInviteDialog.canShow()) {
+                AppInviteContent content = new AppInviteContent.Builder()
+                        .setApplinkUrl(appLinkUrl)
+//                    .setPreviewImageUrl(previewImageUrl)
+                        .build();
+                AppInviteDialog appInviteDialog = new AppInviteDialog(this);
+                callbackManager = CallbackManager.Factory.create();
+                appInviteDialog.registerCallback(callbackManager, new FacebookCallback<AppInviteDialog.Result>() {
+                    @Override
+                    public void onSuccess(AppInviteDialog.Result result) {
+                        Log.d("Facebook", "onSuccess " + result.toString());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d("Facebook", "onCancel");
+                    }
+
+                    @Override
+                    public void onError(FacebookException e) {
+                        Log.d("Facebook", "onError " + e.toString());
+                    }
+                });
+                appInviteDialog.show(content);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        Log.d("Facebook", "onActivityResult\n" + requestCode + "\n" + resultCode + "\n" + data.toString());
+    }
 }

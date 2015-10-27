@@ -3,6 +3,7 @@ package com.idiotsapps.chaoenglish.ui.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.applinks.AppLinkData;
 import com.idiotsapps.chaoenglish.baseclass.ActivityBase;
 import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.R;
@@ -26,6 +29,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import bolts.AppLinks;
 
 public class FirstStartActivity extends ActivityBase {
 
@@ -41,6 +46,21 @@ public class FirstStartActivity extends ActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Uri targetUrl = AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
+        if (targetUrl != null) {
+            Log.i("AppLinks", "App Link Target URL: " + targetUrl.toString());
+        } else {
+            AppLinkData.fetchDeferredAppLinkData(
+                    this,
+                    new AppLinkData.CompletionHandler() {
+                        @Override
+                        public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
+                            //process applink data
+                            Log.i("AppLinks", "process applink data");
+                        }
+                    });
+        }
         prefsHelper = new PreferencesHelper(getApplicationContext());
         setContentView(R.layout.activity_first_start);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -51,6 +71,9 @@ public class FirstStartActivity extends ActivityBase {
     @Override
     protected void onResume() {
         super.onResume();
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+
         AsyncTask<Void, Void, Boolean> task;
         task = new SetDataBase().execute();
         // not first start, call MainActivity
@@ -99,6 +122,8 @@ public class FirstStartActivity extends ActivityBase {
     @Override
     protected void onPause() {
         super.onPause();
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
 //        if (mProgressDialog.isShowing()) {
 //            mProgressDialog.dismiss();
 ////            Log.d(TAG, "onPause dismiss mProgressDialog");

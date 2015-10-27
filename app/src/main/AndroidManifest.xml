@@ -4,6 +4,7 @@
     package="com.idiotsapps.chaoenglish" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".helper.HelperApplication"
@@ -39,6 +40,26 @@
             android:name=".ui.activity.QuesActivity"
             android:label="@string/title_activity_question" >
         </activity>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider749538661857364"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <!-- Accepts URIs "com.example.myapp://" -->
+            <data android:scheme="com.idiotsapps.chaoenglish" />
+        </intent-filter>
+
     </application>
 
 </manifest>

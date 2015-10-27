@@ -11,4 +11,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_view_more">ViewMoreActivity</string>
     <string name="title_activity_first_start">FirstStartActivity</string>
+
+    <string name="facebook_app_id">749538661857364</string>
 </resources>
