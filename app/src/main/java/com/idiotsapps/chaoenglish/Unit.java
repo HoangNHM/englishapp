@@ -7,7 +7,9 @@ import com.idiotsapps.chaoenglish.helper.HelperApplication;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by xtruhuy on 05/09/2015.
@@ -22,7 +24,6 @@ public class Unit implements Parcelable{
     private float grammarPercent;
     private int numOfWord;
     private int cWordIndex = 0;
-    private Date date; // last time user do the test
 
     protected Unit(Parcel in) {
         unitName = in.readInt();
@@ -47,13 +48,6 @@ public class Unit implements Parcelable{
         }
     };
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
     public float getVocabPercent() {
         return vocabPercent;
     }
@@ -78,17 +72,23 @@ public class Unit implements Parcelable{
     }
     public ArrayList<Word> getWords() {
         //If words have not retrieve from database
-//        if(words.size() == 0){
-        words = HelperApplication.sMySQLiteHelper.getWords(this.grade,this.unitName);
-//        }
+        if(words.size() == 0){
+            words = HelperApplication.sMySQLiteHelper.getWords(this.grade,this.unitName);
+            long seed = System.nanoTime();
+            Collections.shuffle(words, new Random(seed));
+        }
         return words;
     }
 
-    public void addWord(Word word) {
-        words.add(word);
+    public void updateVocabPercent(){
+        this.vocabPercent = (cWordIndex+1)/words.size() * 100;
+        HelperApplication.sMySQLiteHelper.updateTestResult(this.unitId,
+                Integer.toString((int)this.vocabPercent), Integer.toString((int)this.grammarPercent),
+                Integer.toString((int)this.listenPercent));
     }
 
-    public Unit(int grade, int unitId,int unitName,int numOfWord, float vPercent, float gPercent, float lPercent) {
+    public Unit(int grade, int unitId,int unitName,int numOfWord, float vPercent,
+                float gPercent, float lPercent) {
         this.unitId= unitId;
         this.numOfWord = numOfWord;
         this.unitName = unitName;

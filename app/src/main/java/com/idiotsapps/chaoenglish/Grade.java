@@ -76,6 +76,7 @@ public class Grade implements Parcelable {
         }
         return units.get(cIndexUnit);
     }
+
     public Unit getNextUnit() {
         if (cIndexUnit < (units.size() -1)) {
             cIndexUnit++;
@@ -83,6 +84,7 @@ public class Grade implements Parcelable {
         }else
             return null;
     }
+
     public boolean isLastUnit(){
         if(cIndexUnit == (units.size() - 1)){
             return true;

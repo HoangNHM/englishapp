@@ -57,19 +57,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.myContext = context;
-//        this.assetManager = context.getAssets();
-        //TODO: copy file database for use
-
-
     }
 
     @Override
     public void onCreate(SQLiteDatabase database) {
         Log.d(tag, "create db helper");
         this.db = database;
-//        openDataBase();
-//        createDataBase();
-////        insertData(this.grades);
     }
 
     /**
@@ -170,10 +163,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
     public boolean openDataBase()  {
         String mPath = "/data/data/" + myContext.getPackageName() + "/databases/" + DATABASE_NAME;
-//		Log.v("mPath", mPath);
         this.db = SQLiteDatabase.openDatabase(mPath, null,
                 SQLiteDatabase.CREATE_IF_NECESSARY);
-//		mDataBase = SQLiteDatabase.openDatabase(mPath, null,SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         return this.db != null;
     }
 
@@ -197,96 +188,21 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         mInput.close();
     }
 
-    //TODO
-    public int updateTestUnit(int unitId, String testType, float result) {
-
-        return 0;
-    }
-
     /**
-     * Insert a new row of new test of new unit
-     * @param unitId
-     * @param vocaRes
-     * @param gramRes
-     * @param listRes
+     * Update test result into database
+     * @param rowId
+     * @param vocaTest
+     * @param gramTest
+     * @param listTest
      * @return
      */
-//    public int insertTestUnit(int unitId, float vocaRes, float gramRes, float listRes) {
-////        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put("unit_id", unitId);
-//        contentValues.put("vocabulary", vocaRes);
-//        contentValues.put("grammar", gramRes);
-//        contentValues.put("listening", listRes);
-//        int rowId = (int) db.insert(TABLE_TEST, null, contentValues);
-//        return rowId;
-//    }
-
-    /**
-     * Insert a new row for new class
-     * @param className
-     * @return
-     */
-    public int insertClass(int className) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("class_name", className);
-        int rowId = (int) db.insert(TABLE_CLASSES, null, contentValues);
-        return rowId;
+    public boolean updateTestResult(long rowId, String vocaTest, String gramTest, String listTest) {
+        ContentValues args = new ContentValues();
+        args.put(VOCA_TEST, vocaTest);
+        args.put(GRAM_TEST, gramTest);
+        args.put(LIST_TEST, listTest);
+        return db.update(TABLE_UNIT, args, UNIT_ID + "=" + rowId, null) > 0;
     }
-
-    /**
-     * Insert a new row for a new unit
-     * @param unitName
-     * @param classId
-     * @param numberOfWord
-     * @return
-     */
-    public int insertUnit(int unitName, int classId, int numberOfWord) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("class_id", classId);
-        contentValues.put("unit_name", unitName);
-        contentValues.put("number_of_words", numberOfWord);
-        int rowId = (int) db.insert(TABLE_UNIT, null, contentValues);
-        return rowId;
-    }
-
-    /**
-     * Get asset manager of context
-     * @param assetManager
-     */
-    public void setAssetManager(AssetManager assetManager) {
-        this.assetManager = assetManager;
-    }
-
-    public ArrayList<Grade> getGrades() {
-        return grades;
-    }
-
-//    /**
-//     * Insert data into database
-//     *
-//     * @param grades
-//     */
-//    public void insertData(ArrayList<Grade> grades) {
-//        int percent[] = new int[]{0,10,30,75,80,90,100 }; //TODO: dumpy data, remove later
-//        for (int i = 0; i < grades.size(); i++) {
-//            Grade grade = grades.get(i);
-//            int className = grade.getGrade();
-//            int classId = insertClass(className);//add row for class
-//            Log.d(tag, "class id: " + classId);
-//            ArrayList<Unit> units = grade.getUnits();
-//            for (int j = 0; j < units.size(); j++) {
-//                Unit unit = units.get(i);
-//                int unitName = unit.getUnit();
-//                int numOfWords = unit.getWords().size();
-//                int unitId = insertUnit(unitName, classId, numOfWords);
-//                Log.d(tag, "unit id: " + unitId);
-//                int testId = insertTestUnit(unitId, percent[i],percent[i], percent[i]);
-//                Log.d(tag, "test id: " + testId);
-//            }
-//        }
-//
-//    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,18 +40,15 @@ public class QuesActivity extends AppCompatActivity
 {
     private ArrayList<Grade> grades = new ArrayList<Grade>();
     private Unit currentUnit;
-    private int lifeCount = 3;
     private Word currentWord;
     private Grade  currentGrade;
-    private int currGradeIndex = 0;
-    private int percent = 0;
     private ImageView imageView;
     private Button[] aBtn = new Button[4];
     private ImageView[] iBtn = new ImageView[4];
     private ImageView[] heartBtn = new ImageView[3];
     private StarDict starDict = null;
+    private int lifeCount = 3;
     private String tag = this.getClass().getSimpleName();
-    private MySQLiteHelper mySQLiteHelper = null;
     //HoangNHM
     private Word[] mWords;
     private Handler mHandlerRialog;
@@ -58,6 +56,7 @@ public class QuesActivity extends AppCompatActivity
     private TextView mTvWord;
     private SoundHelper mSoundHelper;
     private TextView mTvUnit;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +66,7 @@ public class QuesActivity extends AppCompatActivity
 
         // Sound Helper
         mSoundHelper = HelperApplication.sSoundHelper;
+
         // add view RightChoice
         mViewRightChoice = (RelativeLayout) findViewById(R.id.vRightChoice);
         mViewRightChoice.setOnClickListener(mOnDismissRightChoiceView);
@@ -117,6 +117,9 @@ public class QuesActivity extends AppCompatActivity
         mTvUnit = (TextView) findViewById(R.id.tvUnit);
         setTvUnit(this.currentUnit.getUnitName());
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setMax(100);
+
         //Starting game
         goNextWord();
     }
@@ -125,6 +128,9 @@ public class QuesActivity extends AppCompatActivity
         mTvUnit.setText("UNIT" + unit);
     }
 
+    private void setProgressBar(int percent){
+        progressBar.setProgress(percent);
+    }
     private void comeBackMain(){
 //        Intent intentQues = new Intent(QuesActivity.this, MainActivity.class);
 //        startActivity(intentQues);
@@ -175,7 +181,13 @@ public class QuesActivity extends AppCompatActivity
                 public void onClick(View view) {
                     Button b = (Button) view;
                     String word = b.getText().toString();
-                    verifyAnswer(word);
+                    if(verifyAnswer(word)){
+                        showPopUp(word,true,1500,true);
+                    }else{
+                        //TODO: show adv
+                        mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
+                        decrLifeCount(word);
+                    }
                 }
             });
         }
@@ -198,43 +210,44 @@ public class QuesActivity extends AppCompatActivity
         }
 
     }
+
+    private void showPopUp(String text, boolean soundId, int mSecond, final boolean isGoNext) {
+        mTvWord.setText(text);
+        mViewRightChoice.setVisibility(View.VISIBLE);
+//            final DialogFragment dialog = showRightChoiceDialog(word);
+        mHandlerRialog = new Handler();
+        mHandlerRialog.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (View.GONE != mViewRightChoice.getVisibility()) {
+                    mViewRightChoice.setVisibility(View.GONE);
+                    if (isGoNext) {
+                        goNextWord();
+                    }
+                }
+            }
+        }, mSecond);
+        // TODO sound
+        if (soundId) {
+            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_RIGHT);
+        } else {
+            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
+        }
+    }
     /**
      *  Verify if user's answer is correct or not
      *  Will show advertisement if it is corrected
      * @param word
      */
-    private void verifyAnswer(String word){
+    private boolean verifyAnswer(String word){
         String currWord = this.currentWord.getWord();
         if (currWord.equals(word)) {
-            // show Right Choice dialog - then goNextWord
-            mTvWord.setText(word);
-            mViewRightChoice.setVisibility(View.VISIBLE);
-//            final DialogFragment dialog = showRightChoiceDialog(word);
-            mHandlerRialog = new Handler();
-            mHandlerRialog.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (View.GONE != mViewRightChoice.getVisibility()) {
-                        mViewRightChoice.setVisibility(View.GONE);
-                        goNextWord();
-                    }
-                }
-            }, 2000);
-            // TODO sound
-            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_RIGHT);
+            return true;
         }else {
-            //show ads
-            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
-            decrLifeCount(word);
+            return false;
 
         }
     }
-
-//    private DialogFragment showRightChoiceDialog(String word) {
-//        DialogFragment newFragment = CustomDialogFragment.newInstance(word);
-//        newFragment.show(getSupportFragmentManager(), "Rialog");
-//        return newFragment;
-//    }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
@@ -598,22 +611,25 @@ public class QuesActivity extends AppCompatActivity
      * when connecting with a database
      */
     private void updateState(){
+        this.setProgress((int)this.currentUnit.getVocabPercent());
         if(this.currentUnit.isLastWord()){
+            this.currentUnit.updateVocabPercent();
             if(this.currentGrade.isLastUnit()){
-                //move to next grade
-                //move to first of unit
-                if (this.currGradeIndex < this.grades.size()) {
-                    this.currGradeIndex++;
-                    this.currentGrade = grades.get(currGradeIndex);
-                    this.currentUnit = this.currentGrade.getCurrentUnit();
-                    this.currentWord = this.currentUnit.getCurrentWord();
-                }else{
-                    Log.d(tag, "finished game");
-                    return;
-                }
+                //TODO: show dialog finish class
+                String message = "Congratulation! " +
+                        "You have studied " + this.currentGrade.getUnits().size()
+                        + " words!";
+                showPopUp(message,true,3000,false);
+                comeBackMain();
             }else{
                 //move to next unit
+                String message = "Congratulation! " +
+                        "You have studied " + this.currentUnit.getWords().size()
+                        + " words!";
+                showPopUp(message, true, 3000,false);
                 this.currentUnit = this.currentGrade.getNextUnit();
+                this.currentUnit.getWords(); //Get words from database
+                setTvUnit(this.currentUnit.getUnitName());
                 this.currentWord = this.currentUnit.getCurrentWord();
             }
         }else{
