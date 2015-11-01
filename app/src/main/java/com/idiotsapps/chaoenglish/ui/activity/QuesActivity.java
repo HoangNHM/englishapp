@@ -125,7 +125,7 @@ public class QuesActivity extends AppCompatActivity
     }
 
     private void setTvUnit(int unit) {
-        mTvUnit.setText("UNIT" + unit);
+        mTvUnit.setText("UNIT " + unit);
     }
 
     private void setProgressBar(int percent){
@@ -611,9 +611,9 @@ public class QuesActivity extends AppCompatActivity
      * when connecting with a database
      */
     private void updateState(){
-        this.setProgress((int)this.currentUnit.getVocabPercent());
+        this.currentUnit.updateVocabPercent();
+        this.setProgressBar((int)this.currentUnit.getVocabPercent());
         if(this.currentUnit.isLastWord()){
-            this.currentUnit.updateVocabPercent();
             if(this.currentGrade.isLastUnit()){
                 //TODO: show dialog finish class
                 String message = "Congratulation! " +

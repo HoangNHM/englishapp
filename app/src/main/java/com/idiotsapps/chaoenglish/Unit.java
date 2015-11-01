@@ -1,6 +1,7 @@
 package com.idiotsapps.chaoenglish;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
 
@@ -80,11 +81,12 @@ public class Unit implements Parcelable{
         return words;
     }
 
-    public void updateVocabPercent(){
-        this.vocabPercent = (cWordIndex+1)/words.size() * 100;
+    public void updateVocabPercent() {
+        Log.d("testing", "cWordIndex:" + cWordIndex + "size:" + words.size());
+        this.vocabPercent = (cWordIndex + 1) / words.size() * 100;
         HelperApplication.sMySQLiteHelper.updateTestResult(this.unitId,
-                Integer.toString((int)this.vocabPercent), Integer.toString((int)this.grammarPercent),
-                Integer.toString((int)this.listenPercent));
+                Integer.toString((int) this.vocabPercent), Integer.toString((int) this.grammarPercent),
+                Integer.toString((int) this.listenPercent));
     }
 
     public Unit(int grade, int unitId,int unitName,int numOfWord, float vPercent,
