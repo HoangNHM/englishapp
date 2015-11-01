@@ -120,7 +120,7 @@ public class QuesActivity extends AppCompatActivity
         progressBar.setMax(100);
 
         //Starting game
-        goNextWord();
+        playVocabTest();
     }
 
     private void setTvUnit(int unit) {
@@ -151,7 +151,7 @@ public class QuesActivity extends AppCompatActivity
         public void onClick(View v) {
             mHandlerRialog = null;
             mViewRightChoice.setVisibility(View.GONE);
-            goNextWord();
+            playVocabTest();
         }
     };
 
@@ -201,20 +201,11 @@ public class QuesActivity extends AppCompatActivity
         lifeCount--;
         String htmlText = this.starDict.lookupWord(word);
         showFailedDialog(htmlText);
-        if(lifeCount < 0){
-            //TODO: show adv
-            //TODO: show a dialog "number correct word per total
-            comeBackMain();
-        }else{
-            heartBtn[lifeCount].setImageResource(R.drawable.ic_heart_null);
-        }
-
     }
     private enum POPUP_CALLBACK_STATE{
         GO_NEXT_WORD(0),
         GO_NEXT_UNIT(1),
         GO_NEXT_CLASS(3);
-
         POPUP_CALLBACK_STATE(int i) {
         }
     }
@@ -231,7 +222,9 @@ public class QuesActivity extends AppCompatActivity
                     mViewRightChoice.setVisibility(View.GONE);
                     switch (nextState) {
                         case GO_NEXT_WORD:
-                            goNextWord();
+                            //Update current word
+                            QuesActivity.this.currentWord = QuesActivity.this.currentUnit.getNextWord();
+                            playVocabTest();
                             break;
                         case GO_NEXT_UNIT:
                             goNextUnit();
@@ -260,8 +253,10 @@ public class QuesActivity extends AppCompatActivity
     private void goNextUnit() {
         this.currentUnit = this.currentGrade.getNextUnit();
         this.currentUnit.getWords(); //Get words from database
-        setTvUnit(this.currentUnit.getUnitName());
         this.currentWord = this.currentUnit.getCurrentWord();
+        setTvUnit(this.currentUnit.getUnitName());
+        setProgressBar(0);//Reset progress
+        playVocabTest();
     }
 
     /**
@@ -283,14 +278,18 @@ public class QuesActivity extends AppCompatActivity
     public void onDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
         Log.d("testing", "clossing Dialog");
-        //start new activity
         String tag = dialog.getTag();
         if (tag.equals("failedDialog")) {
             dialog.dismiss();
-            //Comeback to screen 1
-            //TODO ViewMoreActivity
-//            Intent intent = new Intent(this, ReportActivity.class);
-//            startActivity(intent);
+            if(lifeCount < 0){
+                String message = "Congratulation! " +
+                        "Corrected " + this.currentUnit.getRightCount() + " words per "
+                        + this.currentUnit.getWords().size();
+                showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
+            }else{
+                heartBtn[lifeCount].setImageResource(R.drawable.ic_heart_null);
+            }
+
         } else {
             dialog.dismiss();//Close dialog
         }
@@ -545,18 +544,15 @@ public class QuesActivity extends AppCompatActivity
     }
 
     /**
-     * Move to next word
+     * Show four word and one image
      */
-    private void goNextWord() {
-//        Word[] words = get4Words();
-        this.currentWord = this.currentUnit.getNextWord();
+    private void playVocabTest() {
         mWords = get4Words();
         // Set an image into view
         String fileName = getFilePath(this.currentWord.getWord());
         imageViewSet(imageView,fileName + ".jpg");
         for (int i = 0; i < 4; i++) {
             this.aBtn[i].setText(mWords[i].getWord());
-//            this.iBtn[i].setText((words[i].getWord()));
         }
     }
 
@@ -642,30 +638,25 @@ public class QuesActivity extends AppCompatActivity
      * when connecting with a database
      */
     private void updateState(){
-        int percent = 0;
         this.currentUnit.updateVocabPercent();
+        this.setProgressBar((int)this.currentUnit.getVocabPercent());
         Log.d("testing", "getVocabPercent:" + (int) this.currentUnit.getVocabPercent());
         if(this.currentUnit.isLastWord()){
-            percent = 0;
             if(this.currentGrade.isLastUnit()){
                 //show dialog finish class
                 String message = "Congratulation! " +
-                        "You have studied " + this.currentGrade.getUnits().size()
-                        + " words!";
+                        "You have studied " + this.currentGrade.getUnits().size() + " words!";
                 showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
             }else{
                 //move to next unit
                 String message = "Congratulation! " +
-                        "You have studied " + this.currentUnit.getWords().size()
-                        + " words!";
+                        "You have studied " + this.currentUnit.getWords().size() + " words!";
                 showPopUp(message, true, 3000,POPUP_CALLBACK_STATE.GO_NEXT_UNIT);
             }
         }else{
             //move to next word
-            percent = (int) this.currentUnit.getVocabPercent();
             showPopUp(this.currentWord.getWord(), true, 1500, POPUP_CALLBACK_STATE.GO_NEXT_WORD);
         }
-        this.setProgressBar(percent);
     }
 
     /**

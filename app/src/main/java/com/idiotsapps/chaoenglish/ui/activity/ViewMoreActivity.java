@@ -11,6 +11,7 @@ import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import com.facebook.CallbackManager;
@@ -35,6 +36,7 @@ import com.idiotsapps.chaoenglish.helper.HelperApplication;
 import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class ViewMoreActivity extends ActivityBase {
@@ -44,6 +46,9 @@ public class ViewMoreActivity extends ActivityBase {
     private ScrollView mScrollViewChart;
     private ArrayList<Unit> mUnits; //list of units of clicked_class
     private CallbackManager callbackManager;
+    private ImageView studyBtn;
+    private int position; //position index of class
+    private ArrayList<Grade> grades = new ArrayList<Grade>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +65,10 @@ public class ViewMoreActivity extends ActivityBase {
         mChart = (HorizontalBarChart) findViewById(R.id.horBarChart);
         // get caller intent
         Intent callerIntent = getIntent();
-        mUnits = callerIntent.getParcelableArrayListExtra("key_units");
+        position = callerIntent.getIntExtra("position", 0);
+        this.grades = HelperApplication.sMySQLiteHelper.getClasses();
+        mUnits = this.grades.get(position).getUnits();
+        Collections.sort(mUnits);
         int[] YVals = getYVals(mUnits);
         // get bundle from intent
         Bundle packageFromCaller = callerIntent.getBundleExtra("ClassPackage");
@@ -74,6 +82,27 @@ public class ViewMoreActivity extends ActivityBase {
                 mScrollViewChart.smoothScrollTo(0, mScrollViewChart.getBottom());
             }
         }, 1000);
+
+        studyBtn = (ImageView) findViewById(R.id.StudyNow);
+        studyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentQues = new Intent(ViewMoreActivity.this, QuesActivity.class);
+                intentQues.putExtra("position",position);
+                startActivity(intentQues);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.grades = HelperApplication.sMySQLiteHelper.getClasses();
+        mUnits = this.grades.get(position).getUnits();
+        Collections.sort(mUnits);
+        int[] YVals = getYVals(mUnits);
+        setActionBar(R.id.abIc, "Class " + mClassName, true); //true: back to parent
+        setupChart(mChart, YVals);
     }
 
     private int[] getYVals(ArrayList<Unit> units) {
@@ -134,8 +163,8 @@ public class ViewMoreActivity extends ActivityBase {
         ArrayList<String> xVals = new ArrayList<String>();
         int count = YVals.length;
         // draw backward
-        for (int i = 1; i <= count; i++) {
-            xVals.add("unit " + i);
+        for (int i = 0; i < count; i++) {
+            xVals.add("unit " + mUnits.get(i).getUnitName());
         }
 
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();

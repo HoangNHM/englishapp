@@ -127,8 +127,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 MySQLiteHelper.VOCA_TEST,MySQLiteHelper.LIST_TEST,MySQLiteHelper.GRAM_TEST};
         ArrayList<Unit> units = new ArrayList<>();
         String selection = "class_id =" + class_id;
+        String orderBy =  MySQLiteHelper.VOCA_TEST + " ASC";
         Log.d(tag, "get Unit list");
-        Cursor unitCursor = this.db.query(MySQLiteHelper.TABLE_UNIT, column, selection,null, null, null, null);
+        Cursor unitCursor = this.db.query(MySQLiteHelper.TABLE_UNIT, column, selection,null, null, null, orderBy);
         if (unitCursor.moveToFirst()) {
             do {
                 // unit_id,unit_name, number_of_words,vocab_test,grammar_test,listen_test

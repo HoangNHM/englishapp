@@ -100,11 +100,12 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
                 // call ViewMoreActivity
                 Toast.makeText(getContext(), "View More, item: " + position, Toast.LENGTH_SHORT).show();
                 Intent intentViewMore = new Intent(getContext(), ViewMoreActivity.class);
-                ArrayList<Unit> units = mGrades.get(position).getUnits(); // pass only list of units of clicked_class to ViewMoreActivity
-                intentViewMore.putParcelableArrayListExtra("key_units", units);
+//                ArrayList<Unit> units = mGrades.get(position).getUnits(); // pass only list of units of clicked_class to ViewMoreActivity
+//                intentViewMore.putParcelableArrayListExtra("key_units", units);
                 Bundle args = new Bundle();
                 args.putInt("ClassName", className);
                 intentViewMore.putExtra("ClassPackage", args);
+                intentViewMore.putExtra("position", position);
 
                 startActivity(intentViewMore);
                 break;

@@ -10,12 +10,13 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Random;
 
 /**
  * Created by xtruhuy on 05/09/2015.
  */
-public class Unit implements Parcelable{
+public class Unit implements Comparable, Parcelable{
     private ArrayList<Word> words = new ArrayList<Word>();
     private int unitName;//1,2,3...
     private int unitId; //rowId of Unit
@@ -133,5 +134,12 @@ public class Unit implements Parcelable{
         dest.writeFloat(grammarPercent);
         dest.writeInt(numOfWord);
         dest.writeInt(cWordIndex);
+    }
+
+
+    @Override
+    public int compareTo(Object o) {
+
+        return this.unitName - ((Unit)o).getUnitName();
     }
 }
