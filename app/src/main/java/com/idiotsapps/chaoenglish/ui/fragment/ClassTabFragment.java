@@ -3,7 +3,6 @@ package com.idiotsapps.chaoenglish.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import java.util.ArrayList;
 public class ClassTabFragment extends Fragment implements CustomClassListViewAdapter.OnClassItemInteractionListener {
 
     private ArrayList<Grade> mGrades;
+    ListView mListViewGrade;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -117,7 +117,23 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // add list view
-        ListView listView = (ListView) view.findViewById(R.id.listViewClass);
+        mListViewGrade = (ListView) view.findViewById(R.id.listViewClass);
+//        ArrayList<ClassItem> arr = new ArrayList<ClassItem>();// Percent of Classes, read from database
+//        mGrades = HelperApplication.sMySQLiteHelper.getClasses();
+//        for (int i = 0; i < mGrades.size(); i++) {
+//            int classId = mGrades.get(i).getGrade();
+//            int percent = (int) mGrades.get(i).getPercent();
+//            arr.add(new ClassItem(classId, percent, null));
+//        }
+//        // adapter
+//        CustomClassListViewAdapter adapter = new CustomClassListViewAdapter(getActivity(), getFragmentManager(), ClassTabFragment.this, arr);
+//        mListViewGrade.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // add list view
         ArrayList<ClassItem> arr = new ArrayList<ClassItem>();// Percent of Classes, read from database
         mGrades = HelperApplication.sMySQLiteHelper.getClasses();
         for (int i = 0; i < mGrades.size(); i++) {
@@ -127,9 +143,8 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
         }
         // adapter
         CustomClassListViewAdapter adapter = new CustomClassListViewAdapter(getActivity(), getFragmentManager(), ClassTabFragment.this, arr);
-        listView.setAdapter(adapter);
+        mListViewGrade.setAdapter(adapter);
     }
-
 //    dùng để callback to parent
 //    private OnFragmentInteractionListener mListener;
 //      // TODO: Rename method, update argument and hook method into UI event

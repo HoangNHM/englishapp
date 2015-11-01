@@ -66,9 +66,11 @@
 
         <!--ProgressBar-->
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressBarQues"
             android:layout_width="match_parent"
             android:layout_height="7dp"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:indeterminate="false"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:background="#d2c8bf" />

@@ -117,7 +117,7 @@ public class QuesActivity extends AppCompatActivity
         mTvUnit = (TextView) findViewById(R.id.tvUnit);
         setTvUnit(this.currentUnit.getUnitName());
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarQues);
         progressBar.setMax(100);
 
         //Starting game
