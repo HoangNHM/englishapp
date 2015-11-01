@@ -22,7 +22,6 @@ import com.idiotsapps.chaoenglish.Grade;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
 import com.idiotsapps.chaoenglish.helper.SoundHelper;
 import com.idiotsapps.chaoenglish.ui.dialog.InfoDialogFragment;
-import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.Unit;
 import com.idiotsapps.chaoenglish.Word;
@@ -181,10 +180,11 @@ public class QuesActivity extends AppCompatActivity
                 public void onClick(View view) {
                     Button b = (Button) view;
                     String word = b.getText().toString();
-                    if(verifyAnswer(word)){
-                        showPopUp(word,true,1500,true);
+                    if(verifyAnswer(word)){ // correct answer
+                        QuesActivity.this.currentUnit.increaseRightCount();
+                        updateState(); //update state of game
                     }else{
-                        //TODO: show adv
+                        //TODO: show adv // incorrect answer
                         mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
                         decrLifeCount(word);
                     }
@@ -210,8 +210,16 @@ public class QuesActivity extends AppCompatActivity
         }
 
     }
+    private enum POPUP_CALLBACK_STATE{
+        GO_NEXT_WORD(0),
+        GO_NEXT_UNIT(1),
+        GO_NEXT_CLASS(3);
 
-    private void showPopUp(String text, boolean soundId, int mSecond, final boolean isGoNext) {
+        POPUP_CALLBACK_STATE(int i) {
+        }
+    }
+
+    private void showPopUp(String text, boolean soundId, int mSecond, final POPUP_CALLBACK_STATE nextState) {
         mTvWord.setText(text);
         mViewRightChoice.setVisibility(View.VISIBLE);
 //            final DialogFragment dialog = showRightChoiceDialog(word);
@@ -221,8 +229,18 @@ public class QuesActivity extends AppCompatActivity
             public void run() {
                 if (View.GONE != mViewRightChoice.getVisibility()) {
                     mViewRightChoice.setVisibility(View.GONE);
-                    if (isGoNext) {
-                        goNextWord();
+                    switch (nextState) {
+                        case GO_NEXT_WORD:
+                            goNextWord();
+                            break;
+                        case GO_NEXT_UNIT:
+                            goNextUnit();
+                            break;
+                        case GO_NEXT_CLASS:
+                            goNextClass();
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
@@ -234,6 +252,18 @@ public class QuesActivity extends AppCompatActivity
             mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
         }
     }
+
+    private void goNextClass() {
+        comeBackMain();
+    }
+
+    private void goNextUnit() {
+        this.currentUnit = this.currentGrade.getNextUnit();
+        this.currentUnit.getWords(); //Get words from database
+        setTvUnit(this.currentUnit.getUnitName());
+        this.currentWord = this.currentUnit.getCurrentWord();
+    }
+
     /**
      *  Verify if user's answer is correct or not
      *  Will show advertisement if it is corrected
@@ -519,6 +549,7 @@ public class QuesActivity extends AppCompatActivity
      */
     private void goNextWord() {
 //        Word[] words = get4Words();
+        this.currentWord = this.currentUnit.getNextWord();
         mWords = get4Words();
         // Set an image into view
         String fileName = getFilePath(this.currentWord.getWord());
@@ -611,31 +642,30 @@ public class QuesActivity extends AppCompatActivity
      * when connecting with a database
      */
     private void updateState(){
+        int percent = 0;
         this.currentUnit.updateVocabPercent();
-        this.setProgressBar((int)this.currentUnit.getVocabPercent());
+        Log.d("testing", "getVocabPercent:" + (int) this.currentUnit.getVocabPercent());
         if(this.currentUnit.isLastWord()){
+            percent = 0;
             if(this.currentGrade.isLastUnit()){
-                //TODO: show dialog finish class
+                //show dialog finish class
                 String message = "Congratulation! " +
                         "You have studied " + this.currentGrade.getUnits().size()
                         + " words!";
-                showPopUp(message,true,3000,false);
-                comeBackMain();
+                showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
             }else{
                 //move to next unit
                 String message = "Congratulation! " +
                         "You have studied " + this.currentUnit.getWords().size()
                         + " words!";
-                showPopUp(message, true, 3000,false);
-                this.currentUnit = this.currentGrade.getNextUnit();
-                this.currentUnit.getWords(); //Get words from database
-                setTvUnit(this.currentUnit.getUnitName());
-                this.currentWord = this.currentUnit.getCurrentWord();
+                showPopUp(message, true, 3000,POPUP_CALLBACK_STATE.GO_NEXT_UNIT);
             }
         }else{
             //move to next word
-            this.currentWord = this.currentUnit.getNextWord();
+            percent = (int) this.currentUnit.getVocabPercent();
+            showPopUp(this.currentWord.getWord(), true, 1500, POPUP_CALLBACK_STATE.GO_NEXT_WORD);
         }
+        this.setProgressBar(percent);
     }
 
     /**
@@ -644,7 +674,6 @@ public class QuesActivity extends AppCompatActivity
      */
     private Word[] get4Words() {
         Word[] playWord = new Word[4];
-        updateState(); //update state of game
         Log.d(tag, "current Grade:" + this.currentGrade.getGrade());
         Log.d(tag, "current Unit:" + this.currentUnit.getUnit());
         Log.d(tag, "current word:" + this.currentWord.getWord());

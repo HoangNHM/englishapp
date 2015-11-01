@@ -25,6 +25,15 @@ public class Unit implements Parcelable{
     private float grammarPercent;
     private int numOfWord;
     private int cWordIndex = 0;
+    private int mRightCount = 0;
+
+    public int getRightCount() {
+        return mRightCount;
+    }
+
+    public void increaseRightCount() {
+        this.mRightCount += 1;
+    }
 
     protected Unit(Parcel in) {
         unitName = in.readInt();
@@ -82,8 +91,8 @@ public class Unit implements Parcelable{
     }
 
     public void updateVocabPercent() {
-        Log.d("testing", "cWordIndex:" + cWordIndex + "size:" + words.size());
-        this.vocabPercent = (cWordIndex + 1) / words.size() * 100;
+        Log.d("testing", "cWordIndex:" + mRightCount + "size:" + words.size());
+        this.vocabPercent = mRightCount * 100 / words.size();
         HelperApplication.sMySQLiteHelper.updateTestResult(this.unitId,
                 Integer.toString((int) this.vocabPercent), Integer.toString((int) this.grammarPercent),
                 Integer.toString((int) this.listenPercent));
