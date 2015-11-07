@@ -5,32 +5,80 @@
     android:orientation="vertical"
     tools:context="com.idiotsapps.chaoenglish.ui.fragment.FriendsTabFragment">
 
-    <ListView
-        android:id="@+id/listViewFriends"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="android.att/buttonBarStyle" >
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        style="?android:attr/borderlessButtonStyle">
 
+        <com.facebook.login.widget.ProfilePictureView
+            android:id="@+id/profilePic"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:text="user name"
+            android:gravity="center"
+            android:paddingTop="2dp"
+            android:paddingBottom="3dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#3b5998"/>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btnFbLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/btnFbInvite"
+            android:text="Invite Friends"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
+            android:background="#3b5998"/>
+
+        <!--<com.facebook.share.widget.ShareButton-->
+            <!--android:id="@+id/btnFbShare"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <!--<com.facebook.share.widget.SendButton-->
+            <!--android:id="@+id/btnFbSend"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <TextView
+            android:layout_margin="20dp"
+            android:text="@string/rate_us"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/btnRateUs"
             android:text="Rate us"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="android.att/buttonBarButtonStyle" />
 
-        <Button
-            android:id="@+id/btnInviteFriend"
-            android:text="Invite friend"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            style="android.att/buttonBarButtonStyle" />
     </LinearLayout>
 
 </LinearLayout>

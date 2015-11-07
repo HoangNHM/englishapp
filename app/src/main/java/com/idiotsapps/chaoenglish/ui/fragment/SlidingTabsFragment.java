@@ -1,5 +1,6 @@
 package com.idiotsapps.chaoenglish.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,13 @@ public class SlidingTabsFragment extends Fragment {
     };
     public SlidingTabsFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("Sliding facebook_error", "onActivityResult\n" + requestCode + "\n" + resultCode + "\n" + data.toString());
+        SamplePagerItem.friendsTabFragment.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -140,6 +149,7 @@ public class SlidingTabsFragment extends Fragment {
         private final CharSequence mTitle;
         private final int mIndicatorColor;
         private final int mDividerColor;
+        public static FriendsTabFragment friendsTabFragment;
 
         SamplePagerItem(CharSequence title, int indicatorColor, int dividerColor) {
             mTitle = title;
@@ -155,7 +165,9 @@ public class SlidingTabsFragment extends Fragment {
          * @return A new {@link android.support.v4.app.Fragment} to be displayed by a {@link ViewPager}
          */
         Fragment createFriendFragment() {
-            return FriendsTabFragment.newInstance("str1", "str2");
+
+            friendsTabFragment =  FriendsTabFragment.newInstance("str1", "str2");
+            return friendsTabFragment;
         }
 
         Fragment createClassFragment() {
