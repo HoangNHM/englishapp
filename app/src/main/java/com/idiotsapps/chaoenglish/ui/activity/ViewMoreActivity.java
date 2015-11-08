@@ -1,39 +1,14 @@
 package com.idiotsapps.chaoenglish.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
-import com.facebook.Profile;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ProfilePictureView;
-import com.facebook.share.model.AppInviteContent;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.AppInviteDialog;
-import com.facebook.share.widget.SendButton;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -46,17 +21,12 @@ import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.Unit;
 import com.idiotsapps.chaoenglish.baseclass.ActivityBase;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
-import com.idiotsapps.chaoenglish.helper.MySQLiteHelper;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 public class ViewMoreActivity extends ActivityBase {
 
-    private static final String TAG = "facebook";
     private HorizontalBarChart mChart;
     private int mClassName;
     private ScrollView mScrollViewChart;
@@ -66,54 +36,11 @@ public class ViewMoreActivity extends ActivityBase {
     private int position; //position index of class
     private ArrayList<Grade> grades = new ArrayList<Grade>();
 
-    // facebook
-    private LoginButton mLoginButton;
-    private View.OnClickListener loginListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_more);
-        // facebook
-//        FacebookSdk.sdkInitialize(getApplicationContext());
-        // Initialize the SDK before executing any other operations,
-        // especially, if you're using Facebook UI elements.
-        callbackManager = CallbackManager.Factory.create();
-        mLoginButton = (LoginButton) findViewById(R.id.login_button);
-//        mLoginButton.setReadPermissions("user_friends");
-        // Other app specific specialization
-        if (null != Profile.getCurrentProfile()) {
-            ((ProfilePictureView)findViewById(R.id.profilePic)).setProfileId(Profile.getCurrentProfile().getId());
-        }
-        // Callback registration
-        mLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-                Log.d(TAG, "logged in");
-                if (null != Profile.getCurrentProfile()) {
-                    ((ProfilePictureView)findViewById(R.id.profilePic)).setProfileId(Profile.getCurrentProfile().getId());
-                }
-            }
 
-            @Override
-            public void onCancel() {
-                // App code
-                Log.d(TAG, "Cancel");
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-                Log.d(TAG, "Error");
-            }
-        });
-        mLoginButton.setOnClickListener(loginListener);
         mScrollViewChart = (ScrollView) findViewById(R.id.scrollViewChart);
 //        ShareLinkContent content = new ShareLinkContent.Builder()
 //                .setContentUrl(Uri.parse("https://fb.me/749567541854476"))
@@ -272,47 +199,6 @@ public class ViewMoreActivity extends ActivityBase {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void invite(View view) {
-        {
-            String appLinkUrl, previewImageUrl;
-
-            appLinkUrl = "https://fb.me/749567541854476";
-//        previewImageUrl = "https://www.mydomain.com/my_invite_image.jpg";
-
-            if (AppInviteDialog.canShow()) {
-                AppInviteContent content = new AppInviteContent.Builder()
-                        .setApplinkUrl(appLinkUrl)
-//                    .setPreviewImageUrl(previewImageUrl)
-                        .build();
-                AppInviteDialog appInviteDialog = new AppInviteDialog(this);
-                appInviteDialog.registerCallback(callbackManager, new FacebookCallback<AppInviteDialog.Result>() {
-                    @Override
-                    public void onSuccess(AppInviteDialog.Result result) {
-                        Log.d("Facebook", "onSuccess " + result.toString());
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Log.d("Facebook", "onCancel");
-                    }
-
-                    @Override
-                    public void onError(FacebookException e) {
-                        Log.d("Facebook", "onError " + e.toString());
-                    }
-                });
-                appInviteDialog.show(content);
-            }
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        Log.d("Facebook", "onActivityResult\n" + requestCode + "\n" + resultCode + "\n" + data.toString());
     }
 
 }

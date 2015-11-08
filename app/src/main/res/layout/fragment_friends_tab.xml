@@ -1,23 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.idiotsapps.chaoenglish.ui.fragment.FriendsTabFragment">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        style="?android:attr/borderlessButtonStyle">
 
         <com.facebook.login.widget.ProfilePictureView
             android:id="@+id/profilePic"
-            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/userName"
@@ -29,19 +22,20 @@
             android:paddingStart="10dp"
             android:paddingRight="10dp"
             android:paddingEnd="10dp"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="20dp"
+            android:textColor="#415dae"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/profilePic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#3b5998"/>
+            android:layout_centerHorizontal="true"/>
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/btnFbLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_below="@id/userName"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/btnFbInvite"
@@ -49,11 +43,17 @@
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/btnFbLogin"
+            android:layout_alignLeft="@id/btnFbLogin"
+            android:layout_alignStart="@id/btnFbLogin"
+            android:layout_alignRight="@id/btnFbLogin"
+            android:layout_alignEnd="@id/btnFbLogin"
+            android:layout_marginTop="20dp"
+            android:minHeight="25dp"
             android:paddingLeft="10dp"
-            android:paddingStart="10dp"
             android:paddingRight="10dp"
-            android:paddingEnd="10dp"
-            android:background="#3b5998"/>
+            android:background="@drawable/style_btn_invite"
+            android:layout_centerHorizontal="true"/>
 
         <!--<com.facebook.share.widget.ShareButton-->
             <!--android:id="@+id/btnFbShare"-->
@@ -65,20 +65,17 @@
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content" />-->
 
-        <TextView
-            android:layout_margin="20dp"
-            android:text="@string/rate_us"
-            android:autoLink="web"
-            android:linksClickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/btnRateUs"
-            android:text="Rate us"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="android.att/buttonBarButtonStyle" />
+    <ImageView
+        android:id="@+id/btnRateUs"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@id/btnFbInvite"
+        android:layout_alignLeft="@id/btnFbLogin"
+        android:layout_alignStart="@id/btnFbLogin"
+        android:layout_alignRight="@id/btnFbLogin"
+        android:layout_alignEnd="@id/btnFbLogin"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/btn_rate_us"
+        android:layout_centerHorizontal="true"/>
 
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -1,13 +1,19 @@
 package com.idiotsapps.chaoenglish.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +40,7 @@ import com.idiotsapps.chaoenglish.R;
 public class FriendsTabFragment extends Fragment {
 
     private static final String TAG = "facebook_error";
+    private ImageView mIvRateUs;
     private Button mBtnFbInvite;
     private LoginButton mBtnFbLogin;
     private TextView mUserName;
@@ -44,12 +51,12 @@ public class FriendsTabFragment extends Fragment {
         public void onClick(View v) {
             String appLinkUrl, previewImageUrl;
             appLinkUrl = "https://fb.me/749567541854476";
-//        previewImageUrl = "https://www.mydomain.com/my_invite_image.jpg";
+            previewImageUrl = "https://scontent-hkg3-1.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11745676_956819461007984_1887474383476805338_n.jpg?oh=f839a51646973b0f41eb984934ecf274&oe=56BDF978";
 
             if (AppInviteDialog.canShow()) {
                 AppInviteContent content = new AppInviteContent.Builder()
                         .setApplinkUrl(appLinkUrl)
-//                    .setPreviewImageUrl(previewImageUrl)
+                    .setPreviewImageUrl(previewImageUrl)
                         .build();
                 AppInviteDialog appInviteDialog = new AppInviteDialog(getActivity());
                 appInviteDialog.registerCallback(mCallbackManager, new FacebookCallback<AppInviteDialog.Result>() {
@@ -97,14 +104,13 @@ public class FriendsTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_friends_tab, container, false);
-//        FacebookSdk.sdkInitialize(MainActivity.mMainContext);
+
         // User name
         mUserName = (TextView) view.findViewById(R.id.userName);
+
+        // Login btn
         mCallbackManager = CallbackManager.Factory.create();
         mBtnFbLogin = (LoginButton) view.findViewById(R.id.btnFbLogin);
-//        mBtnFbLogin.setReadPermissions("public_profile");
-        // If using in a fragment
-//        mBtnFbLogin.setFragment(FriendsTabFragment.this);
         // Callback registration
         mBtnFbLogin.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -126,6 +132,25 @@ public class FriendsTabFragment extends Fragment {
             }
         });
 
+        // Invite
+        mBtnFbInvite = (Button) view.findViewById(R.id.btnFbInvite);
+        mBtnFbInvite.setOnClickListener(inviteFbListener);
+
+        // Rate us
+        mIvRateUs = (ImageView) view.findViewById(R.id.btnRateUs);
+        mIvRateUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                final String appPackageName = getContext().getPackageName(); // getPackageName() from Context or Activity object
+                final String appPackageName = "com.idiots.colldict"; // getPackageName() from Context or Activity object
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+            }
+        });
+
         //code in here or onViewCreated is nearly the same, still not figure out which is better
         return view;
     }
@@ -141,19 +166,10 @@ public class FriendsTabFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Profile Pic
         mProfilePic = (ProfilePictureView) view.findViewById(R.id.profilePic);
         setProfile();
-        mBtnFbInvite = (Button) view.findViewById(R.id.btnFbInvite);
-        mBtnFbInvite.setOnClickListener(inviteFbListener);
-
-        Button btnRateUs = (Button) view.findViewById(R.id.btnRateUs);
-        btnRateUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Rate us", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     @Override
