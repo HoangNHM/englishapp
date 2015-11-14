@@ -10,7 +10,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:foreground="@drawable/avatar_box"/>
 
         <TextView
             android:id="@+id/userName"
@@ -49,7 +50,7 @@
             android:layout_alignRight="@id/btnFbLogin"
             android:layout_alignEnd="@id/btnFbLogin"
             android:layout_marginTop="20dp"
-            android:minHeight="25dp"
+            android:minHeight="30dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:background="@drawable/style_btn_invite"

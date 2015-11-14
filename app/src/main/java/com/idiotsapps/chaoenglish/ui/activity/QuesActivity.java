@@ -378,7 +378,7 @@ public class QuesActivity extends AppCompatActivity
                             res += openTitle + temp[0] + "</span> /<b>" + temp[1] + "</b>/</div>";
                             openTitle = "";
                         } else {
-                            res += openTitle + line + "</b>/</div>";
+                            res += openTitle + line + "</b></div>";
                             openTitle = "";
                         }
                         break;
