@@ -26,6 +26,8 @@ import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.AppInviteDialog;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.idiotsapps.chaoenglish.R;
 
 
@@ -170,6 +172,11 @@ public class FriendsTabFragment extends Fragment {
         // Profile Pic
         mProfilePic = (ProfilePictureView) view.findViewById(R.id.profilePic);
         setProfile();
+
+        // Add advertisement
+        AdView adView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override

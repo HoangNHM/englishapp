@@ -18,6 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.idiotsapps.chaoenglish.Grade;
 import com.idiotsapps.chaoenglish.helper.HelperApplication;
 import com.idiotsapps.chaoenglish.helper.SoundHelper;
@@ -56,6 +59,7 @@ public class QuesActivity extends AppCompatActivity
     private SoundHelper mSoundHelper;
     private TextView mTvUnit;
     private ProgressBar progressBar;
+    private InterstitialAd interstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,10 +123,34 @@ public class QuesActivity extends AppCompatActivity
         progressBar = (ProgressBar) findViewById(R.id.progressBarQues);
         progressBar.setMax(100);
 
+        // Create the interstitial.
+        interstitial = new InterstitialAd(this);
+        interstitial.setAdUnitId(getString(R.string.admob_interstitial));
+
+        // Create ad request.
+        AdRequest interstitialAdRequest = new AdRequest.Builder().build();
+
+        // Begin loading your interstitial.
+        interstitial.loadAd(interstitialAdRequest);
+        interstitial.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                displayInterstitial();
+            }
+        });
         //Starting game
         playVocabTest();
     }
+    public int getRandom(int max) {
+        Random r = new Random();
+        return r.nextInt(max) + 1;
+    }
 
+    public void displayInterstitial() {
+        if (interstitial.isLoaded()) {
+            interstitial.show();
+        }
+    }
     private void setTvUnit(int unit) {
         mTvUnit.setText("UNIT " + unit);
     }
