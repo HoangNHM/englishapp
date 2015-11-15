@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import com.idiotsapps.chaoenglish.R;
 import com.idiotsapps.chaoenglish.Unit;
 import com.idiotsapps.chaoenglish.Word;
 import com.idiotsapps.chaoenglish.stardict.StarDict;
+import com.idiotsapps.chaoenglish.util.PublishQuestion;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,16 +59,17 @@ public class QuesActivity extends AppCompatActivity
     private RelativeLayout mViewRightChoice;
     private TextView mTvWord;
     private SoundHelper mSoundHelper;
-    private TextView mTvUnit;
+    private Button mTvUnit;
     private ProgressBar progressBar;
     private InterstitialAd interstitial;
+    private LinearLayout playGround;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideActionBar();
         setContentView(R.layout.activity_ques);
-
+        playGround = (LinearLayout) findViewById(R.id.playGround);
         // Sound Helper
         mSoundHelper = HelperApplication.sSoundHelper;
 
@@ -117,7 +120,7 @@ public class QuesActivity extends AppCompatActivity
         this.heartBtn[1] = (ImageView) findViewById(R.id.heart2);
         this.heartBtn[2] = (ImageView) findViewById(R.id.heart3);
 
-        mTvUnit = (TextView) findViewById(R.id.tvUnit);
+        mTvUnit = (Button) findViewById(R.id.tvUnit);
         setTvUnit(this.currentUnit.getUnitName());
 
         progressBar = (ProgressBar) findViewById(R.id.progressBarQues);
@@ -154,7 +157,7 @@ public class QuesActivity extends AppCompatActivity
 
 
     private void setTvUnit(int unit) {
-        mTvUnit.setText("UNIT " + unit);
+        mTvUnit.setText("Unit " + unit);
     }
 
     private void setProgressBar(int percent){
@@ -232,6 +235,15 @@ public class QuesActivity extends AppCompatActivity
         String htmlText = this.starDict.lookupWord(word);
         showFailedDialog(htmlText);
     }
+
+    /**
+     * Share question
+     * @param view
+     */
+    public void shareQuestion(View view) {
+        PublishQuestion.publish(this, playGround);
+    }
+
     private enum POPUP_CALLBACK_STATE{
         GO_NEXT_WORD(0),
         GO_NEXT_UNIT(1),

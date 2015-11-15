@@ -11,201 +11,232 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <!--title bar-->
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp" >
+            android:orientation="vertical">
 
-            <!--Quit btn-->
-            <ImageView
-                android:id="@+id/btnQuit"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/btn_quit"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/tvUnit"
-                android:text="unit"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_centerInParent="true"/>
-
-            <!--Heart list-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
-                <ImageView
-                    android:id="@+id/heart1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_heart_full" />
-                <ImageView
-                    android:id="@+id/heart2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_heart_full" />
-                <ImageView
-                    android:id="@+id/heart3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_heart_full" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <!--ProgressBar-->
-        <ProgressBar
-            android:id="@+id/progressBarQues"
-            android:layout_width="match_parent"
-            android:layout_height="7dp"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:indeterminate="false"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:background="#d2c8bf" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:weightSum="2"
-        android:orientation="vertical">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/question_test1"
-            android:layout_margin="2dp"
-            android:background="#97ff6b" >
-
-            <ImageView
+            <!--title bar-->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/wordImage"
-                android:adjustViewBounds="false"
-                android:background="@drawable/spin"
-                android:scaleType="fitXY"
-                tools:ignore="ContentDescription" />
-        </FrameLayout>
-        <TableLayout
+                android:padding="5dp" >
+
+                <!--Quit btn-->
+                <ImageView
+                    android:id="@+id/btnQuit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/btn_quit"
+                    tools:ignore="ContentDescription" />
+
+
+                <!--Share btn-->
+                <Button
+                    android:id="@+id/btnShare"
+                    android:text="Share Question"
+                    android:onClick="shareQuestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_toRightOf="@id/btnQuit"
+                    android:layout_toEndOf="@id/btnQuit"
+                    android:paddingLeft="3dp"
+                    android:paddingStart="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingEnd="3dp"
+                    android:background="@color/btn_help_normal"
+                    android:textColor="@color/text_color_white"/>
+
+                <!--Unit Number-->
+                <Button
+                    android:id="@+id/tvUnit"
+                    android:text="unit 8"
+                    android:minWidth="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:paddingLeft="3dp"
+                    android:paddingStart="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingEnd="3dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/btnShare"
+                    android:layout_toEndOf="@id/btnShare"
+                    android:textColor="@color/text_color_white"
+                    android:background="@color/btn_help_normal"
+                    android:inputType="textCapSentences"/>
+
+                <!--Heart list-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true">
+                    <ImageView
+                        android:id="@+id/heart1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_heart_full" />
+                    <ImageView
+                        android:id="@+id/heart2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_heart_full" />
+                    <ImageView
+                        android:id="@+id/heart3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_heart_full" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!--ProgressBar-->
+            <ProgressBar
+                android:id="@+id/progressBarQues"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:indeterminate="false"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="#d2c8bf" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/playGround"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="top"
-            android:stretchColumns="0"
-            android:shrinkColumns="0">
-
-            <TableRow
-                android:gravity="center_vertical"
+            android:weightSum="2"
+            android:orientation="vertical"
+            android:background="@android:color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_margin="5dp">
-                <Button
-                    android:id="@+id/button_A"
-                    style="?android:attr/buttonStyleSmall"
-                    android:text="New Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/selector_answer"/>
-                <ImageView
-                    android:id="@+id/button_S"
-                    android:layout_width="60dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:scaleType="center"
-                    tools:ignore="ContentDescription"
-                    android:src="@drawable/ic_help"
-                    android:layout_column="1"
-                    android:background="@drawable/selector_help"/>
-            </TableRow>
+                android:id="@+id/question_test1"
+                android:layout_margin="2dp"
+                android:background="#97ff6b" >
 
-            <TableRow
-                android:gravity="center_vertical"
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/wordImage"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/spin"
+                    android:scaleType="fitXY"
+                    tools:ignore="ContentDescription" />
+            </FrameLayout>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_margin="5dp">
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="New Button"
-                    android:id="@+id/button_B"
-                    android:background="@drawable/selector_answer"/>
-                <ImageView
-                    android:id="@+id/button_X"
-                    android:layout_width="60dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:scaleType="center"
-                    tools:ignore="ContentDescription"
-                    android:src="@drawable/ic_help"
-                    android:layout_column="1"
-                    android:background="@drawable/selector_help"/>
-            </TableRow>
+                android:gravity="top"
+                android:stretchColumns="0"
+                android:shrinkColumns="0">
 
-            <TableRow
-                android:gravity="center_vertical"
-                android:layout_weight="1"
-                android:layout_margin="5dp">
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="New Button"
-                    android:id="@+id/button_C"
-                    android:background="@drawable/selector_answer" />
-                <ImageView
-                    android:id="@+id/button_Y"
-                    android:layout_width="60dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:scaleType="center"
-                    tools:ignore="ContentDescription"
-                    android:src="@drawable/ic_help"
-                    android:layout_column="1"
-                    android:background="@drawable/selector_help"/>
+                <TableRow
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp">
+                    <Button
+                        android:id="@+id/button_A"
+                        style="?android:attr/buttonStyleSmall"
+                        android:text="New Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_answer"/>
+                    <ImageView
+                        android:id="@+id/button_S"
+                        android:layout_width="60dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="center"
+                        tools:ignore="ContentDescription"
+                        android:src="@drawable/ic_help"
+                        android:layout_column="1"
+                        android:background="@drawable/selector_help"/>
+                </TableRow>
 
-            </TableRow>
+                <TableRow
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp">
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="New Button"
+                        android:id="@+id/button_B"
+                        android:background="@drawable/selector_answer"/>
+                    <ImageView
+                        android:id="@+id/button_X"
+                        android:layout_width="60dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="center"
+                        tools:ignore="ContentDescription"
+                        android:src="@drawable/ic_help"
+                        android:layout_column="1"
+                        android:background="@drawable/selector_help"/>
+                </TableRow>
 
-            <TableRow
-                android:gravity="center_vertical"
-                android:layout_weight="1"
-                android:layout_margin="5dp">
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="New Button"
-                    android:id="@+id/button_D"
-                    android:background="@drawable/selector_answer" />
-                <ImageView
-                    android:id="@+id/button_Z"
-                    android:layout_width="60dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:scaleType="center"
-                    tools:ignore="ContentDescription"
-                    android:src="@drawable/ic_help"
-                    android:layout_column="1"
-                    android:background="@drawable/selector_help"/>
+                <TableRow
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp">
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="New Button"
+                        android:id="@+id/button_C"
+                        android:background="@drawable/selector_answer" />
+                    <ImageView
+                        android:id="@+id/button_Y"
+                        android:layout_width="60dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="center"
+                        tools:ignore="ContentDescription"
+                        android:src="@drawable/ic_help"
+                        android:layout_column="1"
+                        android:background="@drawable/selector_help"/>
 
-            </TableRow>
-        </TableLayout>
-    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp">
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="New Button"
+                        android:id="@+id/button_D"
+                        android:background="@drawable/selector_answer" />
+                    <ImageView
+                        android:id="@+id/button_Z"
+                        android:layout_width="60dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="center"
+                        tools:ignore="ContentDescription"
+                        android:src="@drawable/ic_help"
+                        android:layout_column="1"
+                        android:background="@drawable/selector_help"/>
+
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
