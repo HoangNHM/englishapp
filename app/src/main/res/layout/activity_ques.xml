@@ -104,13 +104,20 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="top"
-            android:stretchColumns="1"
-            android:shrinkColumns="1">
+            android:stretchColumns="0"
+            android:shrinkColumns="0">
 
             <TableRow
                 android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:layout_margin="5dp">
+                <Button
+                    android:id="@+id/button_A"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="New Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_answer"/>
                 <ImageView
                     android:id="@+id/button_S"
                     android:layout_width="60dp"
@@ -120,21 +127,21 @@
                     android:scaleType="center"
                     tools:ignore="ContentDescription"
                     android:src="@drawable/ic_help"
-                    android:background="@drawable/selector_help"/>
-                <Button
-                    android:id="@+id/button_A"
-                    style="?android:attr/buttonStyleSmall"
                     android:layout_column="1"
-                    android:text="New Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/selector_answer"/>
+                    android:background="@drawable/selector_help"/>
             </TableRow>
 
             <TableRow
                 android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:layout_margin="5dp">
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="New Button"
+                    android:id="@+id/button_B"
+                    android:background="@drawable/selector_answer"/>
                 <ImageView
                     android:id="@+id/button_X"
                     android:layout_width="60dp"
@@ -144,21 +151,21 @@
                     android:scaleType="center"
                     tools:ignore="ContentDescription"
                     android:src="@drawable/ic_help"
-                    android:background="@drawable/selector_help"/>
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:layout_column="1"
-                    android:text="New Button"
-                    android:id="@+id/button_B"
-                    android:background="@drawable/selector_answer"/>
+                    android:background="@drawable/selector_help"/>
             </TableRow>
 
             <TableRow
                 android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:layout_margin="5dp">
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="New Button"
+                    android:id="@+id/button_C"
+                    android:background="@drawable/selector_answer" />
                 <ImageView
                     android:id="@+id/button_Y"
                     android:layout_width="60dp"
@@ -168,15 +175,8 @@
                     android:scaleType="center"
                     tools:ignore="ContentDescription"
                     android:src="@drawable/ic_help"
-                    android:background="@drawable/selector_help"/>
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:layout_column="1"
-                    android:text="New Button"
-                    android:id="@+id/button_C"
-                    android:background="@drawable/selector_answer" />
+                    android:background="@drawable/selector_help"/>
 
             </TableRow>
 
@@ -184,6 +184,13 @@
                 android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:layout_margin="5dp">
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="New Button"
+                    android:id="@+id/button_D"
+                    android:background="@drawable/selector_answer" />
                 <ImageView
                     android:id="@+id/button_Z"
                     android:layout_width="60dp"
@@ -193,15 +200,8 @@
                     android:scaleType="center"
                     tools:ignore="ContentDescription"
                     android:src="@drawable/ic_help"
-                    android:background="@drawable/selector_help"/>
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="New Button"
                     android:layout_column="1"
-                    android:id="@+id/button_D"
-                    android:background="@drawable/selector_answer" />
+                    android:background="@drawable/selector_help"/>
 
             </TableRow>
         </TableLayout>

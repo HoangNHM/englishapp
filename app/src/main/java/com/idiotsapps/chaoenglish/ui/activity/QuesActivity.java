@@ -125,7 +125,7 @@ public class QuesActivity extends AppCompatActivity
 
         // Create the interstitial.
         interstitial = new InterstitialAd(this);
-        interstitial.setAdUnitId(getString(R.string.admob_interstitial));
+        interstitial.setAdUnitId("ca-app-pub-4077183742810168/2109849");
 
         // Create ad request.
         AdRequest interstitialAdRequest = new AdRequest.Builder().build();
@@ -151,6 +151,8 @@ public class QuesActivity extends AppCompatActivity
             interstitial.show();
         }
     }
+
+
     private void setTvUnit(int unit) {
         mTvUnit.setText("UNIT " + unit);
     }
