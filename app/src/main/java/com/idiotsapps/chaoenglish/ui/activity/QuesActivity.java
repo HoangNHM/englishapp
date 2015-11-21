@@ -8,7 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,6 +95,21 @@ public class QuesActivity extends AppCompatActivity
         this.currentUnit.getWords();
         this.currentWord = this.currentUnit.getCurrentWord();
         this.imageView = (ImageView) findViewById(R.id.wordImage);
+
+        // Question image size
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        if (width >= 900) {
+            width = 900;
+            height = 900;
+        } else {
+            height = width;
+        }
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height);
+        lp.gravity = Gravity.CENTER;
+        this.imageView.setLayoutParams(lp);
 
         // Answers buttons
         this.aBtn[0] = (Button) findViewById(R.id.button_A);
