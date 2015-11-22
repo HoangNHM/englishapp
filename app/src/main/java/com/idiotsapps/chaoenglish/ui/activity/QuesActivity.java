@@ -65,6 +65,10 @@ public class QuesActivity extends AppCompatActivity
     private ProgressBar progressBar;
     private InterstitialAd interstitial;
     private LinearLayout playGround;
+    private boolean isAdLoaded = false;
+    private boolean isPopUp = false;
+    private DialogFragment appIdialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +78,6 @@ public class QuesActivity extends AppCompatActivity
         playGround = (LinearLayout) findViewById(R.id.playGround);
         // Sound Helper
         mSoundHelper = HelperApplication.sSoundHelper;
-
         // add view RightChoice
         mViewRightChoice = (RelativeLayout) findViewById(R.id.vRightChoice);
         mViewRightChoice.setOnClickListener(mOnDismissRightChoiceView);
@@ -158,16 +161,13 @@ public class QuesActivity extends AppCompatActivity
                 displayInterstitial();
             }
         });
+
         //Starting game
         playVocabTest();
     }
-    public int getRandom(int max) {
-        Random r = new Random();
-        return r.nextInt(max) + 1;
-    }
 
     public void displayInterstitial() {
-        if (interstitial.isLoaded()) {
+        if (interstitial.isLoaded() && (getRandNumber(3) == 1) && isAdLoaded == true) {
             interstitial.show();
         }
     }
@@ -180,9 +180,8 @@ public class QuesActivity extends AppCompatActivity
     private void setProgressBar(int percent){
         progressBar.setProgress(percent);
     }
+
     private void comeBackMain(){
-//        Intent intentQues = new Intent(QuesActivity.this, MainActivity.class);
-//        startActivity(intentQues);
         onBackPressed();
     }
 
@@ -235,7 +234,6 @@ public class QuesActivity extends AppCompatActivity
                         updateState(); //update state of game
                         mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_RIGHT);
                     }else{
-                        //TODO: show adv // incorrect answer
                         mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
                         decrLifeCount(word);
                     }
@@ -250,6 +248,10 @@ public class QuesActivity extends AppCompatActivity
      */
     private void decrLifeCount(String word){
         lifeCount--;
+        isPopUp = true;
+        if (lifeCount >= 0) {
+            heartBtn[lifeCount].setImageResource(R.drawable.ic_heart_null);
+        }
         String htmlText = this.starDict.lookupWord(word);
         showFailedDialog(htmlText);
         if(lifeCount < 0){
@@ -281,7 +283,6 @@ public class QuesActivity extends AppCompatActivity
     private void showPopUp(String text, int mSecond, final POPUP_CALLBACK_STATE nextState) {
         mTvWord.setText(text);
         mViewRightChoice.setVisibility(View.VISIBLE);
-//            final DialogFragment dialog = showRightChoiceDialog(word);
         mHandlerRialog = new Handler();
         mHandlerRialog.postDelayed(new Runnable() {
             @Override
@@ -306,6 +307,11 @@ public class QuesActivity extends AppCompatActivity
                 }
             }
         }, mSecond);
+        if (soundId) {
+            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_RIGHT);
+        } else {
+            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
+        }
     }
 
     private void goNextClass() {
@@ -337,10 +343,31 @@ public class QuesActivity extends AppCompatActivity
     }
 
     @Override
+    public void onBackPressed() {
+        if (isPopUp) {
+            if (appIdialog.getTag().equals("failedDialog")) {
+                appIdialog.dismiss();
+                if(lifeCount < 0){
+                    String message = "Congratulation! " +
+                            "Corrected " + this.currentUnit.getRightCount() + " words per "
+                            + this.currentUnit.getWords().size();
+                    showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
+                }else{
+                    //Do not thing
+                }
+
+            } else {
+                appIdialog.dismiss();//Close dialog
+            }
+        }
+    }
+
+    @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
         Log.d("testing", "clossing Dialog");
         String tag = dialog.getTag();
+        appIdialog = dialog;
         if (tag.equals("failedDialog")) {
             dialog.dismiss();
 //            if(lifeCount < 0){
@@ -351,6 +378,14 @@ public class QuesActivity extends AppCompatActivity
 //            }else{
 //                heartBtn[lifeCount].setImageResource(R.drawable.ic_heart_null);
 //            }
+            if(lifeCount < 0){
+                String message = "Congratulation! " +
+                        "Corrected " + this.currentUnit.getRightCount() + " words per "
+                        + this.currentUnit.getWords().size();
+                showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
+            }else{
+                //Do not thing
+            }
 
         } else {
             dialog.dismiss();//Close dialog
@@ -367,7 +402,8 @@ public class QuesActivity extends AppCompatActivity
      * @param word
      */
     public void showHelpInfo(String word){
-        //TODO: show ads randomly here
+        this.isAdLoaded = true;
+        this.displayInterstitial();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         final InfoDialogFragment newFragment = new InfoDialogFragment();
         String htmlText = this.starDict.lookupWord(word);

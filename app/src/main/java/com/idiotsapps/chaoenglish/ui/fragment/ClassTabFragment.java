@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -119,6 +120,16 @@ public class ClassTabFragment extends Fragment implements CustomClassListViewAda
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // add list view
         mListViewGrade = (ListView) view.findViewById(R.id.listViewClass);
+        mListViewGrade.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(getContext(), "Study, item: " + position, Toast.LENGTH_SHORT).show();
+                Intent intentQues = new Intent(getContext(), QuesActivity.class);
+//                intentQues.putParcelableArrayListExtra("key_grades", mGrades);
+                intentQues.putExtra("position",position);
+                startActivity(intentQues);
+            }
+        });
 //        ArrayList<ClassItem> arr = new ArrayList<ClassItem>();// Percent of Classes, read from database
 //        mGrades = HelperApplication.sMySQLiteHelper.getClasses();
 //        for (int i = 0; i < mGrades.size(); i++) {

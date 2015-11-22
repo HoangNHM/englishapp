@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="F:\Android\Trung_huynh\ChaoEnglish\facebook\src\main\assets"/></dataSet><dataSet config="release"><source path="F:\Android\Trung_huynh\ChaoEnglish\facebook\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/home/xtruhuy/game_proj/ChaoEnglish/facebook/src/main/assets"/></dataSet><dataSet config="release"><source path="/home/xtruhuy/game_proj/ChaoEnglish/facebook/src/release/assets"/></dataSet></merger>

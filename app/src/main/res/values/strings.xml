@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">ChaoEnglish</string>
-
+    <string name="app_name">ChàoEnglish</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
@@ -15,5 +14,5 @@
     <string name="facebook_app_id">749538661857364</string>
     <string name="rate_us">Support: <a href="http://www.stackoverflow.com">Rate Us</a></string>
     <string name="admod_banner">ca-app-pub-4077183742810168/3586582735</string>
-    <string name="admob_interstitial">ca-app-pub-4077183742810168/2109849</string>
+    <string name="admob_interstitial">ca-app-pub-4077183742810168/2109849539</string>
 </resources>
