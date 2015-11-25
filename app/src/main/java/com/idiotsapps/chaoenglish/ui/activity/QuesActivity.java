@@ -233,6 +233,7 @@ public class QuesActivity extends AppCompatActivity
                     if(verifyAnswer(word)){ // correct answer
                         QuesActivity.this.currentUnit.increaseRightCount();
                         updateState(); //update state of game
+                        mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_RIGHT);
                     }else{
                         //TODO: show adv // incorrect answer
                         mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
@@ -251,6 +252,14 @@ public class QuesActivity extends AppCompatActivity
         lifeCount--;
         String htmlText = this.starDict.lookupWord(word);
         showFailedDialog(htmlText);
+        if(lifeCount < 0){
+            String message = "Congratulation! " +
+                    "Corrected " + this.currentUnit.getRightCount() + " words per "
+                    + this.currentUnit.getWords().size();
+            showPopUp(message, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
+        }else{
+            heartBtn[lifeCount].setImageResource(R.drawable.ic_heart_null);
+        }
     }
 
     /**
@@ -269,7 +278,7 @@ public class QuesActivity extends AppCompatActivity
         }
     }
 
-    private void showPopUp(String text, boolean soundId, int mSecond, final POPUP_CALLBACK_STATE nextState) {
+    private void showPopUp(String text, int mSecond, final POPUP_CALLBACK_STATE nextState) {
         mTvWord.setText(text);
         mViewRightChoice.setVisibility(View.VISIBLE);
 //            final DialogFragment dialog = showRightChoiceDialog(word);
@@ -297,12 +306,6 @@ public class QuesActivity extends AppCompatActivity
                 }
             }
         }, mSecond);
-        // TODO sound
-        if (soundId) {
-            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_RIGHT);
-        } else {
-            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
-        }
     }
 
     private void goNextClass() {
@@ -340,14 +343,14 @@ public class QuesActivity extends AppCompatActivity
         String tag = dialog.getTag();
         if (tag.equals("failedDialog")) {
             dialog.dismiss();
-            if(lifeCount < 0){
-                String message = "Congratulation! " +
-                        "Corrected " + this.currentUnit.getRightCount() + " words per "
-                        + this.currentUnit.getWords().size();
-                showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
-            }else{
-                heartBtn[lifeCount].setImageResource(R.drawable.ic_heart_null);
-            }
+//            if(lifeCount < 0){
+//                String message = "Congratulation! " +
+//                        "Corrected " + this.currentUnit.getRightCount() + " words per "
+//                        + this.currentUnit.getWords().size();
+//                showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
+//            }else{
+//                heartBtn[lifeCount].setImageResource(R.drawable.ic_heart_null);
+//            }
 
         } else {
             dialog.dismiss();//Close dialog
@@ -705,16 +708,16 @@ public class QuesActivity extends AppCompatActivity
                 //show dialog finish class
                 String message = "Congratulation! " +
                         "You have studied " + this.currentGrade.getUnits().size() + " words!";
-                showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
+                showPopUp(message, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
             }else{
                 //move to next unit
                 String message = "Congratulation! " +
                         "You have studied " + this.currentUnit.getWords().size() + " words!";
-                showPopUp(message, true, 3000,POPUP_CALLBACK_STATE.GO_NEXT_UNIT);
+                showPopUp(message, 3000,POPUP_CALLBACK_STATE.GO_NEXT_UNIT);
             }
         }else{
             //move to next word
-            showPopUp(this.currentWord.getWord(), true, 1500, POPUP_CALLBACK_STATE.GO_NEXT_WORD);
+            showPopUp(this.currentWord.getWord(), 1500, POPUP_CALLBACK_STATE.GO_NEXT_WORD);
         }
     }
 
