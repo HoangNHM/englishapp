@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -55,7 +55,6 @@ public class QuesActivity extends AppCompatActivity
     private StarDict starDict = null;
     private int lifeCount = 3;
     private String tag = this.getClass().getSimpleName();
-    //HoangNHM
     private Word[] mWords;
     private Handler mHandlerRialog;
     private RelativeLayout mViewRightChoice;
@@ -103,7 +102,7 @@ public class QuesActivity extends AppCompatActivity
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = metrics.widthPixels;
-        int height = metrics.heightPixels;
+        int height = 0;
         if (width >= 900) {
             width = 900;
             height = 900;
@@ -148,7 +147,7 @@ public class QuesActivity extends AppCompatActivity
 
         // Create the interstitial.
         interstitial = new InterstitialAd(this);
-        interstitial.setAdUnitId("ca-app-pub-4077183742810168/2109849");
+        interstitial.setAdUnitId(this.getString(R.string.admob_interstitial));
 
         // Create ad request.
         AdRequest interstitialAdRequest = new AdRequest.Builder().build();
@@ -166,8 +165,12 @@ public class QuesActivity extends AppCompatActivity
         playVocabTest();
     }
 
+    /**
+     * && (getRandNumber(1) == 1)
+     */
     public void displayInterstitial() {
-        if (interstitial.isLoaded() && (getRandNumber(3) == 1) && isAdLoaded == true) {
+        if (interstitial.isLoaded()  && isAdLoaded == true) {
+
             interstitial.show();
         }
     }
@@ -182,7 +185,7 @@ public class QuesActivity extends AppCompatActivity
     }
 
     private void comeBackMain(){
-        onBackPressed();
+        this.onBackPressed();
     }
 
     private void hideActionBar() {
@@ -344,24 +347,31 @@ public class QuesActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (isPopUp) {
-            if (appIdialog.getTag().equals("failedDialog")) {
-                appIdialog.dismiss();
-                if(lifeCount < 0){
-                    String message = "Congratulation! " +
-                            "Corrected " + this.currentUnit.getRightCount() + " words per "
-                            + this.currentUnit.getWords().size();
-                    showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
-                }else{
-                    //Do not thing
-                }
-
-            } else {
-                appIdialog.dismiss();//Close dialog
+        Log.d(this.tag, "back presssed");
+        if (isPopUp && appIdialog != null) {
+            isPopUp = false;
+            appIdialog.dismiss();
+            if(lifeCount < 0){
+                String message = "Congratulation! " +
+                        "Corrected " + this.currentUnit.getRightCount() + " words per "
+                        + this.currentUnit.getWords().size();
+                showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
+            }else{
+                //Do not thing
             }
+        }else {
+            super.onBackPressed();
         }
     }
 
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
