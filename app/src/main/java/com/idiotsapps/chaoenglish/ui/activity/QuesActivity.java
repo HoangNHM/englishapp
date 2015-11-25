@@ -310,11 +310,6 @@ public class QuesActivity extends AppCompatActivity
                 }
             }
         }, mSecond);
-        if (soundId) {
-            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_RIGHT);
-        } else {
-            mSoundHelper.playSound(SoundHelper.SoundId.SOUND_CHOOSE_WRONG);
-        }
     }
 
     private void goNextClass() {
@@ -355,7 +350,7 @@ public class QuesActivity extends AppCompatActivity
                 String message = "Congratulation! " +
                         "Corrected " + this.currentUnit.getRightCount() + " words per "
                         + this.currentUnit.getWords().size();
-                showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
+                showPopUp(message, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
             }else{
                 //Do not thing
             }
@@ -392,7 +387,7 @@ public class QuesActivity extends AppCompatActivity
                 String message = "Congratulation! " +
                         "Corrected " + this.currentUnit.getRightCount() + " words per "
                         + this.currentUnit.getWords().size();
-                showPopUp(message, true, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
+                showPopUp(message, 3000, POPUP_CALLBACK_STATE.GO_NEXT_CLASS);
             }else{
                 //Do not thing
             }
