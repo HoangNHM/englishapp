@@ -152,14 +152,14 @@ public class QuesActivity extends AppCompatActivity
         // Create ad request.
         AdRequest interstitialAdRequest = new AdRequest.Builder().build();
 
-        // Begin loading your interstitial.
-        interstitial.loadAd(interstitialAdRequest);
-        interstitial.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                displayInterstitial();
-            }
-        });
+//        // Begin loading your interstitial.
+//        interstitial.loadAd(interstitialAdRequest);
+//        interstitial.setAdListener(new AdListener() {
+//            @Override
+//            public void onAdLoaded() {
+//                displayInterstitial();
+//            }
+//        });
 
         //Starting game
         playVocabTest();
@@ -169,10 +169,16 @@ public class QuesActivity extends AppCompatActivity
      * && (getRandNumber(1) == 1)
      */
     public void displayInterstitial() {
-        if (interstitial.isLoaded()  && isAdLoaded == true) {
-
-            interstitial.show();
-        }
+        Log.d(tag, "load add");
+        AdRequest interstitialAdRequest = new AdRequest.Builder().build();
+        // Begin loading your interstitial.
+        interstitial.loadAd(interstitialAdRequest);
+        interstitial.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                interstitial.show();
+            }
+        });
     }
 
 
@@ -359,14 +365,6 @@ public class QuesActivity extends AppCompatActivity
         }
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
