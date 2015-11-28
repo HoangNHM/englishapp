@@ -48,7 +48,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider749538661857364"
+        <provider android:authorities="com.facebook.app.FacebookContentProvider782836641839266"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true"/>
 

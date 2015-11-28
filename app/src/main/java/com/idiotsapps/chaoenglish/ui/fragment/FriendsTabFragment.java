@@ -52,7 +52,7 @@ public class FriendsTabFragment extends Fragment {
         @Override
         public void onClick(View v) {
             String appLinkUrl, previewImageUrl;
-            appLinkUrl = "https://fb.me/749567541854476";
+            appLinkUrl = "https://fb.me/782839928505604";
             previewImageUrl = "https://scontent-hkg3-1.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11745676_956819461007984_1887474383476805338_n.jpg?oh=f839a51646973b0f41eb984934ecf274&oe=56BDF978";
 
             if (AppInviteDialog.canShow()) {
